@@ -30,10 +30,17 @@ class MainActivity : AppCompatActivity() {
         if (result.contents == null) {
             Toast.makeText(this@MainActivity, "Cancelled", Toast.LENGTH_LONG).show()
         } else {
-            Toast.makeText(this@MainActivity,
-                result.contents,
-                Toast.LENGTH_LONG).show()
-            Log.d("my result",result.contents)
+            if(result.contents=="6192012110632")
+            {
+                Toast.makeText(this,"this is aflomad",Toast.LENGTH_LONG).show()
+            }
+            else if (result.contents=="6192402816519"){
+                Toast.makeText(this@MainActivity,
+                    "opalia",
+                    Toast.LENGTH_LONG).show()
+                Log.d("my result",result.contents)
+
+            }
         }
 
 }}
