@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">Ma_Pharmacie</string>
+    <string name="app_name">Ma Pharmacie</string>
+    <string name="my_notifications">mes notifications</string>
+    <string name="my_medicines">medicaments</string>
+    <string name="appointment">rendez-vous</string>
+    <string name="donation">donation</string>
+    <string name="pharmacy">pharmacies</string>
+    <string name="family">famille</string>
+    <string name="protector">protecteur</string>
+    <string name="tracker">suivi</string>
+    <string name="feedback">feedback</string>
 </resources>
