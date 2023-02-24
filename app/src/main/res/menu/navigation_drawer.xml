@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/my_medicines"
+        android:icon="@drawable/pills"
+        
+        android:title="@string/my_medicines"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/appointment"
+        android:icon="@drawable/check_up"
+        android:title="@string/appointment"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/donation"
+        android:icon="@drawable/donation"
+        android:title="@string/donation"
+        android:checkable="true"/>
+
+    <item
+        android:id="@+id/pharmacy"
+        android:icon="@drawable/pharmacy"
+        android:title="@string/pharmacy"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/addMember"
+        android:icon="@drawable/family"
+        android:title="@string/family"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/protector"
+        android:icon="@drawable/friend"
+        android:title="@string/protector"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/tracker"
+        android:icon="@drawable/tracker"
+        android:title="@string/tracker"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/feedback"
+        android:icon="@drawable/feedback"
+        android:title="@string/feedback"
+        android:checkable="true"/>
+
+
+</menu>

@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie
+package esprims.gi2.ma_pharmacie.presentation
 
 import android.os.Bundle
 import android.util.Log
@@ -15,9 +15,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.scanButton.setOnClickListener {
+        binding.topAppBar.setNavigationOnClickListener {
+
 
         }
+
+
     }
 
 }
