@@ -2,29 +2,41 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/my_medicines"
+        android:id="@+id/notificationFragment"
+        android:icon="@drawable/notification_icon"
+
+        android:title="@string/my_notifications"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/mapsFragment"
+        android:icon="@drawable/notification_icon"
+
+        android:title="maps"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/medicineFragment"
         android:icon="@drawable/pills"
-        
+
         android:title="@string/my_medicines"
         android:checkable="true"/>
     <item
-        android:id="@+id/appointment"
+        android:id="@+id/checkUpFragment"
         android:icon="@drawable/check_up"
         android:title="@string/appointment"
         android:checkable="true"/>
     <item
-        android:id="@+id/donation"
+        android:id="@+id/accelerate"
         android:icon="@drawable/donation"
         android:title="@string/donation"
         android:checkable="true"/>
 
     <item
-        android:id="@+id/pharmacy"
+        android:id="@+id/pharmacyFragment"
         android:icon="@drawable/pharmacy"
         android:title="@string/pharmacy"
         android:checkable="true"/>
     <item
-        android:id="@+id/addMember"
+        android:id="@+id/familyFragment"
         android:icon="@drawable/family"
         android:title="@string/family"
         android:checkable="true"/>

@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="dark_green">#295918</color>
+    <color name="light_green">#cfe6d7</color>
     <color name="design_default_color_surface">#355E3B</color>
     <color name="design_default_color_on_surface">@color/white</color>
 </resources>
