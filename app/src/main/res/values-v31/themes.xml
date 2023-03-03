@@ -3,9 +3,14 @@
 
     <style name="Theme.Ma_Pharmacie" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
+
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlHighlight">#000</item>
+
+
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -17,6 +22,7 @@
         <!-- Customize your theme here. -->
 
         <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textSize">20sp</item>
 
         <item name="android:windowSplashScreenBrandingImage">@drawable/proxym</item>
         <item name="navigationViewStyle">@style/AppNavigationViewStyle</item>
@@ -31,5 +37,6 @@
 
     </style>
 
+<style name="simpleText" parent="Widget.MaterialComponents.TextView" />
 
 </resources>

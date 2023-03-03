@@ -9,4 +9,7 @@
     <string name="protector">protecteur</string>
     <string name="tracker">suivi</string>
     <string name="feedback">feedback</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_photo">photo de profil</string>
 </resources>

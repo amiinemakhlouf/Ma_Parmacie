@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_green"
+    tools:context=".presentation.AlarmActivity">
+
+    <TextView
+        android:id="@+id/all_reminders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="08:00 AM   Reminders "
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40dp"
+        android:textSize="30dp"
+         style="@style/TextAppearance.AppCompat"
+        />
+
+
+    <include
+        android:id="@+id/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/all_reminders"
+        android:layout_marginTop="20dp"
+        layout="@layout/divider_with_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/dose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="rivoxaban"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        android:textSize="30dp"
+        />
+
+    <ImageView
+        android:id="@+id/apill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/rivorxaban"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dose"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

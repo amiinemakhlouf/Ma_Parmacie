@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pharmacy_nav_graph"
+    app:startDestination="@id/notificationFragment">
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.notification.NotificationFragment"
+        android:label="mes notifications"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/pharmacyFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.pharmacie.PharmacyFragment"
+        android:label="mes pharmacies"
+        tools:layout="@layout/fragment_pharmacy" />
+    <fragment
+        android:id="@+id/checkUpFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.checkup.CheckUpFragment"
+        android:label="mes rendez-vous"
+        tools:layout="@layout/fragment_check_up" />
+    <fragment
+        android:id="@+id/familyFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.family.FamilyFragment"
+        android:label="ma famille"
+        tools:layout="@layout/fragment_family" />
+    <fragment
+        android:id="@+id/healthTrackFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.health_track.HealthTrackFragment"
+        android:label="mon suivi"
+        tools:layout="@layout/fragment_health_track" />
+    <fragment
+        android:id="@+id/medicineFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.medicine.MedicineFragment"
+        android:label="mes medicaments"
+        tools:layout="@layout/fragment_medicine" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
+</navigation>

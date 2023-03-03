@@ -1,35 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.main.MainActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/top_app_bar"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/ic_baseline_menu_24"
-        app:navigationIconTint="@color/white"
         android:background="?attr/colorSurface"
-        app:title="@string/my_notifications"
         app:titleTextColor="?attr/colorOnSurface"
+
         />
-    <com.google.android.material.navigation.NavigationView
+     <androidx.fragment.app.FragmentContainerView
+         android:id="@+id/my_fragment"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:name="androidx.navigation.fragment.NavHostFragment"
+         app:navGraph="@navigation/pharmacy_nav_graph"
+         app:layout_constraintTop_toBottomOf="@id/top_app_bar"
+         app:layout_constraintBottom_toBottomOf="parent"
+         />
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+    <esprims.gi2.ma_pharmacie.presentation.main.CustomNavigationView
         android:id="@+id/navigationView"
         android:paddingTop="12dp"
         android:paddingStart="8dp"
         app:itemIconSize="35dp"
-        android:visibility="invisible"
+        android:layout_gravity="start"
         app:menu="@menu/navigation_drawer"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_height="match_parent"
-        android:layout_width="wrap_content"/>
+        android:layout_width="wrap_content"
+        app:itemTextAppearance="@style/Theme.Ma_Pharmacie"
 
+    />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
 

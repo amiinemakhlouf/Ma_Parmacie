@@ -1,11 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Ma_Pharmacie" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Ma_Pharmacie" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/dark_green</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlHighlight">#000</item>
+
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -16,7 +20,10 @@
         <item name="navigationViewStyle">@style/AppNavigationViewStyle</item>
 
 
+
     </style>
+
+
 
 
 </resources>
