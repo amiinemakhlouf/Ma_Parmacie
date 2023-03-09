@@ -5,11 +5,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.AlarmManagerCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -17,10 +20,26 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.room.Room
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import esprims.gi2.ma_pharmacie.R
+import esprims.gi2.ma_pharmacie.data.local.database.AppDatabase
+import esprims.gi2.ma_pharmacie.data.local.entity.Medicine
+import esprims.gi2.ma_pharmacie.data.local.entity.MedicineSchedule
+import esprims.gi2.ma_pharmacie.data.local.enums_helpers.AgeCategory
+import esprims.gi2.ma_pharmacie.data.local.enums_helpers.Gender
+import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineForm
+import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineType
 import esprims.gi2.ma_pharmacie.databinding.ActivityMainBinding
-import esprims.gi2.ma_pharmacie.presentation.AlarmActivity
+import esprims.gi2.ma_pharmacie.presentation.alarm.AlarmActivity
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,10 +53,50 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val intent=Intent(this,AlarmActivity::class.java)
+        Log.d("Debuggable false:  ","none")
+        val intent=Intent(this, AlarmActivity::class.java)
+
+
+      /*  val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, AppDatabase.databaseName
+        ).fallbackToDestructiveMigration().build()
+        val myMedicines= mutableListOf<List<Medicine>>()
+         lifecycleScope.launch(IO)
+         {
+
+            db.medicineDao().getAll().collectLatest{it->
+
+                if (it.isNotEmpty())
+                {
+                    for(medicine in it )
+                    {
+                        Log.d("my medicine",medicine.toString())
+                    }
+                }
+            }
+
+         }
         startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION))
         val t=Toast.makeText(this,"i'm amine",Toast.LENGTH_SHORT).show()
         binding.bt.setOnClickListener {
+            lifecycleScope.launch(IO)
+            {
+
+                    db.medicineDao().insert(
+                        Medicine(name = "nari", codabar = "tunisiei",id=5,
+                        gender = Gender.AGNOSTIC, ageCategory = AgeCategory.ADULT.toString(),
+                            expirationDate = 33333, additionalDescription = "hola ya matarr",
+                            form = MedicineForm.CREAM, type = MedicineType.ANTIDEPRESSANT
+
+                    )
+                    )
+            }
+
+            db.runInTransaction(Runnable {
+
+            })
+
 
             val alarmManager =getSystemService(AlarmManager::class.java)
             AlarmManagerCompat.setExactAndAllowWhileIdle(
@@ -54,6 +113,14 @@ class MainActivity : AppCompatActivity() {
 
             )
 
+
+        }*/
+
+        binding.bt.setOnClickListener {
+
+           showCalendar()
+            showTimePcker()
+
         }
 
 
@@ -63,18 +130,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-
-
     }
-
-
-
-
-
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration)||super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfiguration)
+                ||super.onSupportNavigateUp()
 
     }
    private fun setUpDrawer()
@@ -92,6 +151,27 @@ class MainActivity : AppCompatActivity() {
         binding.navigationView.setupWithNavController(navController)
 
     }
+
+    private fun showCalendar()
+    {
+        MaterialDatePicker.Builder.dateRangePicker()
+            .setTitleText("Select dates")
+            .setTheme(R.style.MyThemeOverlay_App_DatePicker)
+
+
+            .build().show(supportFragmentManager,"my date range picker")
+
+    }
+
+    private  fun showTimePcker()
+    {
+        MaterialTimePicker.Builder().setTimeFormat(TimeFormat.CLOCK_24H).build()
+            .show(supportFragmentManager,"time " +
+                "to take medicine")
+    }
+
+
+
 
 
 

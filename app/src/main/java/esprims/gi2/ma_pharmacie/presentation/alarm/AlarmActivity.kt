@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.presentation
+package esprims.gi2.ma_pharmacie.presentation.alarm
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -12,4 +12,24 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile_photo">photo de profil</string>
+    <string name="medication_name">nom de médicament</string>
+    <string name="tablets">Comprimés</string>
+    <string name="Liquids">liquides</string>
+    <string name="Topical">Topiques</string>
+    <string name="Injectables">injectables</string>
+    <string name="medication_forme">la forme de médicament</string>
+    <string name="analgesics">\analgésiques \</string>
+    <string name="analgesics_explanation">:médicaments utilisés pour soulager la douleur</string>
+    <string name="antibiotics">\antibiotiques \</string>
+    <string name="antibiotics_explanation">:médicaments utilisés pour traiter les infections bactériennes.</string>
+    <string name="hormones">\hormones \</string>
+    <string name="hormones_explation">:elles sont utilisées pour réguler les fonctions corporelles.</string>
+    <string name="antivirals">\"antiviraux \"</string>
+    <string name="antivirals_explanation">ils sont utilisés pour traiter les infections virales.</string>
+    <string name="pill_form">Comprimés, Capsules ou gélule (1)</string>
+    <string name="liquid_form">suspensions, sirops ou solutions (2)</string>
+    <string name="cream_form">crèmes, les pommades, les gels (3)</string>
+    <string name="injection_form">injection intramusculaire,sous-cutanée ou intraveineuse (4)</string>
+
+
 </resources>

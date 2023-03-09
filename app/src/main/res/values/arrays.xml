@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name= "medication_types">
+        <item  >analgésiques ces médicaments sont utilisés pour soulager la douleur</item>
+        <item>antibiotiques : ils sont utilisés pour traiter les infections bactériennes.</item>
+        <item>hormones : elles sont utilisées pour réguler les fonctions corporelles</item>
+        <item>antiviraux : ils sont utilisés pour traiter les infections virales.</item>
+    </string-array>
+</resources>

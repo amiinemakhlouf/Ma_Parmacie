@@ -32,12 +32,21 @@
         tools:layout="@layout/fragment_health_track" />
     <fragment
         android:id="@+id/medicineFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.medicine.MedicineFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.medication.show_medication.ShowMedicationFragment"
         android:label="mes medicaments"
-        tools:layout="@layout/fragment_medicine" />
+        tools:layout="@layout/fragment_show_medication" >
+        <action
+            android:id="@+id/action_medicineFragment_to_addMedicineDialog"
+            app:destination="@id/addMedicineDialog"
+            app:enterAnim="@android:anim/fade_in" />
+    </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.MapsFragment"
-        android:label="fragment_maps"
+        android:name="esprims.gi2.ma_pharmacie.presentation.maps.MapsFragment"
+        android:label="les pharmacies porches"
         tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@+id/addMedicineDialog"
+        android:name="esprims.gi2.ma_pharmacie.presentation.medication.add_medication.AddMedication"
+        android:label="nouveau médicament" />
 </navigation>

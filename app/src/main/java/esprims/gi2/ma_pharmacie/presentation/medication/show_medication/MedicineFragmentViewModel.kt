@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.presentation.medicine
+package esprims.gi2.ma_pharmacie.presentation.medication.show_medication
 
 import androidx.lifecycle.ViewModel
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/tablets"
+        android:title="@string/tablets"
+        android:icon="@drawable/pills"
+
+        />
+    <item android:id="@+id/Liquids"
+        android:title="@string/Liquids" />
+    <item android:id="@+id/Topical"
+        android:title="@string/Topical" />
+    <item android:id="@+id/Injectables"
+        android:title="@string/Injectables" />
+</menu>

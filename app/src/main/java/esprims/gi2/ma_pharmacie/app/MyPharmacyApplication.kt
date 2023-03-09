@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie
+package esprims.gi2.ma_pharmacie.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

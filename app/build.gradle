@@ -1,15 +1,22 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+
+
 }
 
 android {
-    compileSdk 33
+    def sdk_max_value= 33
+    compileSdk sdk_max_value
 
     defaultConfig {
         applicationId "esprims.gi2.ma_pharmacie"
-        minSdk 21
-        targetSdk 33
+        minSdk 26
+        targetSdk sdk_max_value
         versionCode 1
         versionName "1.0"
 
@@ -17,10 +24,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable = false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -41,10 +52,51 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    // codabar
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    //hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    implementation 'androidx.room:room-common:2.5.0'
+    implementation 'androidx.room:room-ktx:2.5.0'
+    kapt "com.google.dagger:hilt-compiler:2.44"
+    //by viewmodels
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    //coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    //drawer
+    implementation "androidx.drawerlayout:drawerlayout:1.1.1"
+
+    // navigation component
+    def nav_version = "2.5.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    //room database
+    def room_version = "2.5.0"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+
+
+    //testing dependencies
+    testImplementation "androidx.room:room-testing:$room_version"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 
 
+
+
+
+
+
+
+
+
+}
+
+kapt {
+    correctErrorTypes true
 }
