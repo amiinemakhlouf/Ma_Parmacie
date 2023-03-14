@@ -4,7 +4,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 
-fun onSystemBackClicked(fragment: Fragment)
+fun onSystemBackButtonClicked(fragment: Fragment)
 {
     val callback: OnBackPressedCallback =
         object : OnBackPressedCallback(true /* enabled by default */) {

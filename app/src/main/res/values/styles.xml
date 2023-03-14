@@ -4,6 +4,7 @@
     <style name="MyMedicineInputStyle"
         parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
+        <item name="colorControlActivated">@color/dark_green</item>
         <item name="boxStrokeColor">#355E3B</item>
         <item name="hintTextColor">#355E3B</item>
         <item name="android:textColorHint">@color/black</item>
@@ -15,10 +16,20 @@
 
     <style name="MyDropDownMenu"
         parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-        <item name="android:textColor">@color/white</item>
+        <item name="hintTextColor">#355E3B</item>
         <item name="boxStrokeColor">#355E3B</item>
-        <item name="android:textColorHint">@color/white</item>
-        <item name="hintTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="iconTint">@color/black</item>
+
+
+    </style>
+    <style name="MyDropDownMenuu"
+        parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:width">50dp</item>
+        <item name="boxStrokeColor">#355E3B</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="iconTint">@color/black</item>
 
     </style>
     <style name="MyDropDownMenuAutoComplete"
@@ -30,18 +41,7 @@
 
     </style>
 
-    <style name="date_picker" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar">
-        <item name="daySelectedStyle" >@style/customDaySelectedStyle</item>
-    </style>
 
-    <style name="customDaySelectedStyle" parent="@style/Widget.MaterialComponents.MaterialCalendar.Day.Selected">
-
-        <item name="itemFillColor">@color/black</item>
-        <item name="android:textColorPrimaryInverse">@color/white</item>
-
-
-
-    </style>
 
 
 </resources>

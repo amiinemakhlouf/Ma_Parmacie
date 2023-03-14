@@ -66,8 +66,6 @@
 
     <style name="selected_day"
         parent="@style/Widget.MaterialComponents.MaterialCalendar.Day.Selected">
-        <item name="itemTextColor">@color/dark_green</item>
-        <item name="itemFillColor">@color/black</item>
         <item name="itemStrokeWidth">0dp</item>
     </style>
     <style name="FullScreenDialog" parent="Theme.AppCompat.Light.Dialog">

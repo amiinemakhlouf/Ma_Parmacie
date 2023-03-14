@@ -10,7 +10,6 @@
     android:id="@+id/myTV"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="12sp"
     android:paddingStart="10dp"
     android:paddingEnd="8dp"
     android:paddingTop="4dp"

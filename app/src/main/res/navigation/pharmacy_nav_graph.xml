@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pharmacy_nav_graph"
-    app:startDestination="@id/notificationFragment">
+    app:startDestination="@id/onBoardingFragment">
 
     <fragment
         android:id="@+id/notificationFragment"
@@ -49,4 +49,9 @@
         android:id="@+id/addMedicineDialog"
         android:name="esprims.gi2.ma_pharmacie.presentation.medication.add_medication.AddMedication"
         android:label="nouveau médicament" />
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.onBoarding.OnBoardingFragment"
+        android:label="fragment_on_boarding"
+        tools:layout="@layout/fragment_on_boarding" />
 </navigation>

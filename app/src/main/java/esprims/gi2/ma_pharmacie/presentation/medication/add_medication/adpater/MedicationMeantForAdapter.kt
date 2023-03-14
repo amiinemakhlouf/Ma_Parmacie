@@ -9,11 +9,12 @@ import android.widget.ArrayAdapter
 import android.widget.Filter
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
+import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.MedicationMeantForBinding
 import esprims.gi2.ma_pharmacie.presentation.medication.add_medication.model.MedicationMeantForItem
 
-/*class MedicationMeantForAdapter(context: Context, val medicationsMeantFor:List<MedicationMeantForItem>
-) : ArrayAdapter<MedicationMeantForAdapter>(context,0)
+class MedicationMeantForAdapter(context: Context, val medicationsMeantFor:List<MedicationMeantForItem>
+) : ArrayAdapter<MedicationMeantForItem>(context,0)
 {
     private lateinit var binding: MedicationMeantForBinding
 
@@ -28,8 +29,7 @@ import esprims.gi2.ma_pharmacie.presentation.medication.add_medication.model.Med
             LayoutInflater.from(parent.context)
             ,parent,false)
         binding.sexOrAgeText.text=medicationMeantFor.meantForText.toString()
-        val context =parent.context as AppCompatResources
-        binding.sexOrAgeIcon.setImageDrawable()
+        binding.sexOrAgeIcon.setImageDrawable(getContext().getDrawable(medicationMeantFor.meantForIcon))
         return (binding.root)
     }
 
@@ -47,4 +47,4 @@ import esprims.gi2.ma_pharmacie.presentation.medication.add_medication.model.Med
     override fun getFilter(): Filter {
         return super.getFilter()
     }
-}*/
+}

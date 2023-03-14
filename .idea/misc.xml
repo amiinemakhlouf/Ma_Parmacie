@@ -18,10 +18,18 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2716049382716049" />
         <entry key="app/src/main/res/layout/add_medicine_fragment.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/layout/divider_with_text.xml" value="0.1638888888888889" />
+        <entry key="app/src/main/res/layout/fragment_add_medication.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_add_medicine.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_first_on_boarding.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.13489583333333333" />
         <entry key="app/src/main/res/layout/fragment_medicine.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_on_boarding.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_second_on_boarding.xml" value="0.28489583333333335" />
+        <entry key="app/src/main/res/layout/fragment_second_on_boarding2.xml" value="0.28489583333333335" />
+        <entry key="app/src/main/res/layout/fragment_third.xml" value="0.28489583333333335" />
+        <entry key="app/src/main/res/layout/fragment_third_on_boarding.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/medication_form_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/medication_meant_for.xml" value="0.325" />
         <entry key="app/src/main/res/layout/medication_type_item.xml" value="0.340625" />
         <entry key="app/src/main/res/menu/close_add_medicine.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/menu/medication_form.xml" value="0.1" />

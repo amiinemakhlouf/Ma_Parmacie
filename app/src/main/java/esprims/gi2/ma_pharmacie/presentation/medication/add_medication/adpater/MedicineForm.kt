@@ -28,6 +28,7 @@ class MedicineForm(context:Context, val medicineForms:List<MedicationFormItem>
         binding.logo.setImageDrawable(
             context.applicationContext.getDrawable(medicationForm!!.image))
         binding.title.text=medicationForm.name
+
         return (binding.root)
     }
 

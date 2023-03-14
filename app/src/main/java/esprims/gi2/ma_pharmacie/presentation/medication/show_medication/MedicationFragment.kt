@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentShowMedicationBinding
 
-import esprims.gi2.ma_pharmacie.presentation.medication.startAnimation
-import esprims.gi2.ma_pharmacie.presentation.shared.onSystemBackClicked
+import esprims.gi2.ma_pharmacie.presentation.shared.onSystemBackButtonClicked
 
 class ShowMedicationFragment : Fragment() {
     private val TAG = "MedicineFragment"
@@ -34,7 +32,7 @@ class ShowMedicationFragment : Fragment() {
                 interpolator = AccelerateDecelerateInterpolator()
             }
 
-        onSystemBackClicked(this)
+        onSystemBackButtonClicked(this)
 
         binding.fab.setOnClickListener {
             val action =

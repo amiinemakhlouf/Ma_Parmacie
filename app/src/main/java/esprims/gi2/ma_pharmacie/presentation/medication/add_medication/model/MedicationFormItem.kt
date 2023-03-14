@@ -11,12 +11,10 @@ data class MedicationFormItem (
 
 
 {
-    companion object{
-        var index=1
-    }
-    override fun toString():String{
 
-        return  name.substring(name.lastIndex-2,name.lastIndex+1)
+    override fun toString():String{
+        //name.substring(name.lastIndex-2,name.lastIndex+1)
+        return  name
     }
 
 

@@ -1,18 +1,18 @@
 package esprims.gi2.ma_pharmacie.presentation.main
-import android.app.AlarmManager
-import android.app.PendingIntent
+
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.AlarmManagerCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -20,26 +20,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.room.Room
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import esprims.gi2.ma_pharmacie.R
-import esprims.gi2.ma_pharmacie.data.local.database.AppDatabase
-import esprims.gi2.ma_pharmacie.data.local.entity.Medicine
-import esprims.gi2.ma_pharmacie.data.local.entity.MedicineSchedule
-import esprims.gi2.ma_pharmacie.data.local.enums_helpers.AgeCategory
-import esprims.gi2.ma_pharmacie.data.local.enums_helpers.Gender
-import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineForm
-import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineType
 import esprims.gi2.ma_pharmacie.databinding.ActivityMainBinding
 import esprims.gi2.ma_pharmacie.presentation.alarm.AlarmActivity
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import java.lang.Exception
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -154,12 +142,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun showCalendar()
     {
-        MaterialDatePicker.Builder.dateRangePicker()
+         val myCalendar= MaterialDatePicker.Builder.dateRangePicker()
             .setTitleText("Select dates")
             .setTheme(R.style.MyThemeOverlay_App_DatePicker)
-
-
-            .build().show(supportFragmentManager,"my date range picker")
+            .build()
+        myCalendar.show(supportFragmentManager,"my date range picker")
 
     }
 
@@ -168,6 +155,28 @@ class MainActivity : AppCompatActivity() {
         MaterialTimePicker.Builder().setTimeFormat(TimeFormat.CLOCK_24H).build()
             .show(supportFragmentManager,"time " +
                 "to take medicine")
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            val view: View? = currentFocus
+            if (view != null && view is EditText) {
+                val r = Rect()
+                view.getGlobalVisibleRect(r)
+                val rawX = ev.rawX.toInt()
+                val rawY = ev.rawY.toInt()
+                if (!r.contains(rawX, rawY)) {
+                    view.clearFocus()
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
+    fun hideKeyboard(view: View) {
+        val inputMethodManager: InputMethodManager =
+            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
     }
 
 
