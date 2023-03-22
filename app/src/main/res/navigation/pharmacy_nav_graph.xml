@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pharmacy_nav_graph"
-    app:startDestination="@id/onBoardingFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.notification.NotificationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.ReminderFragment"
         android:label="mes notifications"
-        tools:layout="@layout/fragment_notification" />
+        tools:layout="@layout/fragment_reminder" />
     <fragment
         android:id="@+id/pharmacyFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.pharmacie.PharmacyFragment"
@@ -48,10 +48,19 @@
     <fragment
         android:id="@+id/addMedicineDialog"
         android:name="esprims.gi2.ma_pharmacie.presentation.medication.add_medication.AddMedication"
-        android:label="nouveau médicament" />
+        android:label="nouveau médicament"
+
+
+        />
+
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.onBoarding.OnBoardingFragment"
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

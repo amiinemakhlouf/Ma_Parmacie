@@ -42,11 +42,12 @@
         app:layout_constraintTop_toBottomOf="@id/on_boarding_image"
         app:layout_constraintStart_toStartOf="@id/on_boarding_image"
         app:layout_constraintEnd_toEndOf="@id/on_boarding_image"
-        android:text="titlle 1"
+        android:text="Ne manquez jamais une dose avec nos rappels"
         android:fontFamily="@font/on_boarding_font"
         android:textStyle="bold"
         android:textColor="#405245"
-        android:textSize="30sp"/>
+        android:textSize="20sp"
+       />
 
     <TextView
         android:id="@+id/description"
@@ -58,9 +59,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="30sp"
-        android:textAlignment="center"
+
         android:gravity="center"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitati"
+        android:text="Ma pharmacie vous aide à ne jamais manquer une dose de médicament. Vous pouvez planifier des rappels pour vous rappeler quand prendre vos médicaments."
+
         />
 
     <TextView
@@ -69,7 +71,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="back"
+        android:text="@string/back"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="60dp"/>
 
@@ -81,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/skip_text"
         app:layout_constraintBottom_toBottomOf="@id/skip_text"
-        android:text="Next"
+        android:text="@string/next"
         android:layout_marginEnd="20dp"
         android:textStyle="bold"
         />
@@ -95,34 +97,37 @@
         app:layout_constraintTop_toTopOf="@id/next_text"
         app:layout_constraintBottom_toBottomOf="@id/next_text"
         >
-        <View
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/first_square"
             android:layout_width="15dp"
             android:layout_height="15dp"
+            app:cardCornerRadius="50dp"
+            app:cardBackgroundColor="@color/unselected_tab"
             app:layout_constraintStart_toStartOf="@id/square_containers"
             app:layout_constraintTop_toTopOf="@id/square_containers"
             app:layout_constraintBottom_toBottomOf="@id/square_containers"
-            android:background="@color/unselected_tab"/>
-        <View
+          />
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/second_square"
             android:layout_width="15dp"
             android:layout_height="15dp"
             app:layout_constraintStart_toEndOf="@id/first_square"
             android:layout_marginStart="20dp"
+            app:cardCornerRadius="50dp"
+            app:cardBackgroundColor="@color/dark_green"
             app:layout_constraintTop_toTopOf="@id/square_containers"
             app:layout_constraintBottom_toBottomOf="@id/square_containers"
-            android:background="@color/dark_green"
             />
-        <View
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/third_square"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginStart="20dp"
-
+            app:cardCornerRadius="50dp"
+            app:cardBackgroundColor="@color/unselected_tab"
             app:layout_constraintStart_toEndOf="@id/second_square"
             app:layout_constraintTop_toTopOf="@id/square_containers"
             app:layout_constraintBottom_toBottomOf="@id/square_containers"
-            android:background="@color/unselected_tab"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

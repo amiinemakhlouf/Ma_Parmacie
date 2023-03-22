@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-   android:background="?attr/colorSurface"
+    android:layout_width="80dp"
+    android:layout_height="120dp"
+    android:background="?attr/colorSurface"
+    android:layout_marginEnd="5dp"
     android:id="@+id/calendar_linear_layout"
     android:gravity="center">
 
     <TextView
+        android:id="@+id/txtDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="mon"
+        android:layout_marginTop="30sp"
+        android:layout_gravity="center_horizontal"
+        android:text="15"
         android:textColor="@color/white"
-        android:id="@+id/txt_day"/>
+        />
+
     <TextView
+        android:id="@+id/txtNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="20"
+        android:layout_marginTop="60dp"
+        android:text="Wed"
         android:textColor="@color/white"
-        android:id="@+id/txt_date"/>
-</LinearLayout>
+        android:layout_gravity="center_horizontal"
+        />
+
+
+</com.google.android.material.card.MaterialCardView>

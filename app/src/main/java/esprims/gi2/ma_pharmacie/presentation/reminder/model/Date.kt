@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.presentation.notification.model
+package esprims.gi2.ma_pharmacie.presentation.reminder.model
 
 data class Date (
     val dayInThreeLetter:String,

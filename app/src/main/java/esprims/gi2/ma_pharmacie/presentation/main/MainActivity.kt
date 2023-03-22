@@ -1,15 +1,20 @@
 package esprims.gi2.ma_pharmacie.presentation.main
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +31,7 @@ import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.ActivityMainBinding
+import esprims.gi2.ma_pharmacie.domain.ScheduleNotificationUseCase
 import esprims.gi2.ma_pharmacie.presentation.alarm.AlarmActivity
 
 
@@ -34,15 +40,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController:NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private  var toast:Toast?=null
+    private  val TAG="Main activity"
 
     private val viewModel: MainActivityViewModel by viewModels()
+    @SuppressLint("ServiceCast")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        Log.d("Debuggable false:  ","none")
         val intent=Intent(this, AlarmActivity::class.java)
+
+        Log.d(TAG,"i'm here")
+
+
+        val vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+
+
+
+       // ScheduleNotificationUseCase().invoke(this)
 
 
       /*  val db = Room.databaseBuilder(

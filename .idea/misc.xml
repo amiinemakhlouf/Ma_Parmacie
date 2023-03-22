@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.334375" />
+        <entry key="app/src/main/res/drawable-v24/arrow_forward.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/calendar.xml" value="0.308" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.1215" />
         <entry key="app/src/main/res/drawable/days_backgorund.xml" value="0.123" />
@@ -13,28 +14,34 @@
         <entry key="app/src/main/res/drawable/liquid.xml" value="0.123" />
         <entry key="app/src/main/res/drawable/medication.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/medication_icon.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/relinder_item.xml" value="0.2655" />
         <entry key="app/src/main/res/drawable/rounded_corners_on_top.xml" value="0.253" />
         <entry key="app/src/main/res/layout/activity_alarm.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2716049382716049" />
         <entry key="app/src/main/res/layout/add_medicine_fragment.xml" value="0.30052083333333335" />
+        <entry key="app/src/main/res/layout/days_items.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/divider_with_text.xml" value="0.1638888888888889" />
         <entry key="app/src/main/res/layout/fragment_add_medication.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_add_medicine.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_first_on_boarding.xml" value="0.28489583333333335" />
+        <entry key="app/src/main/res/layout/fragment_first_on_boarding.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.13489583333333333" />
         <entry key="app/src/main/res/layout/fragment_medicine.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/fragment_on_boarding.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_second_on_boarding.xml" value="0.28489583333333335" />
+        <entry key="app/src/main/res/layout/fragment_second_on_boarding.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_second_on_boarding2.xml" value="0.28489583333333335" />
-        <entry key="app/src/main/res/layout/fragment_third.xml" value="0.28489583333333335" />
+        <entry key="app/src/main/res/layout/fragment_third.xml" value="0.67" />
         <entry key="app/src/main/res/layout/fragment_third_on_boarding.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/medication_form_item.xml" value="0.5" />
         <entry key="app/src/main/res/layout/medication_meant_for.xml" value="0.325" />
         <entry key="app/src/main/res/layout/medication_type_item.xml" value="0.340625" />
+        <entry key="app/src/main/res/layout/reminder_item.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/menu/close_add_medicine.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/menu/medication_form.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_medication_form.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/menu/navigation_drawer.xml" value="0.30052083333333335" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2655" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>
     </option>

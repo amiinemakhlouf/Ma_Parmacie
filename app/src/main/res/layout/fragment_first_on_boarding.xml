@@ -42,11 +42,12 @@
         app:layout_constraintTop_toBottomOf="@id/on_boarding_image"
         app:layout_constraintStart_toStartOf="@id/on_boarding_image"
         app:layout_constraintEnd_toEndOf="@id/on_boarding_image"
-        android:text="titlle 1"
+        android:lineSpacingExtra="10dp"
+        android:text="Mémorisez les détails de vos médicaments"
         android:fontFamily="@font/on_boarding_font"
         android:textStyle="bold"
         android:textColor="#405245"
-        android:textSize="30sp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/description"
@@ -60,8 +61,8 @@
         android:layout_marginTop="30sp"
         android:textAlignment="center"
         android:gravity="center"
-        android:text="publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content."
-        />
+        android:lineSpacingExtra="4dp"
+        android:text="Ma pharmacie vous permet  de sauvegarder les informations sur vos médicaments  pour une utilisation ultérieure. Ainsi, vous pouvez facilement récupérer vos données en cas de besoin."/>
 
     <TextView
         android:id="@+id/skip_text"
@@ -69,7 +70,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Skip  all  "
+        android:text="@string/skip_all"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="60dp"/>
 
@@ -81,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/skip_text"
         app:layout_constraintBottom_toBottomOf="@id/skip_text"
-        android:text="Next"
+        android:text="@string/next"
         android:layout_marginEnd="20dp"
         android:textStyle="bold"
         />
@@ -95,34 +96,36 @@
         app:layout_constraintTop_toTopOf="@id/next_text"
         app:layout_constraintBottom_toBottomOf="@id/next_text"
         >
-        <View
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/first_square"
             android:layout_width="15dp"
             android:layout_height="15dp"
+            app:cardCornerRadius="50dp"
             app:layout_constraintStart_toStartOf="@id/square_containers"
             app:layout_constraintTop_toTopOf="@id/square_containers"
             app:layout_constraintBottom_toBottomOf="@id/square_containers"
             android:background="@color/dark_green"/>
-        <View
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/second_square"
             android:layout_width="15dp"
             android:layout_height="15dp"
             app:layout_constraintStart_toEndOf="@id/first_square"
             android:layout_marginStart="20dp"
+            app:cardCornerRadius="50dp"
+            app:cardBackgroundColor="@color/unselected_tab"
             app:layout_constraintTop_toTopOf="@id/square_containers"
             app:layout_constraintBottom_toBottomOf="@id/square_containers"
-            android:background="@color/unselected_tab"
             />
-        <View
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/third_square"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginStart="20dp"
-
+            app:cardCornerRadius="50dp"
+            app:cardBackgroundColor="@color/unselected_tab"
             app:layout_constraintStart_toEndOf="@id/second_square"
             app:layout_constraintTop_toTopOf="@id/square_containers"
             app:layout_constraintBottom_toBottomOf="@id/square_containers"
-            android:background="@color/unselected_tab"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
