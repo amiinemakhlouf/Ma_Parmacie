@@ -12,4 +12,6 @@
     <color name="design_default_color_surface">#355E3B</color>
     <color name="design_default_color_on_surface">@color/white</color>
     <color name="unselected_tab">#578a64</color>
+    <color name="soft_blue">#9eefff</color>
+    <color name="dark_blue">#2709e6</color>
 </resources>

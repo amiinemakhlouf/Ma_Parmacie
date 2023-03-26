@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_green"
+    android:clickable="true"
+  android:focusable="true"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.login.LoginFragment">
@@ -93,6 +95,8 @@
             android:hint="mot de passe"
             android:textColorHint="@null"
             app:hintTextColor="@color/dark_green"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/dark_green"
 
             app:boxCornerRadiusTopEnd="20dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -117,7 +121,7 @@
             android:text="@string/forget_password"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/login"
+            android:id="@+id/loginBt"
             android:layout_width="200dp"
             android:layout_height="60dp"
             app:layout_constraintTop_toBottomOf="@id/forgetPassword"
@@ -142,7 +146,7 @@
             android:layout_marginStart="30dp"
             app:dividerColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login"/>
+            app:layout_constraintTop_toBottomOf="@id/loginBt"/>
         <TextView
             app:layout_constraintStart_toEndOf="@id/left_divider"
             app:layout_constraintEnd_toStartOf="@id/right_divider"
@@ -160,21 +164,20 @@
             android:layout_marginEnd="30dp"
             app:dividerColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login"/>
+            app:layout_constraintTop_toBottomOf="@id/loginBt"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/google_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             app:layout_constraintTop_toBottomOf="@id/right_divider"
-            style="?attr/materialButtonOutlinedStyle"
             android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="@id/login"
-            app:layout_constraintEnd_toEndOf="@id/login"
+            app:layout_constraintStart_toStartOf="@id/loginBt"
+            app:layout_constraintEnd_toEndOf="@id/loginBt"
             app:cornerRadius="40dp"
             app:strokeColor	="@color/black"
             app:iconGravity="textStart"
-            android:text="continue avec google"
+            android:text="continuer avec google"
             app:iconTint="@null"
             android:textColor="@color/black"
             android:textSize="10sp"
@@ -191,6 +194,7 @@
             android:layout_marginStart="-20dp"
             android:textSize="13sp"
             app:layout_constraintTop_toBottomOf="@id/google_sign_in"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:text="Etes vous nouveau?"/>
         <TextView
             android:id="@+id/createNewAccount"
@@ -198,8 +202,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/isNewUSer"
             android:textSize="13sp"
+            android:paddingStart="5dp"
             android:textColor="@color/dark_green"
             app:layout_constraintTop_toBottomOf="@id/google_sign_in"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:text="créer un compte"/>
 
 

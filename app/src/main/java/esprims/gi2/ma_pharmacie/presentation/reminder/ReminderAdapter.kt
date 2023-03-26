@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import esprims.gi2.ma_pharmacie.R
-import esprims.gi2.ma_pharmacie.databinding.DaysItemsBinding
 import esprims.gi2.ma_pharmacie.databinding.ReminderItemBinding
-import esprims.gi2.ma_pharmacie.presentation.reminder.model.Date
 import esprims.gi2.ma_pharmacie.presentation.reminder.model.Reminder
 
-class ReminderAdapter(private  val dataset:List<Reminder>
+class ReminderAdapter(
+    private  val dataset:List<Reminder>,
+    private val reminderCallback:ReminderCallback
 ) : RecyclerView.Adapter<ReminderAdapter.ViewHolder>() {
     class ViewHolder(
         val binding: ReminderItemBinding
@@ -19,6 +19,9 @@ class ReminderAdapter(private  val dataset:List<Reminder>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+
+
 
         return  ViewHolder(
             ReminderItemBinding.inflate(
@@ -31,7 +34,16 @@ class ReminderAdapter(private  val dataset:List<Reminder>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem=dataset[position]
-        holder.binding.medicationDose.text="15"
+
+        val context=holder.itemView.context
+        holder.binding.medicationName.transitionName=context.resources.getString(R.string.medicationNameTransition)
+        holder.binding.reminderDetails.setOnClickListener {
+
+
+            reminderCallback.navigateToDetailsScreen()
+
+
+        }
 
     }
 }

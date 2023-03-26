@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="80dp"
     android:layout_height="120dp"
     android:background="?attr/colorSurface"
+    app:cardCornerRadius="10dp"
     android:layout_marginEnd="5dp"
     android:id="@+id/calendar_linear_layout"
     android:gravity="center">
@@ -16,11 +17,12 @@
         android:layout_marginTop="30sp"
         android:layout_gravity="center_horizontal"
         android:text="15"
+
         android:textColor="@color/white"
         />
 
     <TextView
-        android:id="@+id/txtNumber"
+        android:id="@+id/txtDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"

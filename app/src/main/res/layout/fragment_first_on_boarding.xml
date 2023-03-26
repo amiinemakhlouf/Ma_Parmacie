@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@id/appName"
         app:layout_constraintStart_toStartOf="@id/appName"
         app:layout_constraintEnd_toEndOf="@id/appName"
-        android:src="@drawable/on_boarding_image"/>
+        android:src="@drawable/medication_reminder_on_boarding"/>
 
     <TextView
         android:id="@+id/title"

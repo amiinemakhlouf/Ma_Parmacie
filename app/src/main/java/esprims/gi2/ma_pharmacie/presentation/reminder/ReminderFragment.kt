@@ -5,24 +5,38 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.doOnPreDraw
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentReminderBinding
+import esprims.gi2.ma_pharmacie.presentation.login.LoginFragmentDirections
+import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.reminder.model.Date
 import esprims.gi2.ma_pharmacie.presentation.reminder.model.Reminder
 
 
-class ReminderFragment : Fragment() {
+class ReminderFragment : Fragment() ,ReminderCallback {
      private  lateinit var binding:FragmentReminderBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding= FragmentReminderBinding.inflate(layoutInflater)
-        return binding.root
+        return  binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+        enableDrawer()
         val dates= listOf<Date>(Date("mon",22,1),
             Date("mon",22,1),
             Date("mon",22,1),
@@ -36,6 +50,7 @@ class ReminderFragment : Fragment() {
             Reminder("dazda",5,"ddzaz","dsqdqdsq"),
 
         )
+
         showDaysRecyclerView(dates)
         showReminderRecyclerView( reminders)
 
@@ -52,12 +67,28 @@ class ReminderFragment : Fragment() {
 
     private  fun showReminderRecyclerView(list:List<Reminder>)
     {
-        val reminderAdapter= ReminderAdapter(list)
+        val reminderAdapter= ReminderAdapter(list,this)
         binding.reminderRecyclerView.apply {
             layoutManager=LinearLayoutManager(requireActivity(),
             LinearLayoutManager.VERTICAL,false)
             adapter=reminderAdapter
+
         }
     }
+
+
+    fun enableDrawer(){
+
+        (requireActivity() as MainActivity).binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+
+    override fun navigateToDetailsScreen() {
+        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        val action = ReminderFragmentDirections.actionReminderFragmentToReminderDetailsFragment()
+        navHostFragment.navController.navigate(action,  )
+        Toast.makeText(requireContext(),"tounisir",Toast.LENGTH_SHORT).show()
+
+    }
+
 }
 

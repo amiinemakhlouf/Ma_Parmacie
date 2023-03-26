@@ -2,23 +2,28 @@ package esprims.gi2.ma_pharmacie.presentation.main
 
 import android.annotation.SuppressLint
 import android.content.Context
+
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -31,16 +36,26 @@ import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.ActivityMainBinding
-import esprims.gi2.ma_pharmacie.domain.ScheduleNotificationUseCase
 import esprims.gi2.ma_pharmacie.presentation.alarm.AlarmActivity
+import esprims.gi2.ma_pharmacie.presentation.shared.onSystemBackButtonClicked
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    public lateinit var binding: ActivityMainBinding
     private lateinit var navController:NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     private  val TAG="Main activity"
+    private  val firstVisit=true
+
 
     private val viewModel: MainActivityViewModel by viewModels()
     @SuppressLint("ServiceCast")
@@ -48,13 +63,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+
+        val graph = navHostFragment.navController.graph
+        graph.setStartDestination(R.id.loginFragment)
+        navHostFragment.navController.graph=graph
+        blockDrawerBeforeMenuScreen()
         val intent=Intent(this, AlarmActivity::class.java)
 
+
+
+
         Log.d(TAG,"i'm here")
+        onSystemBackButtonClicked(supportFragmentManager.fragments.last())
 
 
-        val vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+
+      //  val vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+       // vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
 
 
 
@@ -129,13 +157,14 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        setContentView(binding.root)
+
         setUpDrawer()
 
 
 
     }
     override fun onSupportNavigateUp(): Boolean {
+        navController.graph.setStartDestination(R.id.loginFragment)
         return navController.navigateUp(appBarConfiguration)
                 ||super.onSupportNavigateUp()
 
@@ -144,10 +173,12 @@ class MainActivity : AppCompatActivity() {
     {
         val hostNavFragment=supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         navController=hostNavFragment.findNavController()
+
+
         binding.navigationView.setupWithNavController(navController)
         appBarConfiguration= AppBarConfiguration(
             setOf(R.id.mapsFragment,R.id.notificationFragment,R.id.checkUpFragment, R.id.notificationFragment,
-                R.id.familyFragment,R.id.healthTrackFragment
+                R.id.familyFragment,R.id.healthTrackFragment,R.id.reminderFragment
             )
             ,binding.drawer)
         setSupportActionBar(binding.topAppBar)
@@ -189,11 +220,16 @@ class MainActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
-    fun hideKeyboard(view: View) {
-        val inputMethodManager: InputMethodManager =
-            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
+
+
+
+   private fun blockDrawerBeforeMenuScreen()
+    {
+       binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
     }
+
+
 
 
 

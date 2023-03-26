@@ -3,13 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pharmacy_nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/onBoardingFragment">
 
-    <fragment
-        android:id="@+id/notificationFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.ReminderFragment"
-        android:label="mes notifications"
-        tools:layout="@layout/fragment_reminder" />
     <fragment
         android:id="@+id/pharmacyFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.pharmacie.PharmacyFragment"
@@ -57,10 +52,42 @@
         android:id="@+id/onBoardingFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.onBoarding.OnBoardingFragment"
         android:label="fragment_on_boarding"
-        tools:layout="@layout/fragment_on_boarding" />
+        tools:layout="@layout/fragment_on_boarding" >
+        <action
+            android:id="@+id/action_onBoardingFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_reminderFragment"
+            app:destination="@id/reminderFragment"
+            app:exitAnim="@anim/nav_default_enter_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/reminderFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.ReminderFragment"
+        android:label="rappel des médicaments"
+        tools:layout="@layout/fragment_reminder" >
+        <action
+            android:id="@+id/action_reminderFragment_to_reminderDetailsFragment"
+            app:destination="@id/reminderDetailsFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/reminderDetailsFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.reminder_detail.ReminderDetailsFragment"
+        android:label="fragment_reminder_details"
+        tools:layout="@layout/fragment_reminder_details" />
+    <fragment
+        android:id="@+id/thirdOnBoardingFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.onBoarding.ThirdOnBoardingFragment"
+        android:label="ThirdOnBoardingFragment" >
+        <action
+            android:id="@+id/action_thirdOnBoardingFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

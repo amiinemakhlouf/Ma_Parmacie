@@ -34,6 +34,10 @@
     <string name="skip_all">Ignorer tout</string>
     <string name="back">retour</string>
     <string name="forget_password">mot de passe oublié</string>
+    <string name="dose">Dose</string>
+    <string name="programme">Programme</string>
+    <string name="quantity">quantité</string>
+    <string name="medicationNameTransition">medication_name_transition</string>
 
 
 </resources>
