@@ -14,4 +14,5 @@
     <color name="unselected_tab">#578a64</color>
     <color name="soft_blue">#9eefff</color>
     <color name="dark_blue">#2709e6</color>
+    <color name="red">#FF0000</color>
 </resources>

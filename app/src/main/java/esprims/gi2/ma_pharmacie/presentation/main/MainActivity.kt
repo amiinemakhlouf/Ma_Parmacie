@@ -1,7 +1,6 @@
 package esprims.gi2.ma_pharmacie.presentation.main
 
 import android.annotation.SuppressLint
-import android.content.Context
 
 import android.content.Intent
 import android.graphics.Rect
@@ -15,15 +14,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -37,11 +30,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.ActivityMainBinding
 import esprims.gi2.ma_pharmacie.presentation.alarm.AlarmActivity
+import esprims.gi2.ma_pharmacie.data.remote.RetrofitBuilder
+import esprims.gi2.ma_pharmacie.dto.LoginDto
+import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
+import esprims.gi2.ma_pharmacie.dto.RegisterDto
 import esprims.gi2.ma_pharmacie.presentation.shared.onSystemBackButtonClicked
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -55,14 +50,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private  val TAG="Main activity"
     private  val firstVisit=true
-
-
     private val viewModel: MainActivityViewModel by viewModels()
     @SuppressLint("ServiceCast")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        val userApi= RetrofitBuilder.build().create(UserService::class.java)
+
+        /*lifecycleScope.launch(IO)
+        {
+            val result=  userApi.register(RegisterDto("fromAndroidAfterRefactor@gmail.com","tunisiasat","password"))
+            withContext(Main){
+                Toast.makeText(this@MainActivity,result.toString(),Toast.LENGTH_SHORT).show()
+            }
+            Log.d(TAG +"fayo",result.toString())
+        }*/
+
         setContentView(binding.root)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
@@ -161,6 +165,17 @@ class MainActivity : AppCompatActivity() {
         setUpDrawer()
 
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(viewModel.navigateToLogin){
+            val hostNavFragment=supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+            navController=hostNavFragment.findNavController()
+            navController.navigate(R.id.loginFragment)
+
+        }
 
     }
     override fun onSupportNavigateUp(): Boolean {

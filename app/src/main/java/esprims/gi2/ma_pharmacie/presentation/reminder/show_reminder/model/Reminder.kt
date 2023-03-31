@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.presentation.reminder.model
+package esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model
 
 data class Reminder(
     val medicationName:String,

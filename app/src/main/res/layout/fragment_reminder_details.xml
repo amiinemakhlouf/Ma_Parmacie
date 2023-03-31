@@ -80,7 +80,7 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/doseTitle"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/black"
             />
 
         <com.google.android.material.divider.MaterialDivider
@@ -114,9 +114,11 @@
 8:00 | 15:00 | 20:00     "
             android:textSize="16sp"
             android:lineSpacingExtra="2dp"
+            android:textColor="@color/black"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ProgramTitle"
-            android:textColor="@android:color/darker_gray"
+
             />
 
         <com.google.android.material.divider.MaterialDivider
@@ -151,7 +153,8 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Quantity"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/black"
+
             />
 
 

@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.presentation.reminder
+package esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,13 +13,14 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentReminderBinding
+import esprims.gi2.ma_pharmacie.presentation.login.LoginFragmentDirections
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Date
 import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.DaysAdapter
 import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
 
 
-class ReminderFragment : Fragment() ,ReminderCallback {
+class ReminderFragment : Fragment() , ReminderCallback {
      private  lateinit var binding:FragmentReminderBinding
 
     override fun onCreateView(
@@ -36,6 +37,11 @@ class ReminderFragment : Fragment() ,ReminderCallback {
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         enableDrawer()
         onSystemBackButtonClicked(this)
+        binding.addFab.setOnClickListener {
+            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+            val action = ReminderFragmentDirections.actionReminderFragmentToAddReminderFragment()
+            navHostFragment.navController.navigate(action)
+        }
         val dates= listOf<Date>(
             Date("mon",22,1),
             Date("mon",22,1),

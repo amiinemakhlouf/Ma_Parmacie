@@ -51,7 +51,7 @@
             android:theme="@style/MyMedicineInputStyle">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/medicationNameET"
+            android:id="@+id/medication_name_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"

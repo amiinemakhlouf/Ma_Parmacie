@@ -82,7 +82,7 @@ class AddMedication : Fragment() {
         onSystemBackButtonClicked(this)
         handleFocusStateFormAutoCompleteTextView(binding.medicationForm)
         handleFocusStateFormAutoCompleteTextView(binding.medicationType)
-        handleFocusOnEditText(binding.medicationNameET)
+        handleFocusOnEditText(binding.medicationNameEt)
         handleFocusOnEditText(binding.addDescriptionEt1)
         getMedicationExpirationDate()
         showMeantForDropDown()

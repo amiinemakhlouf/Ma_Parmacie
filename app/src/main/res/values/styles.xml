@@ -20,6 +20,7 @@
         <item name="boxStrokeColor">#355E3B</item>
         <item name="android:textColorHint">@color/black</item>
         <item name="iconTint">@color/black</item>
+        <item name="strokeColor">@color/white</item>
 
 
     </style>

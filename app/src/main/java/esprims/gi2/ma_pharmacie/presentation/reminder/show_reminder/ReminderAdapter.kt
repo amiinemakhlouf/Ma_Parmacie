@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.presentation.reminder
+package esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Remind
 
 class ReminderAdapter(
     private  val dataset:List<Reminder>,
-    private val reminderCallback:ReminderCallback
+    private val reminderCallback: ReminderCallback
 ) : RecyclerView.Adapter<ReminderAdapter.ViewHolder>() {
     class ViewHolder(
         val binding: ReminderItemBinding
@@ -36,7 +36,7 @@ class ReminderAdapter(
         val currentItem=dataset[position]
 
         val context=holder.itemView.context
-        holder.binding.medicationName.transitionName=context.resources.getString(R.string.medicationNameTransition)
+        holder.binding.medicationNameTv.transitionName=context.resources.getString(R.string.medicationNameTransition)
         holder.binding.reminderDetails.setOnClickListener {
 
 

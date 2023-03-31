@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentReminderBinding
 import esprims.gi2.ma_pharmacie.databinding.FragmentReminderDetailsBinding
+import esprims.gi2.ma_pharmacie.presentation.shared.onSystemBackButtonClicked
 
 class ReminderDetailsFragment : Fragment() {
 
@@ -30,11 +32,13 @@ class ReminderDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        onSystemBackButtonClicked(this)
         disableTopBar()
     }
     private fun disableTopBar()
     {
         ( requireActivity() as AppCompatActivity).supportActionBar!!.hide()
     }
+
 
 }

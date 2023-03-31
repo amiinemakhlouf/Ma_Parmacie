@@ -10,5 +10,8 @@ import kotlinx.coroutines.launch
 class MainActivityViewModel :ViewModel() {
 
 
+    var navigateToLogin =false
+
+
 
 }

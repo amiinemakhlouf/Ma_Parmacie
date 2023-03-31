@@ -46,7 +46,7 @@ class OnBoardingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         runBlocking{
             shouldNavigateToLogin()?.let {
-               binding.progressBar.visibility=INVISIBLE
+
                 val navHostFragment =
                     requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
                 val navController = navHostFragment.navController

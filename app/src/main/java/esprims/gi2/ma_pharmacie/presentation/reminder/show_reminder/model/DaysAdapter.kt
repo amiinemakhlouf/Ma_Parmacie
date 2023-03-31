@@ -1,14 +1,12 @@
-package esprims.gi2.ma_pharmacie.presentation.reminder
+package esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.DaysItemsBinding
-import esprims.gi2.ma_pharmacie.presentation.reminder.model.Date
 
 class DaysAdapter(
     private  val dataset:List<Date>

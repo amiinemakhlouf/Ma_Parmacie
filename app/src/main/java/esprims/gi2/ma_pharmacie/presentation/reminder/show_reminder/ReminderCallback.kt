@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.presentation.reminder
+package esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder
 
 import android.widget.TextView
 
