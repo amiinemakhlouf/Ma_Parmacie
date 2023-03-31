@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.ReminderItemBinding
-import esprims.gi2.ma_pharmacie.presentation.reminder.model.Reminder
+import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
 
 class ReminderAdapter(
     private  val dataset:List<Reminder>,

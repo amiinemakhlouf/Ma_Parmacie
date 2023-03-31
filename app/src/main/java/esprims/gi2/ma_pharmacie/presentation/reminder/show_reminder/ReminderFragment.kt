@@ -5,20 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.doOnPreDraw
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentReminderBinding
-import esprims.gi2.ma_pharmacie.presentation.login.LoginFragmentDirections
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
-import esprims.gi2.ma_pharmacie.presentation.reminder.model.Date
-import esprims.gi2.ma_pharmacie.presentation.reminder.model.Reminder
+import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Date
+import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.DaysAdapter
+import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
 
 
 class ReminderFragment : Fragment() ,ReminderCallback {
@@ -37,10 +35,12 @@ class ReminderFragment : Fragment() ,ReminderCallback {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         enableDrawer()
-        val dates= listOf<Date>(Date("mon",22,1),
+        onSystemBackButtonClicked(this)
+        val dates= listOf<Date>(
             Date("mon",22,1),
             Date("mon",22,1),
-            Date("mon",22,1),Date("mon",22,1)
+            Date("mon",22,1),
+            Date("mon",22,1), Date("mon",22,1)
         )
         val reminders = listOf<Reminder>(
             Reminder("dazda",5,"ddzaz","dsqdqdsq"),
@@ -57,7 +57,7 @@ class ReminderFragment : Fragment() ,ReminderCallback {
     }
     private fun showDaysRecyclerView( dates:List<Date>)
     {
-        val daysAdapter=DaysAdapter(dates)
+        val daysAdapter= DaysAdapter(dates)
         binding.daysRecyclerView.apply {
             layoutManager= LinearLayoutManager(requireActivity()
                 ,LinearLayoutManager.HORIZONTAL,false)
@@ -87,6 +87,19 @@ class ReminderFragment : Fragment() ,ReminderCallback {
         val action = ReminderFragmentDirections.actionReminderFragmentToReminderDetailsFragment()
         navHostFragment.navController.navigate(action,  )
         Toast.makeText(requireContext(),"tounisir",Toast.LENGTH_SHORT).show()
+
+    }
+
+     private fun onSystemBackButtonClicked(fragment: Fragment)
+    {
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    requireActivity().moveTaskToBack(true)
+                }
+            }
+        fragment.requireActivity().getOnBackPressedDispatcher().addCallback(fragment.requireActivity(), callback);
+
 
     }
 
