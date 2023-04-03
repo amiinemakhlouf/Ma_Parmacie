@@ -44,7 +44,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <nav-graph android:value="@navigation/pharmacy_nav_graph"/>
+
         </activity>
+
     </application>
 
 </manifest>

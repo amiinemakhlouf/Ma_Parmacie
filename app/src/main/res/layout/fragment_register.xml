@@ -68,6 +68,7 @@
             app:boxCornerRadiusBottomStart="20dp"
             android:hint="Nom d'utilisateur "
             android:textColorHint="@null"
+
             app:hintTextColor="@color/dark_green"
             app:boxCornerRadiusTopEnd="20dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

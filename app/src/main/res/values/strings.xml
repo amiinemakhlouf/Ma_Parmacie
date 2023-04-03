@@ -38,6 +38,9 @@
     <string name="programme">Programme</string>
     <string name="quantity">quantité</string>
     <string name="medicationNameTransition">medication_name_transition</string>
+    <string name="welcome">bienvenu</string>
+    <string name="Invalid_email_address">adresse email inexistante</string>
+    <string name="wrong_password">mot de passe incorrect</string>
 
 
 </resources>

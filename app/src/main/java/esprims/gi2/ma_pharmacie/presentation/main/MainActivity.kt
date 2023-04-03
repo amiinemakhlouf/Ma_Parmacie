@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 
 import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -57,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val userApi= RetrofitBuilder.build().create(UserService::class.java)
+
+
 
         /*lifecycleScope.launch(IO)
         {

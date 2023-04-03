@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pharmacy_nav_graph"
-    app:startDestination="@id/onBoardingFragment">
+    app:startDestination="@id/emailOtpFragment">
 
     <fragment
         android:id="@+id/pharmacyFragment"
@@ -61,7 +61,7 @@
         android:id="@+id/loginFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_reminderFragment"
             app:destination="@id/reminderFragment"
@@ -72,6 +72,10 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <deepLink
+            android:id="@+id/deepLink2"
+            android:autoVerify="true"
+            app:uri="https://exe.com" />
     </fragment>
     <fragment
         android:id="@+id/reminderFragment"
@@ -90,7 +94,12 @@
         android:id="@+id/reminderDetailsFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.reminder_detail.ReminderDetailsFragment"
         android:label="fragment_reminder_details"
-        tools:layout="@layout/fragment_reminder_details" />
+        tools:layout="@layout/fragment_reminder_details">
+        <deepLink
+            android:id="@+id/deepLink"
+            android:autoVerify="true"
+            app:uri="https://mabarmacie.com/register" />
+    </fragment>
     <fragment
         android:id="@+id/thirdOnBoardingFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.onBoarding.ThirdOnBoardingFragment"
@@ -108,4 +117,9 @@
         android:id="@+id/registerFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.register.RegisterFragment"
         android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/emailOtpFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.email_confirmation.EmailOtpFragment"
+        android:label="confirmation de email"
+        tools:layout="@layout/fragment_email_otp" />
 </navigation>
