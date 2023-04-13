@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.email_confirmation.EmailOtpFragment">
+    tools:context=".presentation.otp_confirmation.EmailConfirmOtpFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
@@ -20,7 +20,7 @@
         android:padding="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Un code de confirmation a été envoyé à votre e-mail. Veuillez vérifier votre boîte de réception"
+        android:text="Un code de confirmation de l'email a été envoyé à votre e-mail. Veuillez vérifier votre boîte de réception"
         app:layout_constraintTop_toBottomOf="@id/image"
         />
 
@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:layout_margin="4dp"
+        android:textCursorDrawable="@color/dark_green"
         android:backgroundTint="@color/dark_green"
         app:layout_constraintTop_toBottomOf="@id/message"
         android:hint="code de confirmation"
@@ -65,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@id/resend"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:text="envoyer le code"
+        android:text="confirmer"
         app:cornerRadius="20dp"
         android:backgroundTint="@color/dark_green"
         />

@@ -1,7 +1,8 @@
-package esprims.gi2.ma_pharmacie.domain
+package esprims.gi2.ma_pharmacie.useCase
 
 import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.data.remote.RetrofitBuilder
@@ -22,7 +23,9 @@ class LoginUseCase {
         Log.d("login use case",result.code().toString())
         if (result.isSuccessful)
         {
-            return  Result.Success()
+            val jwt=result.headers().get("Authorization")!!
+
+            return  Result.Success(data = jwt)
         }
 
 
@@ -32,18 +35,6 @@ class LoginUseCase {
         return Result.Error(message = errorMessage)
     }
 
-    fun loginWithGoogle():Unit {
 
-        val context = MyPharmacyApplication.instance
-        val options =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
-                .requestIdToken(
-                    context.getString(
-                        R.string.default_web_client_id
-                    )
-                ).build()
-        val signInClient = GoogleSignIn.getClient(context, options)
-
-    }
 
 }

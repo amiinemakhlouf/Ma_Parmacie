@@ -68,8 +68,7 @@
        app:boxCornerRadiusBottomStart="20dp"
         android:hint="Email"
         app:helperTextTextColor="@color/red"
-
-
+        android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
         android:textColorHint="@null"
         app:hintTextColor="@color/dark_green"
         app:boxCornerRadiusTopEnd="20dp"
@@ -102,12 +101,15 @@
             app:endIconTint="@color/dark_green"
             app:helperTextTextColor="@color/red"
             app:boxCornerRadiusTopEnd="20dp"
+            android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
+                android:inputType="textPassword"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 

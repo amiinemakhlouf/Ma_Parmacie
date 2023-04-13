@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.data.local.entity
+package esprims.gi2.ma_pharmacie.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

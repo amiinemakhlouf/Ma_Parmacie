@@ -1,13 +1,13 @@
 package esprims.gi2.ma_pharmacie.presentation.main
 
 import android.annotation.SuppressLint
-
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Rect
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
@@ -15,6 +15,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -28,36 +30,54 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.ActivityMainBinding
 import esprims.gi2.ma_pharmacie.presentation.alarm.AlarmActivity
-import esprims.gi2.ma_pharmacie.data.remote.RetrofitBuilder
-import esprims.gi2.ma_pharmacie.dto.LoginDto
-import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
-import esprims.gi2.ma_pharmacie.dto.RegisterDto
+import esprims.gi2.ma_pharmacie.presentation.onBoarding.dataStore
 import esprims.gi2.ma_pharmacie.presentation.shared.onSystemBackButtonClicked
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
-
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     public lateinit var binding: ActivityMainBinding
-    private lateinit var navController:NavController
+    private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private  val TAG="Main activity"
-    private  val firstVisit=true
+    private val TAG = "Main activity"
+    private val firstVisit = true
+    var isRomReminder:Boolean=false
     private val viewModel: MainActivityViewModel by viewModels()
+
     @SuppressLint("ServiceCast")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val userApi= RetrofitBuilder.build().create(UserService::class.java)
+        setContentView(binding.root)
+
+       /* lifecycleScope.launch(IO){
+            if(userIsLoggedIn()){
+
+                withContext(Main){
+                    Log.d("bogi","i'm logged in ")
+                    navigateToReminderScreen()
+                }
+            }
+            else{
+                withContext(Main){
+                    Log.d("bogi","not logged in ")
+                    navigateTologinScreen()
+
+                }
+
+            }
+
+        }*/
 
 
 
@@ -70,33 +90,30 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG +"fayo",result.toString())
         }*/
 
-        setContentView(binding.root)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
 
         val graph = navHostFragment.navController.graph
         graph.setStartDestination(R.id.loginFragment)
-        navHostFragment.navController.graph=graph
+        navHostFragment.navController.graph = graph
         blockDrawerBeforeMenuScreen()
-        val intent=Intent(this, AlarmActivity::class.java)
+        val intent = Intent(this, AlarmActivity::class.java)
 
 
 
 
-        Log.d(TAG,"i'm here")
+        Log.d(TAG, "i'm here")
         onSystemBackButtonClicked(supportFragmentManager.fragments.last())
 
 
-
-      //  val vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-       // vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-
+        //  val vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        // vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
 
 
-       // ScheduleNotificationUseCase().invoke(this)
+        // ScheduleNotificationUseCase().invoke(this)
 
 
-      /*  val db = Room.databaseBuilder(
+        /*  val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, AppDatabase.databaseName
         ).fallbackToDestructiveMigration().build()
@@ -157,69 +174,101 @@ class MainActivity : AppCompatActivity() {
 
         binding.bt.setOnClickListener {
 
-           showCalendar()
+            showCalendar()
             showTimePcker()
 
         }
-
-
-
-
         setUpDrawer()
+        binding.navigationView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
 
+            logout()
+            isRomReminder=true
+            return@setOnMenuItemClickListener true
+        }
 
 
     }
 
-    override fun onResume() {
+    private fun navigateToReminderScreen() {
+        val hostNavFragment =
+            supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        navController = hostNavFragment.findNavController()
+        navController.navigate(R.id.reminderFragment)
+
+    }
+
+     suspend private fun userIsLoggedIn(): Boolean {
+
+        val jwtKey = stringPreferencesKey("jwt")
+
+          val preferences= dataStore.data.first()
+         if(!preferences[jwtKey].isNullOrEmpty()){
+
+             return true
+         }
+
+        return false
+
+    }
+
+    /*override fun onResume() {
         super.onResume()
-        if(viewModel.navigateToLogin){
-            val hostNavFragment=supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-            navController=hostNavFragment.findNavController()
+        if (viewModel.navigateToLogin) {
+            val hostNavFragment =
+                supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+            navController = hostNavFragment.findNavController()
             navController.navigate(R.id.loginFragment)
 
         }
 
-    }
+    }*/
+
     override fun onSupportNavigateUp(): Boolean {
         navController.graph.setStartDestination(R.id.loginFragment)
         return navController.navigateUp(appBarConfiguration)
-                ||super.onSupportNavigateUp()
+                || super.onSupportNavigateUp()
 
     }
-   private fun setUpDrawer()
-    {
-        val hostNavFragment=supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        navController=hostNavFragment.findNavController()
+
+    private fun setUpDrawer() {
+        val hostNavFragment =
+            supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        navController = hostNavFragment.findNavController()
 
 
         binding.navigationView.setupWithNavController(navController)
-        appBarConfiguration= AppBarConfiguration(
-            setOf(R.id.mapsFragment,R.id.notificationFragment,R.id.checkUpFragment, R.id.notificationFragment,
-                R.id.familyFragment,R.id.healthTrackFragment,R.id.reminderFragment
-            )
-            ,binding.drawer)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.mapsFragment,
+                R.id.notificationFragment,
+                R.id.checkUpFragment,
+                R.id.notificationFragment,
+                R.id.familyFragment,
+                R.id.healthTrackFragment,
+                R.id.reminderFragment,
+            ), binding.drawer
+        )
         setSupportActionBar(binding.topAppBar)
-        setupActionBarWithNavController(navController,appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navigationView.setupWithNavController(navController)
 
     }
 
-    private fun showCalendar()
-    {
-         val myCalendar= MaterialDatePicker.Builder.dateRangePicker()
+    private fun showCalendar() {
+        val myCalendar = MaterialDatePicker.Builder.dateRangePicker()
             .setTitleText("Select dates")
             .setTheme(R.style.MyThemeOverlay_App_DatePicker)
             .build()
-        myCalendar.show(supportFragmentManager,"my date range picker")
+        myCalendar.show(supportFragmentManager, "my date range picker")
 
     }
 
-    private  fun showTimePcker()
-    {
+    private fun showTimePcker() {
         MaterialTimePicker.Builder().setTimeFormat(TimeFormat.CLOCK_24H).build()
-            .show(supportFragmentManager,"time " +
-                "to take medicine")
+            .show(
+                supportFragmentManager, "time " +
+                        "to take medicine"
+            )
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -239,12 +288,66 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    private fun blockDrawerBeforeMenuScreen() {
+     //   binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(esprims.gi2.ma_pharmacie.R.menu.menu_top_bar, menu)
+        return true
+    }
 
 
-   private fun blockDrawerBeforeMenuScreen()
+    private fun deleteJwtFromLocalStorage() {
+
+        val jwtKey = stringPreferencesKey("jwt")
+        lifecycleScope.launch(IO) {
+
+
+                       dataStore.edit { settings ->
+                           settings[jwtKey]=""
+                       }
+
+                        withContext(Main) {
+                            navigateTologinScreen()
+                            showLogoutToast()
+                        }
+
+
+                }
+        }
+
+
+
+
+
+    private fun navigateTologinScreen() {
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        navHostFragment.navController.navigate(R.id.loginFragment)
+    }
+
+    private fun showLogoutToast() {
+        Toasty.success(this, "Vous êtes maintenant déconnecté", Toast.LENGTH_SHORT, true).show();
+
+    }
+
+    private  fun logout()
     {
-       binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        binding.drawer.close()
+        binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        val dialog = ProgressDialog.show(
+            this, "",
+            "déconnexion en cours...", true
+        )
 
+
+        deleteJwtFromLocalStorage()
+        showLogoutToast()
+        dialog.dismiss()
+        navigateTologinScreen()
     }
 
 

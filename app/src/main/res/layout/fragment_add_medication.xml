@@ -48,7 +48,7 @@
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/MyMedicineInputStyle"
-            android:theme="@style/MyMedicineInputStyle">
+            >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/medication_name_et"
@@ -77,11 +77,7 @@
             android:focusableInTouchMode="true"
             android:clickable="true"
             android:focusable="true"
-
-
-
-
-            >
+  >
 
             <AutoCompleteTextView
                 android:id="@+id/medicineFormDropDown"
@@ -134,13 +130,49 @@
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/medicationDescription"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintTop_toBottomOf="@id/medicationType"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:boxBackgroundColor="@color/white"
+            app:endIconTint="#355E3B"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="top"
+            android:textColorHint="@color/black"
+            android:hint="description..."
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/medicineDescriptionDropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity=""
+                android:maxLines="1"
+                android:singleLine="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:inputType="none"
+                android:ellipsize="end"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/medicationEndDateLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            app:layout_constraintTop_toBottomOf="@id/medicationType"
+            app:layout_constraintTop_toBottomOf="@id/medicationDescription"
             android:layout_marginTop="20dp"
 
             app:startIconDrawable="@drawable/calendar"
@@ -174,7 +206,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            app:layout_constraintTop_toBottomOf="@id/medicationType"
+            app:layout_constraintTop_toBottomOf="@id/medicationDescription"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toEndOf="@id/medicationEndDateLayout"
             android:layout_marginStart="8dp"
@@ -200,64 +232,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/add_descriptionEt"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintTop_toBottomOf="@id/meant_for"
-            android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/confirm_button"
-            android:padding="10dp"
-            app:boxStrokeWidth="2dp"
-            app:boxCornerRadiusBottomEnd="20dp"
-            app:boxCornerRadiusTopStart="20dp"
-            app:boxStrokeColor="@color/dark_green"
-            app:hintTextColor="@color/dark_green"
-            android:hint="ajouter votre description "
-            android:textColorHint="@color/black"
-            style="@style/MyMedicineInputStyle"
-            android:theme="@style/MyMedicineInputStyle"
-            app:errorIconDrawable="@null"
 
-
-
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/add_descriptionEt1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top"
-
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/description_error_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/add_descriptionEt"
-            app:layout_constraintTop_toBottomOf="@id/add_descriptionEt"
-            android:textSize="12dp"
-            android:text="ce champs est vide"
-            android:layout_marginStart="50dp"
-            android:textColor="@android:color/holo_red_dark"
-            android:layout_marginTop="-6dp"
-            android:visibility="invisible"
-
-            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/confirm_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            app:layout_constraintTop_toBottomOf="@id/add_descriptionEt"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintStart_toStartOf="parent"

@@ -83,7 +83,7 @@ class AddMedication : Fragment() {
         handleFocusStateFormAutoCompleteTextView(binding.medicationForm)
         handleFocusStateFormAutoCompleteTextView(binding.medicationType)
         handleFocusOnEditText(binding.medicationNameEt)
-        handleFocusOnEditText(binding.addDescriptionEt1)
+        handleFocusOnEditText(binding.medicineDescriptionDropDown)
         getMedicationExpirationDate()
         showMeantForDropDown()
         var open =false
@@ -97,14 +97,14 @@ class AddMedication : Fragment() {
         clearErrorState(binding.medicationType)
         clearErrorState(binding.medicationForm)
         clearErrorState(binding.medicationName)
-        clearErrorState(binding.addDescriptionEt)
+        clearErrorState(binding.medicationDescription)
         clearErrorState(binding.meantFor)
 
     }
 
     private fun clearErrorState(textInputLayout: TextInputLayout)
     {
-        if( textInputLayout.id ==R.id.add_descriptionEt){
+        /*if( textInputLayout.id ==R.id.medicationDescription){
             binding.descriptionErrorMessage.visibility= INVISIBLE
             binding.addDescriptionEt.error=null
             textInputLayout.isErrorEnabled = false
@@ -113,7 +113,7 @@ class AddMedication : Fragment() {
         }
         textInputLayout.error = null
         textInputLayout.helperText = null
-        textInputLayout.isErrorEnabled = false
+        textInputLayout.isErrorEnabled = false*/
 
 
     }
@@ -287,13 +287,13 @@ class AddMedication : Fragment() {
     fun isIsAllInputsValid(context:AppCompatActivity) :Boolean
     {
         var areInputsValid=true
-        if(!AddMedicationValidator.isTextInputValid(binding.medicationForm,context)) areInputsValid=false
+       /* if(!AddMedicationValidator.isTextInputValid(binding.medicationForm,context)) areInputsValid=false
         if(!AddMedicationValidator.isTextInputValid(binding.medicationName,requireActivity()  as AppCompatActivity)) areInputsValid=false
         if(!AddMedicationValidator.isTextInputValid(binding.medicationEndDateLayout,requireActivity()  as AppCompatActivity)) areInputsValid=false
         if(!AddMedicationValidator.isTextInputValid(binding.medicationType,requireActivity()  as AppCompatActivity)) areInputsValid=false
         if(!AddMedicationValidator.isTextInputValid(binding.meantFor,requireActivity()  as AppCompatActivity)) areInputsValid=false
-        if(!AddMedicationValidator.isTextInputValid(binding.addDescriptionEt,requireActivity()  as AppCompatActivity)) areInputsValid=false
-
+        if(!AddMedicationValidator.isTextInputValid(binding.medicationDescription,requireActivity()  as AppCompatActivity)) areInputsValid=false
+*/
         return  areInputsValid
 
     }

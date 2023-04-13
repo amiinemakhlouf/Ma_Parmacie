@@ -1,5 +1,6 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model
 
+import android.content.res.Resources.getSystem
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
@@ -31,7 +32,8 @@ class DaysAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem=dataset[position]
-        holder.binding.txtDate.text="15"
+        holder.binding.txtDate.text=dataset[position].dayInDigits.toString()
+        holder.binding.txtDay.text=dataset[position].dayInThreeLetter.toString()
         if(position==2)
         {
 
@@ -39,13 +41,11 @@ class DaysAdapter(
             ((holder.binding.root) as MaterialCardView).elevation= 40F
             holder.binding.txtDate.setTextColor(context.resources.getColor(R.color.dark_green))
             holder.binding.txtDay.setTextColor(context.resources.getColor(R.color.dark_green))
-            holder.binding.calendarLinearLayout.background=context.getDrawable(R.drawable.rounded_corner)
-            holder.binding.txtDate.text="TODAY"
-            holder.binding.txtDay.text=""
-            holder.binding.txtDate.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                setMargins(0,80,0,0)
-            }
+            holder.binding.calendarLinearLayout.background=context.getDrawable(R.drawable.current_day)
+
 
         }
     }
+    val Int.px: Int get() = (this * getSystem().displayMetrics.density).toInt()
+
 }

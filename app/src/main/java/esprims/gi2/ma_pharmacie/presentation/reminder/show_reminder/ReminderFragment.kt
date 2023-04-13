@@ -35,7 +35,10 @@ class ReminderFragment : Fragment() , ReminderCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+
+        (requireActivity() as MainActivity).binding.drawer.visibility= View.VISIBLE
         enableDrawer()
+        handleAppBackButton()
         onSystemBackButtonClicked(this)
         binding.addFab.setOnClickListener {
             val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
@@ -43,10 +46,13 @@ class ReminderFragment : Fragment() , ReminderCallback {
             navHostFragment.navController.navigate(action)
         }
         val dates= listOf<Date>(
-            Date("mon",22,1),
-            Date("mon",22,1),
-            Date("mon",22,1),
-            Date("mon",22,1), Date("mon",22,1)
+            Date("lun",22,1),
+            Date("mar",22,1),
+            Date("mer",22,1),
+            Date("jeu",22,1),
+            Date("ven",22,1),
+            Date("sam",22,1),
+            Date("dim",22,1),
         )
         val reminders = listOf<Reminder>(
             Reminder("dazda",5,"ddzaz","dsqdqdsq"),
@@ -86,6 +92,7 @@ class ReminderFragment : Fragment() , ReminderCallback {
     fun enableDrawer(){
 
         (requireActivity() as MainActivity).binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+
     }
 
     override fun navigateToDetailsScreen() {
@@ -106,6 +113,9 @@ class ReminderFragment : Fragment() , ReminderCallback {
             }
         fragment.requireActivity().getOnBackPressedDispatcher().addCallback(fragment.requireActivity(), callback);
 
+
+    }
+    private fun handleAppBackButton() {
 
     }
 

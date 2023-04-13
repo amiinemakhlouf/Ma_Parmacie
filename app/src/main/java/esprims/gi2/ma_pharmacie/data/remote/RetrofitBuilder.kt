@@ -10,8 +10,8 @@ object RetrofitBuilder {
 
 
 
-    //val myServerLocalIpAdress="http://192.168.1.16:8080/"
-    val myServerLocalIpAdress="http://10.0.2.2:8080/"
+    val myServerLocalIpAdress="http://192.168.11.103:3000/"
+    //val myServerLocalIpAdress="http://10.0.2.2:3000/"
     fun build(): Retrofit = Retrofit.Builder()
         .baseUrl(myServerLocalIpAdress)
         .addConverterFactory(GsonConverterFactory.create())

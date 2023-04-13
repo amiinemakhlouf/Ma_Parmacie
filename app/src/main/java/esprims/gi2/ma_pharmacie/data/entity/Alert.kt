@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.data.local.entity
+package esprims.gi2.ma_pharmacie.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
