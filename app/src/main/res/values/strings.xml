@@ -45,6 +45,7 @@
     <string name="otp_false_code">Code incorrect</string>
     <string name="email">email</string>
     <string name="email_invalid">adresse e-mail invalide.</string>
+    <string name="no_internet">Vous n\'avez pas d\'Internet.</string>
 
 
 </resources>

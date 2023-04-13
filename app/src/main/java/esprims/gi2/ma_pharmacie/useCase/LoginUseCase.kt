@@ -17,6 +17,8 @@ class LoginUseCase {
     {
         val userApi= RetrofitBuilder.build().create(UserService::class.java)
 
+        try {
+
 
         val result=userApi.login(loginDto)
 
@@ -30,9 +32,13 @@ class LoginUseCase {
 
 
         val errorMessage=result.errorBody()!!.string()
-        Log.d("login use case",errorMessage)
-        Log.d("papi",errorMessage)
-        return Result.Error(message = errorMessage)
+            return Result.Error(message = errorMessage)
+        }
+        catch (e:java.lang.Exception){
+           return  esprims.gi2.ma_pharmacie.Result.Error("no internet connection")
+        }
+
+
     }
 
 

@@ -46,8 +46,7 @@ class LoginViewModel @Inject constructor (
 
     suspend fun loginWithGoogleAccount(user: User): Unit {
         viewModelScope.launch(IO) {
-
-
+            loginState.emit(UIState.Loading())
             val result = loginGoogleClient.invoke(user)
             loginState.emit(UIState.Default)
             when (result) {

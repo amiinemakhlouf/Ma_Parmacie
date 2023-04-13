@@ -14,6 +14,9 @@ class ConfirmEmailUseCase {
     {
         val userApi= RetrofitBuilder.build().create(UserService::class.java)
         var jwt:String=""
+        try {
+
+
         var result:Response<out  Any> = if(forRegister){
             Log.d("ConfirmEmailUseCase","register bro")
             val response= userApi.sentOtpToConfirmEmail(confirmDto)
@@ -36,6 +39,10 @@ class ConfirmEmailUseCase {
         Log.d("confrim status code",result.code().toString())
         if(result.isSuccessful){
             return Result.Success(message =jwt )
+        }
+        }catch (e:Exception)
+        {
+            return  esprims.gi2.ma_pharmacie.Result.Error("no internet connection")
         }
         return Result.Error("wrong code")
     }

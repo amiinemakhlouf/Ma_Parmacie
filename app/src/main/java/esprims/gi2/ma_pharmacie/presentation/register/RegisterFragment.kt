@@ -13,12 +13,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.Result
 import esprims.gi2.ma_pharmacie.databinding.FragmentRegisterBinding
 import esprims.gi2.ma_pharmacie.dto.RegisterDto
+import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -40,7 +43,28 @@ class RegisterFragment : Fragment() {
 
         moveToLoginScreen()
         handleRegisterBtLogic()
+        updateUiAfterRegisterFlow()
         clearErrorMessageWhenUSerTyping()
+
+    }
+
+    private fun updateUiAfterRegisterFlow() {
+        viewModel._registerStateFlow.collectLatest {uiState->
+
+          when(uiState)
+          {
+              is UIState.Success ->{
+                  updateUiAfterRegisterSuccess()
+                  moveToConfirmRegistration()
+
+              }
+
+              is UIState.Error ->{
+                  updateUiAfterRegisterFailed()
+              }
+          }
+
+        }
 
     }
 
@@ -50,25 +74,10 @@ class RegisterFragment : Fragment() {
             if (isInputsValid()) {
                 val userDto = getUserDto()
                 lifecycleScope.launch(IO) {
-                    val result = viewModel.register(userDto)
-
-                    withContext(Main) {
-
-                        when (result) {
-                            is Result.Success -> {
-                                updateUiAfterRegisterSuccess()
-                            }
-
-                            is Result.Error -> {
-                                updateUiAfterRegisterFailed()
-                            }
-                        }
-                    }
-                }
-
+                    viewModel.register(userDto)
             }
         }
-    }
+    }}
 
     private fun updateUiAfterRegisterFailed() {
         Toast.makeText(requireActivity(), "error walah", Toast.LENGTH_SHORT).show()
@@ -200,12 +209,11 @@ class RegisterFragment : Fragment() {
     }
 
     private fun updateUiAfterRegisterSuccess() {
-        Toast.makeText(requireActivity(), "une dernière étape", Toast.LENGTH_SHORT).show()
+        Toasty.success(requireActivity(),"une dernière étape",Toast.LENGTH_SHORT).show()
         binding.emailError.text = ""
         binding.emailError.visibility = View.INVISIBLE
 
         binding.emailEt.boxStrokeColor = requireActivity().resources.getColor(R.color.dark_green)
-        moveToConfirmRegistration()
 
     }
 

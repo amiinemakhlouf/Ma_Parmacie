@@ -11,8 +11,10 @@ class LoginGoogleClient {
     suspend operator fun invoke(user:User):Result<String>
     {
         val userApi= RetrofitBuilder.build().create(UserService::class.java)
+        try{
+
+
        val result= userApi.registerGoogleClient(user)
-        Log.d("code",result.code().toString())
        return  when(result.isSuccessful)
         {
             true ->  {
@@ -22,6 +24,11 @@ class LoginGoogleClient {
             else -> {throw error(result.errorBody()!!.string())
             }
 
+        }
+
+        }catch (e:Exception)
+        {
+           return  esprims.gi2.ma_pharmacie.Result.Error("no internet connection")
         }
 
 

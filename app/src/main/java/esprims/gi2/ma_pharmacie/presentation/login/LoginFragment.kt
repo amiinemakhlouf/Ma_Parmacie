@@ -1,5 +1,6 @@
 package esprims.gi2.ma_pharmacie.presentation.login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
@@ -121,6 +123,7 @@ class LoginFragment : Fragment() {
 
     }
 
+    @SuppressLint("ResourceType")
     private fun updateUiLoginFlow() {
         lifecycleScope.launch(Main) {
 
@@ -139,9 +142,21 @@ class LoginFragment : Fragment() {
                         progressDialog.show()
 
                     }
+
+                    is UIState.Error ->{
+                        progressDialog.hide()
+                        showSnackBar(getString(R.string.no_internet))
+                    }
                 }
             }
         }
+    }
+
+    private fun showSnackBar(message:String) {
+        Snackbar.make(binding.root,message,Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(resources.getColor(android.R.color.darker_gray,null))
+            .setTextColor(resources.getColor(R.color.white))
+            .show()
     }
 
     private fun disableDrawer() {
@@ -285,6 +300,9 @@ class LoginFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==0)
         {
+            try {
+
+
             val account= GoogleSignIn.getSignedInAccountFromIntent(data)
             val userData =account.result
             val username=userData.displayName
@@ -296,7 +314,15 @@ class LoginFragment : Fragment() {
             }
 
 
+
+            }
+            catch(e:java.lang.Exception){
+
+                progressDialog.hide()
+
+            }
         }
+
     }
 
     suspend private fun userIsLoggedIn(): Boolean {

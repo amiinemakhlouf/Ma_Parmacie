@@ -20,6 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.Result.Success
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentEmailOtpBinding
@@ -196,8 +197,8 @@ class EmailConfirmOtpFragment : Fragment() {
         lifecycleScope.launch(Main){
 
 
-        Toast.makeText(requireActivity(), "welcome", Toast.LENGTH_SHORT).show()
-        val navHostFragment =
+            Toasty.success(requireActivity(), "Bienvenue", Toast.LENGTH_SHORT, true).show();
+            val navHostFragment =
             requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         val action =
             EmailConfirmOtpFragmentDirections.actionEmailOtpFragmentToReminderFragment()
