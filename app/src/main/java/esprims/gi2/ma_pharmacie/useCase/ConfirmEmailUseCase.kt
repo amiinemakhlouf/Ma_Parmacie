@@ -6,13 +6,17 @@ import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
 import esprims.gi2.ma_pharmacie.dto.ConfirmDto
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import retrofit2.Response
+import javax.inject.Inject
 
-class ConfirmEmailUseCase {
+class ConfirmEmailUseCase @Inject constructor(
+    private val userApi:UserService
+) {
 
 
-    suspend fun confirmEmail(confirmDto: ConfirmDto,forRegister:Boolean) : Result<String>
+    suspend fun confirmEmail(confirmDto: ConfirmDto,forRegister:Boolean,
+
+    ) : Result<String>
     {
-        val userApi= RetrofitBuilder.build().create(UserService::class.java)
         var jwt:String=""
         try {
 

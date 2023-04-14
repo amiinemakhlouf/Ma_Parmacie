@@ -10,7 +10,7 @@ import esprims.gi2.ma_pharmacie.dto.ForgetPasswordDto
 import esprims.gi2.ma_pharmacie.dto.RegisterDto
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import esprims.gi2.ma_pharmacie.useCase.ForgetPasswordUseCase
-import esprims.gi2.ma_pharmacie.useCase.sendOtpConfirmationUseCase
+import esprims.gi2.ma_pharmacie.useCase.SendOtpConfirmationUseCase
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ConfirmEmailOtpViewModel @Inject constructor(
     val confirmEmailUseCase: ConfirmEmailUseCase,
-    val sendOtpUseCaseForRegister:sendOtpConfirmationUseCase,
+    val sendOtpUseCaseForRegister:SendOtpConfirmationUseCase,
     val sendOtpUseCaseForForgetPassword: ForgetPasswordUseCase
 
 ) :ViewModel() {

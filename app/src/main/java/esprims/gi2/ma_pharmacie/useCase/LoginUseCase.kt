@@ -5,12 +5,12 @@ import esprims.gi2.ma_pharmacie.data.remote.RetrofitBuilder
 import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.dto.LoginDto
+import javax.inject.Inject
 
-class LoginUseCase {
+class LoginUseCase @Inject constructor(private val userApi: UserService) {
 
      suspend fun loginWithEmailAndPassword(loginDto:LoginDto): Result<String>
     {
-        val userApi= RetrofitBuilder.build().create(UserService::class.java)
 
         try {
 

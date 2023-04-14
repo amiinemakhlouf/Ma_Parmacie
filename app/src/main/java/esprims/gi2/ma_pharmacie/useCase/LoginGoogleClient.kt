@@ -4,12 +4,14 @@ import esprims.gi2.ma_pharmacie.data.entity.User
 import esprims.gi2.ma_pharmacie.data.remote.RetrofitBuilder
 import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
+import javax.inject.Inject
 
-class LoginGoogleClient {
+class LoginGoogleClient @Inject constructor(
+    private  val userApi:UserService
+) {
 
     suspend operator fun invoke(user:User): Result<String>
     {
-        val userApi= RetrofitBuilder.build().create(UserService::class.java)
         try{
 
 

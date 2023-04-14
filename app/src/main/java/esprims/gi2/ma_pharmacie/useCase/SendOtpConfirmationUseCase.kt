@@ -1,18 +1,16 @@
 package esprims.gi2.ma_pharmacie.useCase
 
-import android.util.Log
-import esprims.gi2.ma_pharmacie.data.remote.RetrofitBuilder
 import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
 
 import esprims.gi2.ma_pharmacie.dto.RegisterDto
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
+import javax.inject.Inject
 
 
-class sendOtpConfirmationUseCase {
+class SendOtpConfirmationUseCase @Inject constructor(private val userApi:UserService) {
 
     suspend operator fun invoke(registerDto: RegisterDto): Result<String>
     {
-        val userApi= RetrofitBuilder.build().create(UserService::class.java)
 
            try {
 
