@@ -5,13 +5,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import esprims.gi2.ma_pharmacie.useCase.LoginUseCase
 import javax.inject.Inject
-import esprims.gi2.ma_pharmacie.Result
+import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.data.entity.User
 import esprims.gi2.ma_pharmacie.dto.LoginDto
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import esprims.gi2.ma_pharmacie.useCase.LoginGoogleClient
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 

@@ -20,6 +20,7 @@ import esprims.gi2.ma_pharmacie.databinding.FragmentNewPasswordBinding
 import esprims.gi2.ma_pharmacie.dto.LoginDto
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.register.Utils
+import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -62,7 +63,7 @@ class NewPasswordFragment : Fragment() {
                     withContext(Main)
                     {
                     when (result) {
-                        is esprims.gi2.ma_pharmacie.Result.Success -> updateUiAfterSucces()
+                        is Result.Success -> updateUiAfterSucces()
                         else -> Toast.makeText(requireActivity(),"error occured",Toast.LENGTH_SHORT).show()
                     }
                     }

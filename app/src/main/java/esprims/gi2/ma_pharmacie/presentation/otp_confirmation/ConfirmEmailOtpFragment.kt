@@ -20,6 +20,7 @@ import esprims.gi2.ma_pharmacie.databinding.FragmentEmailOtpBinding
 import esprims.gi2.ma_pharmacie.dto.ConfirmDto
 import esprims.gi2.ma_pharmacie.dto.RegisterDto
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
+import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import esprims.gi2.ma_pharmacie.useCase.saveJwtLocally
 import kotlinx.coroutines.Dispatchers.IO
@@ -31,7 +32,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ConfirmEmailOtpFragment : Fragment() {
 
-    private lateinit var progressDialog: AlertDialog
+    private lateinit var loadingDialog: LoadingDialog
     private lateinit var binding: FragmentEmailOtpBinding
     private val viewModel: ConfirmEmailOtpViewModel by viewModels()
     private val args: ConfirmEmailOtpFragmentArgs by navArgs()
@@ -42,9 +43,8 @@ class ConfirmEmailOtpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEmailOtpBinding.inflate(layoutInflater)
-        val alertDialogBuilder=AlertDialog.Builder(requireContext())
-        progressDialog= alertDialogBuilder.setView(R.layout.custom_progress_bar).show()
-        progressDialog.hide()
+        loadingDialog = LoadingDialog(requireActivity() as MainActivity)
+        loadingDialog.hideDialog()
 
         return binding.root
     }
@@ -84,7 +84,7 @@ class ConfirmEmailOtpFragment : Fragment() {
                 {
                     is UIState.Error->  updateUiAfterFaillure()
                     is UIState.Success -> updateUiAfterSuccess(uiState.data)
-                    is UIState.Loading  -> progressDialog.show()
+                    is UIState.Loading  -> loadingDialog.showDialog()
                 }
 
             }
@@ -147,7 +147,7 @@ class ConfirmEmailOtpFragment : Fragment() {
 
     private fun updateUiAfterFaillure() {
         Toasty.error(requireActivity(),getString(R.string.otp_false_code),Toast.LENGTH_LONG).show()
-        progressDialog.hide()
+        loadingDialog.hideDialog()
     }
 
     private fun returnToLoginScreen() {
@@ -188,7 +188,7 @@ class ConfirmEmailOtpFragment : Fragment() {
         lifecycleScope.launch(Main)
         {
 
-            progressDialog.hide()
+            loadingDialog.hideDialog()
 
             when (args.source) {
             Source.REGISTER.indice -> {

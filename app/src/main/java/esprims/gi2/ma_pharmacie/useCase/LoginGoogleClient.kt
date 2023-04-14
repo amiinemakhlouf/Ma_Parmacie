@@ -1,14 +1,13 @@
 package esprims.gi2.ma_pharmacie.useCase
 
-import android.util.Log
 import esprims.gi2.ma_pharmacie.data.entity.User
 import esprims.gi2.ma_pharmacie.data.remote.RetrofitBuilder
 import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
-import esprims.gi2.ma_pharmacie.Result
+import esprims.gi2.ma_pharmacie.presentation.shared.Result
 
 class LoginGoogleClient {
 
-    suspend operator fun invoke(user:User):Result<String>
+    suspend operator fun invoke(user:User): Result<String>
     {
         val userApi= RetrofitBuilder.build().create(UserService::class.java)
         try{
@@ -28,7 +27,7 @@ class LoginGoogleClient {
 
         }catch (e:Exception)
         {
-           return  esprims.gi2.ma_pharmacie.Result.Error("no internet connection")
+           return  Result.Error("no internet connection")
         }
 
 

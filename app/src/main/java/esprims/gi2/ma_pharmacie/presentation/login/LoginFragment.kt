@@ -1,6 +1,7 @@
 package esprims.gi2.ma_pharmacie.presentation.login
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -30,6 +33,7 @@ import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.onBoarding.dataStore
 import esprims.gi2.ma_pharmacie.presentation.register.Utils
+import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
 import esprims.gi2.ma_pharmacie.useCase.saveJwtLocally
@@ -43,7 +47,7 @@ import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
-    private lateinit var progressDialog: AlertDialog
+    private lateinit var loadingDialog: LoadingDialog
     private  val TAG ="Login fragment"
     private  lateinit var  binding:FragmentLoginBinding
     private val viewModel: LoginViewModel by viewModels()
@@ -53,18 +57,14 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val alertDialogBuilder=AlertDialog.Builder(requireContext())
-        progressDialog= alertDialogBuilder.setView(R.layout.custom_progress_bar).show()
-
-
-
+        loadingDialog=LoadingDialog(requireActivity() as MainActivity)
+        loadingDialog.showDialog()
         (  requireActivity() as MainActivity).binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         binding= FragmentLoginBinding.inflate(layoutInflater)
         if((requireActivity() as MainActivity).isFRomReminder==true)
         {
             (requireActivity() as MainActivity).isFRomReminder=false
-            progressDialog.hide()
+            loadingDialog.hideDialog()
             return  binding.root
         }
         (requireActivity() as MainActivity).binding.drawer.visibility= View.INVISIBLE
@@ -94,7 +94,7 @@ class LoginFragment : Fragment() {
                 withContext(Main){
 
                     (requireActivity() as MainActivity).binding.root.visibility= View.VISIBLE
-                    progressDialog.hide()
+                    loadingDialog.hideDialog()
 
 
                 }
@@ -132,7 +132,7 @@ class LoginFragment : Fragment() {
                 when (uiState) {
 
                     is UIState.Success -> {
-                        progressDialog.hide()
+                        loadingDialog.hideDialog()
                         Toasty.success(requireActivity(), "Bienvenue", Toast.LENGTH_SHORT, true).show();
                         uiState.data?.let {
                             saveJwtLocally(it,requireActivity())
@@ -140,12 +140,12 @@ class LoginFragment : Fragment() {
                         moveToReminderScreen()
                     }
                     is UIState.Loading ->{
-                        progressDialog.show()
+                        loadingDialog.showDialog()
 
                     }
 
                     is UIState.Error ->{
-                        progressDialog.hide()
+                        loadingDialog.hideDialog()
                         uiState.message?.let { Toasty.error(requireActivity(), it,Toast.LENGTH_LONG).show() }
                         //showSnackBar(getString(R.string.no_internet))
                     }
@@ -177,8 +177,7 @@ class LoginFragment : Fragment() {
              if(isInputsValid()){
                 val email=binding.emailEt.editText?.text.toString().trimEnd()
                 val password=binding.password.editText?.text.toString()
-                progressDialog.show()
-
+                loadingDialog.showDialog()
                 viewModel.loginWithEmailAndPassword(LoginDto(email=email,password=password))
 
                 }
@@ -191,7 +190,7 @@ class LoginFragment : Fragment() {
    private fun moveToReminderScreen() {
 
 
-            progressDialog.hide()
+            loadingDialog.hideDialog()
 
         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         val action = LoginFragmentDirections.actionLoginFragmentToReminderFragment()
@@ -268,7 +267,8 @@ class LoginFragment : Fragment() {
 
         val signInClient= GoogleSignIn.getClient(requireContext(),options)
         signInClient.signInIntent.also {
-            startActivityForResult(it,0)
+           // startActivityForResult(it,0)
+            startForResult.launch(it)
         }
         }
      }
@@ -298,34 +298,6 @@ class LoginFragment : Fragment() {
             binding.password.helperText=""
         }
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==0)
-        {
-            try {
-
-
-            val account= GoogleSignIn.getSignedInAccountFromIntent(data)
-            val userData =account.result
-            val username=userData.displayName
-            val email=userData.email
-            lifecycleScope.launch(IO){
-                viewModel.loginWithGoogleAccount(User(username=username!!,email=email!!))
-
-            }
-
-
-
-            }
-            catch(e:java.lang.Exception){
-
-                progressDialog.hide()
-
-            }
-        }
-
-    }
-
     suspend private fun userIsLoggedIn(): Boolean {
 
         val jwtKey = stringPreferencesKey("jwt")
@@ -341,5 +313,30 @@ class LoginFragment : Fragment() {
 
 
 
-    }}
+    }
+    val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent = result.data
+
+            try {
+
+
+                val account= GoogleSignIn.getSignedInAccountFromIntent(intent)
+                val userData =account.result
+                val username=userData.displayName
+                val email=userData.email
+                lifecycleScope.launch(IO){
+                    viewModel.loginWithGoogleAccount(User(username=username!!,email=email!!))
+
+                }
+    }
+            catch(e:java.lang.Exception){
+
+                loadingDialog.hideDialog()
+
+            }
+        }
+    }
+}
 

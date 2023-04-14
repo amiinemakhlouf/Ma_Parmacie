@@ -1,14 +1,15 @@
 package esprims.gi2.ma_pharmacie.presentation.register
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -17,6 +18,8 @@ import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentRegisterBinding
 import esprims.gi2.ma_pharmacie.dto.RegisterDto
+import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
+import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -27,24 +30,21 @@ import kotlinx.coroutines.launch
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private val viewModel: RegisterViewModel by viewModels()
-    private lateinit var progressDialog: AlertDialog
+    private lateinit var loadingDialog: LoadingDialog
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val alertDialogBuilder=AlertDialog.Builder(requireContext())
-        progressDialog= alertDialogBuilder.setView(R.layout.custom_progress_bar).show()
-        progressDialog.hide()
-
+        loadingDialog= LoadingDialog(requireActivity() as MainActivity)
         binding = FragmentRegisterBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        loadingDialog.hideDialog()
         moveBackToLoginScreen()
         handleRegisterBtLogic()
         updateUiAfterRegisterFlow()
@@ -61,7 +61,7 @@ class RegisterFragment : Fragment() {
           when(uiState)
           {
               is UIState.Loading ->{
-                  progressDialog.show()
+                  loadingDialog.showDialog()
               }
               is UIState.Success ->{
                   updateUiAfterRegisterSuccess()
@@ -71,8 +71,8 @@ class RegisterFragment : Fragment() {
               }
 
               is UIState.Error ->{
-                  updateUiAfterRegisterFailed()
-                  progressDialog.hide()
+                  uiState.message?.let { updateUiAfterRegisterFailed(it) }
+                  loadingDialog.hideDialog()
 
               }
 
@@ -94,12 +94,16 @@ class RegisterFragment : Fragment() {
         }
     }}
 
-    private fun updateUiAfterRegisterFailed() {
-        Toast.makeText(requireActivity(), "error walah", Toast.LENGTH_SHORT).show()
-        binding.emailError.text = "Un compte avec cette e-mail existe déjà. "
-        binding.emailError.visibility = View.VISIBLE
-        binding.emailEt.boxStrokeColor = resources.getColor(R.color.red)
-        binding.registerBt.isActivated = true
+    private fun updateUiAfterRegisterFailed(errorMessage:String) {
+        binding.registerBt.visibility= INVISIBLE
+
+        val handler = Handler()
+        handler.postDelayed(Runnable { // Dismiss the Toast message
+            binding.registerBt.visibility=VISIBLE
+        }, 2000.toLong()) // 3000 milliseconds = 3 seconds
+
+
+        Toasty.error(requireActivity(),errorMessage,Toast.LENGTH_SHORT).show()
     }
 
 
@@ -229,7 +233,7 @@ class RegisterFragment : Fragment() {
         binding.emailError.visibility = View.INVISIBLE
 
         binding.emailEt.boxStrokeColor = requireActivity().resources.getColor(R.color.dark_green)
-        progressDialog.hide()
+        loadingDialog.hideDialog()
 
     }
 

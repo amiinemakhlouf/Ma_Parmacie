@@ -4,13 +4,13 @@ import android.util.Log
 import esprims.gi2.ma_pharmacie.data.remote.RetrofitBuilder
 import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
 import esprims.gi2.ma_pharmacie.dto.ConfirmDto
-import esprims.gi2.ma_pharmacie.Result
+import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import retrofit2.Response
 
 class ConfirmEmailUseCase {
 
 
-    suspend fun confirmEmail(confirmDto: ConfirmDto,forRegister:Boolean) :Result<String>
+    suspend fun confirmEmail(confirmDto: ConfirmDto,forRegister:Boolean) : Result<String>
     {
         val userApi= RetrofitBuilder.build().create(UserService::class.java)
         var jwt:String=""
@@ -42,7 +42,7 @@ class ConfirmEmailUseCase {
         }
         }catch (e:Exception)
         {
-            return  esprims.gi2.ma_pharmacie.Result.Error("no internet connection")
+            return  Result.Error("no internet connection")
         }
         return Result.Error("wrong code")
     }

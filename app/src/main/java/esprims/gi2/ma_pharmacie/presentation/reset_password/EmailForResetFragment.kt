@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import esprims.gi2.ma_pharmacie.R
-import esprims.gi2.ma_pharmacie.Result
+import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.databinding.FragmentResetPasswordEmailBinding
 import esprims.gi2.ma_pharmacie.dto.ForgetPasswordDto
 import esprims.gi2.ma_pharmacie.presentation.register.Utils
@@ -57,7 +56,7 @@ class EmailForResetFragment : Fragment() {
                         is Result.Success -> {
                             updateUiAfterSucces(email)
                         }
-                        else -> updateUIAfterFailure((result as Result.Error).message)
+                        else -> updateUIAfterFailure((result as Result.Error).message!!)
                     }
                 }
             }

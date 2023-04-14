@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import esprims.gi2.ma_pharmacie.useCase.ConfirmEmailUseCase
 import esprims.gi2.ma_pharmacie.dto.ConfirmDto
-import esprims.gi2.ma_pharmacie.Result
+import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.dto.ForgetPasswordDto
 import esprims.gi2.ma_pharmacie.dto.RegisterDto
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
