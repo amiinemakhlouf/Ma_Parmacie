@@ -228,8 +228,10 @@ class RegisterFragment : Fragment() {
     }
 
     private fun updateUiAfterRegisterSuccess() {
-        Toasty.success(requireActivity(),"une dernière étape",Toast.LENGTH_SHORT).show()
-        binding.emailError.text = ""
+        val finalStepMessage="une dernière étape"
+        val clearMessage=""
+        Toasty.success(requireActivity(),finalStepMessage,Toast.LENGTH_SHORT).show()
+        binding.emailError.text = clearMessage
         binding.emailError.visibility = View.INVISIBLE
 
         binding.emailEt.boxStrokeColor = requireActivity().resources.getColor(R.color.dark_green)

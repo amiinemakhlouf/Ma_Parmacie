@@ -241,18 +241,21 @@ class LoginFragment : Fragment() {
 
     private fun passwordHandler():Boolean
     {
+        val emptyFieldErrorMessage="merci de remplir ce champs"
+        val invalidPasswordErrorMessage="mot de passe doit contenir plus de 8  carachteres"
+        val clearMessage= ""
         if(binding.password.editText?.text.isNullOrBlank())
         {
-            binding.password.helperText="merci de remplir ce champs"
+            binding.password.helperText=emptyFieldErrorMessage
             return false
         }
         else if(!Utils.isPasswordValid(password = binding.password.editText?.text.toString()))
         {
-            binding.password.helperText="mot de passe doit contenir plus de 8  carachteres"
+            binding.password.helperText=invalidPasswordErrorMessage
             return false
         }
         else{
-            binding.password.helperText=""
+            binding.password.helperText=clearMessage
 
         }
         return true
@@ -291,16 +294,17 @@ class LoginFragment : Fragment() {
     }
     private fun clearErrorMessageWhenTyping()
     {
+        val clearMessage= ""
         binding.emailEt.editText?.doOnTextChanged { text, start, before, count ->
-            binding.emailEt.helperText=""
+            binding.emailEt.helperText=clearMessage
         }
         binding.password.editText?.doOnTextChanged { text, start, before, count ->
-            binding.password.helperText=""
+            binding.password.helperText=clearMessage
         }
     }
     suspend private fun userIsLoggedIn(): Boolean {
-
-        val jwtKey = stringPreferencesKey("jwt")
+         val key="jwt"
+        val jwtKey = stringPreferencesKey(key)
 
         val preferences= requireContext().dataStore.data.first()
         if(!preferences[jwtKey].isNullOrEmpty()){

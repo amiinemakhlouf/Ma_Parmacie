@@ -302,12 +302,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun deleteJwtFromLocalStorage() {
 
-        val jwtKey = stringPreferencesKey("jwt")
+        val key="jwt"
+        val clearJwt=""
+        val jwtKey = stringPreferencesKey(key)
         lifecycleScope.launch(IO) {
 
 
                        dataStore.edit { settings ->
-                           settings[jwtKey]=""
+                           settings[jwtKey]=clearJwt
                        }
 
                         withContext(Main) {
@@ -330,17 +332,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLogoutToast() {
-        Toasty.success(this, "Vous êtes maintenant déconnecté", Toast.LENGTH_SHORT, true).show();
+        val disconnectMessage="Vous êtes maintenant déconnecté"
+        Toasty.success(this, disconnectMessage, Toast.LENGTH_SHORT, true).show();
 
     }
 
     private  fun logout()
     {
+        val loadingMessage="déconnexion en cours..."
         binding.drawer.close()
         binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         val dialog = ProgressDialog.show(
             this, "",
-            "déconnexion en cours...", true
+            loadingMessage, true
         )
 
 

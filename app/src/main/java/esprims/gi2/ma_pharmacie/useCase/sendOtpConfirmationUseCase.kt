@@ -22,11 +22,13 @@ class sendOtpConfirmationUseCase {
                if (result.code() < 300) {
                    return Result.Success(result.body().toString())
                }
-               return Result.Error(message = "E-mail indisponible.")
+               val emailAlreadyUsed="E-mail indisponible."
+               return Result.Error(message =emailAlreadyUsed )
            }
            catch (e:java.lang.Exception)
            {
-               return Result.Error(message = "Pas de connexion internet")
+               val noInternetConnectionMessage="Pas de connexion internet"
+               return Result.Error(message =noInternetConnectionMessage )
 
            }
 

@@ -17,7 +17,6 @@ class LoginUseCase {
 
         val result=userApi.login(loginDto)
 
-        Log.d("login use case",result.code().toString())
         if (result.isSuccessful)
         {
             val jwt=result.headers().get("Authorization")!!
@@ -30,7 +29,8 @@ class LoginUseCase {
             return Result.Error(message = errorMessage)
         }
         catch (e:java.lang.Exception){
-           return  Result.Error("Pas de connexion internet")
+            val noInternetMEssage="Pas de connexion internet"
+           return  Result.Error(noInternetMEssage)
         }
 
 
