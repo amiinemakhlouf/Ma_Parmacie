@@ -23,7 +23,6 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
-import esprims.gi2.ma_pharmacie.Result
 import esprims.gi2.ma_pharmacie.data.entity.User
 import esprims.gi2.ma_pharmacie.databinding.FragmentLoginBinding
 import esprims.gi2.ma_pharmacie.dto.LoginDto
@@ -57,14 +56,15 @@ class LoginFragment : Fragment() {
 
         val alertDialogBuilder=AlertDialog.Builder(requireContext())
         progressDialog= alertDialogBuilder.setView(R.layout.custom_progress_bar).show()
-        progressDialog.hide()
+
 
 
         (  requireActivity() as MainActivity).binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         binding= FragmentLoginBinding.inflate(layoutInflater)
-        if((requireActivity() as MainActivity).isRomReminder==true)
+        if((requireActivity() as MainActivity).isFRomReminder==true)
         {
-            (requireActivity() as MainActivity).isRomReminder=false
+            (requireActivity() as MainActivity).isFRomReminder=false
+            progressDialog.hide()
             return  binding.root
         }
         (requireActivity() as MainActivity).binding.drawer.visibility= View.INVISIBLE
@@ -83,7 +83,7 @@ class LoginFragment : Fragment() {
                 withContext(Main){
                     Log.d("bogi","i'm logged in ")
 
-                    moveToMainScreen()
+                    moveToReminderScreen()
 
 
 
@@ -94,6 +94,7 @@ class LoginFragment : Fragment() {
                 withContext(Main){
 
                     (requireActivity() as MainActivity).binding.root.visibility= View.VISIBLE
+                    progressDialog.hide()
 
 
                 }
@@ -136,7 +137,7 @@ class LoginFragment : Fragment() {
                         uiState.data?.let {
                             saveJwtLocally(it,requireActivity())
                         }
-                        moveToMainScreen()
+                        moveToReminderScreen()
                     }
                     is UIState.Loading ->{
                         progressDialog.show()
@@ -145,7 +146,8 @@ class LoginFragment : Fragment() {
 
                     is UIState.Error ->{
                         progressDialog.hide()
-                        showSnackBar(getString(R.string.no_internet))
+                        uiState.message?.let { Toasty.error(requireActivity(), it,Toast.LENGTH_LONG).show() }
+                        //showSnackBar(getString(R.string.no_internet))
                     }
                 }
             }
@@ -186,7 +188,7 @@ class LoginFragment : Fragment() {
 
 
 
-   private fun moveToMainScreen() {
+   private fun moveToReminderScreen() {
 
 
             progressDialog.hide()
@@ -307,7 +309,6 @@ class LoginFragment : Fragment() {
             val userData =account.result
             val username=userData.displayName
             val email=userData.email
-            progressDialog.show()
             lifecycleScope.launch(IO){
                 viewModel.loginWithGoogleAccount(User(username=username!!,email=email!!))
 

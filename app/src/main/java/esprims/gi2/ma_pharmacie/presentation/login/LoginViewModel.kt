@@ -35,7 +35,7 @@ class LoginViewModel @Inject constructor (
             when (result) {
                 is Result.Success -> loginState.emit(UIState.Success<String>(result.data))
 
-                is Result.Error -> loginState.emit(UIState.Error())
+                is Result.Error -> loginState.emit(UIState.Error(result.message))
 
             }
 
@@ -55,7 +55,7 @@ class LoginViewModel @Inject constructor (
                     loginState.emit(UIState.Success(success.data))
                 }
                 is Result.Error -> {
-                    loginState.emit(UIState.Error())
+                    loginState.emit(UIState.Error(result.message))
 
                 }
             }

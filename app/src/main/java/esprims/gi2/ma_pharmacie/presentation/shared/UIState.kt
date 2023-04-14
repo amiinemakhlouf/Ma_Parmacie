@@ -15,5 +15,5 @@ sealed class UIState<T>(var data:T?=null ) {
      *
      * @param errorMessageId The ID to find the string resource.
      */
-    class Error( ) : UIState<String>()
+    class Error(val message:String?=null ) : UIState<String>()
 }

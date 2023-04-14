@@ -1,13 +1,13 @@
 package esprims.gi2.ma_pharmacie.presentation.register
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +15,6 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
-import esprims.gi2.ma_pharmacie.Result
 import esprims.gi2.ma_pharmacie.databinding.FragmentRegisterBinding
 import esprims.gi2.ma_pharmacie.dto.RegisterDto
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
@@ -23,17 +22,22 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private val viewModel: RegisterViewModel by viewModels()
+    private lateinit var progressDialog: AlertDialog
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val alertDialogBuilder=AlertDialog.Builder(requireContext())
+        progressDialog= alertDialogBuilder.setView(R.layout.custom_progress_bar).show()
+        progressDialog.hide()
+
         binding = FragmentRegisterBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -41,7 +45,7 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        moveToLoginScreen()
+        moveBackToLoginScreen()
         handleRegisterBtLogic()
         updateUiAfterRegisterFlow()
         clearErrorMessageWhenUSerTyping()
@@ -49,21 +53,32 @@ class RegisterFragment : Fragment() {
     }
 
     private fun updateUiAfterRegisterFlow() {
+        lifecycleScope.launch(Main){
+
+
         viewModel._registerStateFlow.collectLatest {uiState->
 
           when(uiState)
           {
+              is UIState.Loading ->{
+                  progressDialog.show()
+              }
               is UIState.Success ->{
                   updateUiAfterRegisterSuccess()
                   moveToConfirmRegistration()
+
 
               }
 
               is UIState.Error ->{
                   updateUiAfterRegisterFailed()
+                  progressDialog.hide()
+
               }
+
           }
 
+        }
         }
 
     }
@@ -175,7 +190,7 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun moveToLoginScreen() {
+    private fun moveBackToLoginScreen() {
         binding.login.setOnClickListener {
             val navHostFragment =
                 requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
@@ -214,6 +229,7 @@ class RegisterFragment : Fragment() {
         binding.emailError.visibility = View.INVISIBLE
 
         binding.emailEt.boxStrokeColor = requireActivity().resources.getColor(R.color.dark_green)
+        progressDialog.hide()
 
     }
 

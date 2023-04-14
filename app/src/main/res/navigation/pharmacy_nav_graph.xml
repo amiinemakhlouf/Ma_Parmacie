@@ -131,7 +131,7 @@
     </fragment>
     <fragment
         android:id="@+id/emailOtpFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.otp_confirmation.EmailConfirmOtpFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.otp_confirmation.ConfirmEmailOtpFragment"
         android:label="confirmation de email"
         tools:layout="@layout/fragment_email_otp" >
         <action

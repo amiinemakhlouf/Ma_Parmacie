@@ -1,46 +1,40 @@
 package esprims.gi2.ma_pharmacie.presentation.otp_confirmation
 
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
-import esprims.gi2.ma_pharmacie.Result.Success
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentEmailOtpBinding
 import esprims.gi2.ma_pharmacie.dto.ConfirmDto
 import esprims.gi2.ma_pharmacie.dto.RegisterDto
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
+import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import esprims.gi2.ma_pharmacie.useCase.saveJwtLocally
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
-class EmailConfirmOtpFragment : Fragment() {
+class ConfirmEmailOtpFragment : Fragment() {
 
+    private lateinit var progressDialog: AlertDialog
     private lateinit var binding: FragmentEmailOtpBinding
-    private val viewModel: EmailOtpViewModel by viewModels()
-    private val args: EmailConfirmOtpFragmentArgs by navArgs()
-    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+    private val viewModel: ConfirmEmailOtpViewModel by viewModels()
+    private val args: ConfirmEmailOtpFragmentArgs by navArgs()
 
 
     override fun onCreateView(
@@ -48,6 +42,10 @@ class EmailConfirmOtpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEmailOtpBinding.inflate(layoutInflater)
+        val alertDialogBuilder=AlertDialog.Builder(requireContext())
+        progressDialog= alertDialogBuilder.setView(R.layout.custom_progress_bar).show()
+        progressDialog.hide()
+
         return binding.root
     }
 
@@ -56,8 +54,41 @@ class EmailConfirmOtpFragment : Fragment() {
 
         returnToLoginScreen()
         handleConfirmBt()
+        updateUIForConfirmEmailFlow()
         resendCode()
+        updateUiAfterResendCode()
 
+
+    }
+
+    private fun updateUiAfterResendCode() {
+        lifecycleScope.launch(Main){
+
+        viewModel._resendCodeStateFlow.collectLatest {uiState ->
+
+        when (uiState)
+        {
+            is UIState.Success  -> Toasty.success(requireActivity(),"code renvoyé").show()
+        }
+
+        }
+        }
+
+    }
+
+    private fun updateUIForConfirmEmailFlow() {
+        lifecycleScope.launch(Main){
+            viewModel._emailStateFlow.collectLatest { uiState->
+
+                when(uiState)
+                {
+                    is UIState.Error->  updateUiAfterFaillure()
+                    is UIState.Success -> updateUiAfterSuccess(uiState.data)
+                    is UIState.Loading  -> progressDialog.show()
+                }
+
+            }
+        }
 
     }
 
@@ -79,9 +110,7 @@ class EmailConfirmOtpFragment : Fragment() {
         binding.resend.setOnClickListener {
             lifecycleScope.launch(IO){
                 viewModel.resendOtpCodeForForgetPassword(args.email!!)
-                withContext(Main){
-                    Toast.makeText(requireActivity(),"code envoyé",Toast.LENGTH_SHORT).show()
-                }
+
             }
 
         }
@@ -93,9 +122,7 @@ class EmailConfirmOtpFragment : Fragment() {
                 args.email!!
                 args.username!!
                 viewModel.resendOtpCode(RegisterDto(args.username!! , args.email!! , args.password !!) )
-                withContext(Main){
-                    Toast.makeText(requireActivity(),"code envoyé",Toast.LENGTH_SHORT).show()
-                }
+
             }
 
         }
@@ -110,22 +137,7 @@ class EmailConfirmOtpFragment : Fragment() {
                 val forResult = args.source == 1
 
                 val result =viewModel.confirmEmail(ConfirmDto(args.email!!.trimEnd(), code), forResult)
-                withContext(Main)
-                {
-                    when (result) {
 
-                        is Success -> {
-
-                            withContext(IO){
-                                saveJwtLocally(context=requireContext(),jwt=result.message!!)
-
-                            }
-                            updateUiAfterSuccess()
-                        }
-                        else -> updateUiAfterFaillure()
-                    }
-
-                }
 
             }
 
@@ -134,8 +146,8 @@ class EmailConfirmOtpFragment : Fragment() {
     }
 
     private fun updateUiAfterFaillure() {
-        Toast.makeText(requireActivity(), getString(R.string.otp_false_code), Toast.LENGTH_SHORT)
-            .show()
+        Toasty.error(requireActivity(),getString(R.string.otp_false_code),Toast.LENGTH_LONG).show()
+        progressDialog.hide()
     }
 
     private fun returnToLoginScreen() {
@@ -153,7 +165,7 @@ class EmailConfirmOtpFragment : Fragment() {
 
         val navHostFragment =
             requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        val action = EmailConfirmOtpFragmentDirections.actionEmailOtpFragmentToLoginFragment()
+        val action = ConfirmEmailOtpFragmentDirections.actionEmailOtpFragmentToLoginFragment()
         navHostFragment.navController.navigate(action)
 
 
@@ -172,13 +184,17 @@ class EmailConfirmOtpFragment : Fragment() {
 
 
 
-    private fun updateUiAfterSuccess() {
+    private fun updateUiAfterSuccess(data: String?) {
         lifecycleScope.launch(Main)
         {
 
+            progressDialog.hide()
 
-        when (args.source) {
-            Source.REGISTER.indice -> navigateTOReminderScreen()
+            when (args.source) {
+            Source.REGISTER.indice -> {
+                navigateTOReminderScreen()
+                saveJwtLocally(jwt=data!!, context = requireContext())
+            }
             Source.FORGETPASSWORD.indice -> navigateToNewPasswordScreen()
         }
         }
@@ -188,7 +204,7 @@ class EmailConfirmOtpFragment : Fragment() {
 
         val navHostFragment =
             requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        val action = EmailConfirmOtpFragmentDirections.actionEmailOtpFragmentToNewPasswordFragment()
+        val action = ConfirmEmailOtpFragmentDirections.actionEmailOtpFragmentToNewPasswordFragment()
         navHostFragment.navController.navigate(action)
 
     }
@@ -201,7 +217,7 @@ class EmailConfirmOtpFragment : Fragment() {
             val navHostFragment =
             requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         val action =
-            EmailConfirmOtpFragmentDirections.actionEmailOtpFragmentToReminderFragment()
+            ConfirmEmailOtpFragmentDirections.actionEmailOtpFragmentToReminderFragment()
         navHostFragment.navController.navigate(action)
     }
     }

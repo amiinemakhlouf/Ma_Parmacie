@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val TAG = "Main activity"
     private val firstVisit = true
-    var isRomReminder:Boolean=false
+    var isFRomReminder:Boolean=false
     private val viewModel: MainActivityViewModel by viewModels()
 
     @SuppressLint("ServiceCast")
@@ -182,7 +182,7 @@ class MainActivity : AppCompatActivity() {
         binding.navigationView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
 
             logout()
-            isRomReminder=true
+            isFRomReminder=true
             return@setOnMenuItemClickListener true
         }
 

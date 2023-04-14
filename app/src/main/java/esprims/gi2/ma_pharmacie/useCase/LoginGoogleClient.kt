@@ -21,7 +21,7 @@ class LoginGoogleClient {
                 val  jwt=result.headers().get("Authorization")!!
                 Result.Success(data=jwt )
             }
-            else -> {throw error(result.errorBody()!!.string())
+            else -> {throw error(message=result.errorBody()!!.string())
             }
 
         }

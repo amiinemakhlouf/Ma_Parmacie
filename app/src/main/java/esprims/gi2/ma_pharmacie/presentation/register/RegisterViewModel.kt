@@ -23,12 +23,13 @@ class RegisterViewModel @Inject constructor(
      fun register(registerDto: RegisterDto):Unit{
          viewModelScope.launch(IO) {
         val result=sendOtpConfirmationUseCase.invoke(registerDto)
+
         registerStateFlow.emit(UIState.Loading())
         when(result)
         {
             is Result.Success -> registerStateFlow.emit(UIState.Success())
 
-            is Result.Error -> registerStateFlow.emit(UIState.Error)
+            is Result.Error -> registerStateFlow.emit(UIState.Error())
         }
 
          }
