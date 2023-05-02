@@ -1,5 +1,4 @@
-package esprims.gi2.ma_pharmacie.useCase
-import esprims.gi2.ma_pharmacie.data.remote.RetrofitBuilder
+package esprims.gi2.ma_pharmacie.useCase.authentication
 import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
 import esprims.gi2.ma_pharmacie.dto.ForgetPasswordDto
 import esprims.gi2.ma_pharmacie.presentation.shared.Result

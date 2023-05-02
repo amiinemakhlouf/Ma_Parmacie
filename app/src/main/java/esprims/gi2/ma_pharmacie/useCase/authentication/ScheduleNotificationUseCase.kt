@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.useCase
+package esprims.gi2.ma_pharmacie.useCase.authentication
 
 import android.app.AlarmManager
 import android.app.PendingIntent

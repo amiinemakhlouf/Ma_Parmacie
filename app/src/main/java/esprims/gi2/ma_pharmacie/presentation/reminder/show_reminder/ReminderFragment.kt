@@ -55,11 +55,13 @@ class ReminderFragment : Fragment() , ReminderCallback {
             Date("dim",22,1),
         )
         val reminders = listOf<Reminder>(
-            Reminder("dazda",5,"ddzaz","dsqdqdsq"),
-            Reminder("dazda",5,"ddzaz","dsqdqdsq"),
-            Reminder("dazda",5,"ddzaz","dsqdqdsq"),
-            Reminder("dazda",5,"ddzaz","dsqdqdsq"),
-            Reminder("dazda",5,"ddzaz","dsqdqdsq"),
+            Reminder("Efferalgan","2*1000g","10:00 AM","Amine"),
+            Reminder("Omega 3","1*1000g","11:00 AM","Beyrem"),
+            Reminder("Zartan","2*1000g","5:00 PM","Dorsaf",),
+            Reminder("Efferalgan","2*1000g","5:00 AM","Amine"),
+            Reminder("Omega 3","1*1000g","5:00 AM","Beyrem"),
+            Reminder("Efferalgan","2*1000g","8:00 AM","Amine"),
+            Reminder("Omega 3","1*1000g","8:00 AM","Beyrem"),
 
         )
 
@@ -99,7 +101,6 @@ class ReminderFragment : Fragment() , ReminderCallback {
         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         val action = ReminderFragmentDirections.actionReminderFragmentToReminderDetailsFragment()
         navHostFragment.navController.navigate(action,  )
-        Toast.makeText(requireContext(),"tounisir",Toast.LENGTH_SHORT).show()
 
     }
 

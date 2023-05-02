@@ -61,6 +61,7 @@ class LoginFragment : Fragment() {
         loadingDialog.showDialog()
         (  requireActivity() as MainActivity).binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         binding= FragmentLoginBinding.inflate(layoutInflater)
+        val text="dqsdqs"
         if((requireActivity() as MainActivity).isFRomReminder==true)
         {
             (requireActivity() as MainActivity).isFRomReminder=false

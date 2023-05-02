@@ -36,7 +36,10 @@ class ReminderAdapter(
         val currentItem=dataset[position]
 
         val context=holder.itemView.context
-        holder.binding.medicationNameTv.transitionName=context.resources.getString(R.string.medicationNameTransition)
+        holder.binding.medicationNameTv.setText(currentItem.medicationName)
+        holder.binding.reminderTime.setText(currentItem.reminderTime)
+        holder.binding.personName.setText(currentItem.personName)
+//        holder.binding.medicationDose.setText(currentItem.dose)
         holder.binding.reminderDetails.setOnClickListener {
 
 

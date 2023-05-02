@@ -48,15 +48,13 @@ class RegisterFragment : Fragment() {
         moveBackToLoginScreen()
         handleRegisterBtLogic()
         updateUiAfterRegisterFlow()
-        clearErrorMessageWhenUSerTyping()
+        clearErrorMessageWhenUserTyping()
 
     }
 
     private fun updateUiAfterRegisterFlow() {
         lifecycleScope.launch(Main){
-
-
-        viewModel._registerStateFlow.collectLatest {uiState->
+            viewModel._registerStateFlow.collectLatest {uiState->
 
           when(uiState)
           {
@@ -204,7 +202,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun clearErrorMessageWhenUSerTyping() {
+    private fun clearErrorMessageWhenUserTyping() {
 
         binding.emailEt.editText?.doOnTextChanged { text, start, before, count ->
 

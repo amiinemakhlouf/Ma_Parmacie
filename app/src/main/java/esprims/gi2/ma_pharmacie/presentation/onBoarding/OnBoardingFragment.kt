@@ -33,6 +33,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 class OnBoardingFragment : Fragment() {
 
   private  lateinit var  binding:FragmentOnBoardingBinding
+  private lateinit var adapter: OnBoardingAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,16 +52,12 @@ class OnBoardingFragment : Fragment() {
                     requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
                 val navController = navHostFragment.navController
                 navController.navigate(R.id.loginFragment)
-
-
-
-                return@let
+                   return@let
 
 
             }
-            if (shouldNavigateToLogin()==null){
-                saveFirstStartUp()
-            }
+            saveFirstStartUp()
+
 
         }
         val fragmentList = listOf<Fragment>(
@@ -73,6 +70,7 @@ class OnBoardingFragment : Fragment() {
             ,lifecycle ,fragmentList)
         val viewPager= requireActivity().findViewById<ViewPager2>(R.id.onboarding_view_pager)
         viewPager.adapter=adapter
+
 
 
 
@@ -91,7 +89,7 @@ class OnBoardingFragment : Fragment() {
         lifecycleScope.launch(IO){
             requireActivity().dataStore.edit { settings ->
 
-                settings[booleanSaveValue] = true
+                settings[booleanSaveValue]=true
             }
         }
 

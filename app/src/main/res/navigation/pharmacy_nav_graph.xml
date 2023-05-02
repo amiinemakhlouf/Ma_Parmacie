@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pharmacy_nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/addReminderFragment">
 
     <fragment
         android:id="@+id/pharmacyFragment"
@@ -117,7 +117,11 @@
         android:id="@+id/addReminderFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderFragment"
         android:label="fragment_add_reminder"
-        tools:layout="@layout/fragment_add_reminder" />
+        tools:layout="@layout/fragment_add_reminder" >
+        <action
+            android:id="@+id/action_addReminderFragment_to_addReminder2Fragment"
+            app:destination="@id/addReminder2Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.register.RegisterFragment"
@@ -176,4 +180,17 @@
             android:id="@+id/action_resetPasswordFragment_to_emailOtpFragment"
             app:destination="@id/emailOtpFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/firstOnBoardingFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.onBoarding.FirstOnBoardingFragment"
+        android:label="FirstOnBoardingFragment" >
+        <action
+            android:id="@+id/action_firstOnBoardingFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addReminder2Fragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminder2Fragment"
+        android:label="fragment_add_reminder2"
+        tools:layout="@layout/fragment_add_reminder2" />
 </navigation>

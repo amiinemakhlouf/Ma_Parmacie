@@ -1,7 +1,5 @@
-package esprims.gi2.ma_pharmacie.useCase
+package esprims.gi2.ma_pharmacie.useCase.authentication
 
-import android.util.Log
-import esprims.gi2.ma_pharmacie.data.remote.RetrofitBuilder
 import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.dto.LoginDto

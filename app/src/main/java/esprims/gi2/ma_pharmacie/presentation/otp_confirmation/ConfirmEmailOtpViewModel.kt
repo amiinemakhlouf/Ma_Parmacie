@@ -3,14 +3,14 @@ package esprims.gi2.ma_pharmacie.presentation.otp_confirmation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import esprims.gi2.ma_pharmacie.useCase.ConfirmEmailUseCase
+import esprims.gi2.ma_pharmacie.useCase.authentication.ConfirmEmailUseCase
 import esprims.gi2.ma_pharmacie.dto.ConfirmDto
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.dto.ForgetPasswordDto
 import esprims.gi2.ma_pharmacie.dto.RegisterDto
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
-import esprims.gi2.ma_pharmacie.useCase.ForgetPasswordUseCase
-import esprims.gi2.ma_pharmacie.useCase.SendOtpConfirmationUseCase
+import esprims.gi2.ma_pharmacie.useCase.authentication.ForgetPasswordUseCase
+import esprims.gi2.ma_pharmacie.useCase.authentication.SendOtpConfirmationUseCase
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ConfirmEmailOtpViewModel @Inject constructor(
     val confirmEmailUseCase: ConfirmEmailUseCase,
-    val sendOtpUseCaseForRegister:SendOtpConfirmationUseCase,
+    val sendOtpUseCaseForRegister: SendOtpConfirmationUseCase,
     val sendOtpUseCaseForForgetPassword: ForgetPasswordUseCase
 
 ) :ViewModel() {

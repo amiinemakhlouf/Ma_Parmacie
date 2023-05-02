@@ -3,7 +3,7 @@ package esprims.gi2.ma_pharmacie.presentation.register
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import esprims.gi2.ma_pharmacie.useCase.SendOtpConfirmationUseCase
+import esprims.gi2.ma_pharmacie.useCase.authentication.SendOtpConfirmationUseCase
 import esprims.gi2.ma_pharmacie.dto.RegisterDto
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
@@ -22,10 +22,10 @@ class RegisterViewModel @Inject constructor(
 
      fun register(registerDto: RegisterDto):Unit{
          viewModelScope.launch(IO) {
-        val result=sendOtpConfirmationUseCase.invoke(registerDto)
+             registerStateFlow.emit(UIState.Loading())
 
-        registerStateFlow.emit(UIState.Loading())
-        when(result)
+             val result=sendOtpConfirmationUseCase.invoke(registerDto)
+             when(result)
         {
             is Result.Success -> registerStateFlow.emit(UIState.Success())
 

@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.useCase
+package esprims.gi2.ma_pharmacie.useCase.authentication
 
 import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
 
