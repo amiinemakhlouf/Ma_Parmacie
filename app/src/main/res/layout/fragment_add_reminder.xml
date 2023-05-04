@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".presentation.reminder.add_reminder.AddReminderFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     tools:context=".presentation.reminder.add_reminder.AddReminderFragment">
 
@@ -12,7 +18,6 @@
         android:id="@+id/illustration"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/add_medication_illustration"/>
     <ImageView
@@ -41,11 +46,17 @@
         app:hintTextColor="@color/dark_green"
         android:theme="@style/CustomCursorStyle"
         app:boxBackgroundColor="@color/white"
-        app:endIconDrawable="@drawable/barcode_scan"
+        app:endIconDrawable="@drawable/medication_end_icon"
+        app:endIconMinSize="10dp"
         app:endIconTint="@color/dark_green"
         app:endIconMode="custom"
         android:hint="Nom de medicament"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
         android:textColorHint="#478778"
+        android:paddingEnd="5dp"
         app:boxStrokeErrorColor="@color/dark_green"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         >
@@ -64,41 +75,6 @@
 
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/NameET"
-        app:layout_constraintTop_toBottomOf="@id/medicationNameET"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        app:boxStrokeColor="@color/dark_green"
-        app:boxStrokeWidth="2dp"
-        app:helperTextTextColor="@color/red"
-        app:hintTextColor="@color/dark_green"
-        app:boxBackgroundColor="@android:color/white"
-        android:backgroundTint="@android:color/darker_gray"
-        android:hint="Nom de malade"
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/baseline_face_24"
-        app:endIconTint="@color/dark_green"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:theme="@style/CustomCursorStyle"
-        android:textColorHint="#478778"
-
-
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="@color/black"
-            android:paddingTop="0dp"
-            android:paddingBottom="0dp"
-            android:textCursorDrawable="@color/dark_green"
-
-
-            />
-    </com.google.android.material.textfield.TextInputLayout>
 
 
 
@@ -107,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/NameET"
+        app:layout_constraintTop_toBottomOf="@id/medicationNameET"
         android:text="Type"
         android:textColor="@color/dark_green"
         android:layout_marginTop="20dp"
@@ -134,11 +110,11 @@
         android:id="@+id/dose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dose"
+        android:text="Quantité"
         app:layout_constraintTop_toBottomOf="@id/types_rv"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="-10dp"
+        android:layout_marginTop="16dp"
         android:textSize="20sp"
         android:textColor="@color/dark_green"
 
@@ -147,29 +123,89 @@
         android:id="@+id/medicationDoseET"
         app:layout_constraintTop_toBottomOf="@id/dose"
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
         app:boxStrokeColor="@color/dark_green"
-        app:boxStrokeWidth="2dp"
+
         app:helperTextTextColor="@color/red"
-        android:textColorHint="@null"
+        android:textColorHint="@color/dark_green"
+        app:layout_constraintStart_toStartOf="parent"
         app:hintTextColor="@color/dark_green"
         app:boxBackgroundColor="@android:color/white"
-        android:hint="Exemple :2*200g"
-        android:backgroundTint="@android:color/darker_gray"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        app:hintEnabled="true"
+
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
         android:theme="@style/CustomCursorStyle"
 
         >
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/quantityEt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/black"
             android:paddingTop="10dp"
             android:paddingBottom="0dp"
             android:textCursorDrawable="@color/dark_green"
+            android:textSize="22sp"
+            android:inputType="number"
+            android:text="0"
+            android:gravity="center_horizontal"
+
+
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/quantityTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/medicationDoseET"
+        app:layout_constraintBottom_toBottomOf="@id/medicationDoseET"
+        app:layout_constraintStart_toEndOf="@id/medicationDoseET"
+        android:layout_marginStart="20dp"
+        android:text="csqdsqdqs"
+        android:textColor="@color/black"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/medicationDescription"
+        app:layout_constraintTop_toBottomOf="@id/medicationDoseET"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        app:boxStrokeColor="@color/dark_green"
+        app:boxStrokeWidth="2dp"
+        app:helperTextTextColor="@color/red"
+        app:hintTextColor="@color/dark_green"
+        app:boxBackgroundColor="@android:color/white"
+        android:backgroundTint="@android:color/darker_gray"
+        android:hint="description"
+        app:endIconMode="custom"
+        app:endIconTint="@color/dark_green"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:theme="@style/CustomCursorStyle"
+        android:textColorHint="#478778"
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxCornerRadiusBottomEnd="20dp"
+
+
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:paddingBottom="0dp"
+            android:textCursorDrawable="@color/dark_green"
+            android:gravity="top"
+
 
 
             />
@@ -181,7 +217,7 @@
         android:id="@+id/continuer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/medicationDoseET"
+        app:layout_constraintTop_toBottomOf="@id/medicationDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
@@ -206,3 +242,5 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

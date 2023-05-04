@@ -46,6 +46,10 @@
     <string name="email">email</string>
     <string name="email_invalid">adresse e-mail invalide.</string>
     <string name="no_internet">Vous n\'avez pas d\'Internet.</string>
+    <string name="capsule">Capsule</string>
+    <string name="bottles">bouteille</string>
+    <string name="injection">Injection</string>
+    <string name="pill">Comprimé</string>
 
 
 </resources>

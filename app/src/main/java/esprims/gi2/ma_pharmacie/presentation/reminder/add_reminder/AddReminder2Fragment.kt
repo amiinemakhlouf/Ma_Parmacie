@@ -1,19 +1,27 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
+import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.RadioButton
-import android.widget.ScrollView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -23,21 +31,30 @@ import com.google.android.material.timepicker.TimeFormat
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddReminder2Binding
+import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
+import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
 
+    private val speechRecognizer: SpeechRecognizer by lazy { SpeechRecognizer.createSpeechRecognizer(requireContext()) }
     private var actualReminderITem: Int=-1
     private var checkedRadioBt: RadioButton?=null
     private  lateinit var binding:FragmentAddReminder2Binding
     private lateinit var datePicker: MaterialDatePicker<Long>
     val selectedDays= mutableListOf<String>()
+    var isClicked=false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        hideAppBar(requireActivity() as MainActivity)
         binding=FragmentAddReminder2Binding.inflate(layoutInflater)
         return binding.root
     }
@@ -45,24 +62,134 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val listOfRAdioButtons=getRAddioButtonsChoices()
+
         handleMedicationsTakeRadioButtons(listOfRAdioButtons)
         handleSelectAllDays()
         handleConfirmBt()
-        datePicker=buildDatePicker()
         setUpDaysRv()
         handleAddReminders(getReminderView())
         handleDeleteReminder(getReminderView())
         handleSelectDate()
-
-
-
-        binding.endDateTextField.setOnClickListener {
-            selectDate(binding.endDate)
+        binding.recordSeekBar.apply {
+            updateSpeaking(true)
+            updateViewColor(Color.BLACK)
+            updateAmplitude(0.5f)
+            updateSpeed(-0.1f)
         }
-        binding.endDate.setOnClickListener {
-            selectDate(binding.endDate)
+        val requestPermissionLauncher= getRequestPermissionLauncher()
+
+
+        binding.recordImage.setOnLongClickListener { _ ->
+            isClicked=true
+          when{  ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.RECORD_AUDIO
+            ) ==PackageManager.PERMISSION_GRANTED ->{
+              Toast.makeText(requireActivity(),"clicked",Toast.LENGTH_SHORT).show()
+              recordAudio()
+
+
+          }
+
+            shouldShowRequestPermissionRationale(android.Manifest.permission.RECORD_AUDIO) ->{
+
+            }
+              else  ->{
+
+                  requestPermissionLauncher.launch(
+                      android.Manifest.permission.RECORD_AUDIO)
+
+              }
+        }
+            return@setOnLongClickListener true
         }
 
+        catchWhenUserReleaseBt()
+
+
+
+
+    }
+
+
+
+    private fun catchWhenUserReleaseBt() {
+
+
+        binding.recordImage.setOnTouchListener { view, event ->
+
+
+                                    speechRecognizer.stopListening()
+                                  binding.recordSeekBar.visibility= INVISIBLE
+
+                true
+
+            }
+
+
+
+
+
+
+    }
+
+    private fun recordAudio() {
+        isClicked=false
+        val intent= Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,Locale.getDefault())
+        speechRecognizer.setRecognitionListener  (object :RecognitionListener{
+            override fun onReadyForSpeech(params: Bundle?) {
+                binding.recordSeekBar.visibility= VISIBLE
+            }
+
+            override fun onBeginningOfSpeech() {
+
+            }
+
+            override fun onRmsChanged(rmsdB: Float) {
+            }
+
+            override fun onBufferReceived(buffer: ByteArray?) {
+            }
+
+            override fun onEndOfSpeech() {
+            }
+
+            override fun onError(error: Int) {
+            }
+
+            override fun onResults(results: Bundle?) {
+            }
+
+            override fun onPartialResults(partialResults: Bundle?) {
+                Toasty.info(requireContext(),"enregistrement a commencé").show()
+
+            }
+
+            override fun onEvent(eventType: Int, params: Bundle?) {
+                Toasty.info(requireContext(),"enregistrement a commencé").show()
+
+            }
+
+        })
+        speechRecognizer.startListening(intent)
+    }
+
+    private fun getRequestPermissionLauncher(): ActivityResultLauncher<String> {
+        return  registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Toasty.success(requireContext(),"granted Bro").show()
+            } else {
+                // Explain to the user that the feature is unavailable because the
+                // feature requires a permission that the user has denied. At the
+                // same time, respect the user's decision. Don't link to system
+                // settings in an effort to convince the user to change their
+                // decision.
+            }
+        }
     }
 
     private fun handleDeleteReminder(listOfReminders:List<kotlin.collections.List<View>>)
@@ -97,10 +224,19 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
         binding.startDateTextField.setOnClickListener {
 
             selectDate(binding.startDate)
+            return@setOnClickListener
+        }
+        binding.startDate.setOnClickListener {
+            selectDate(binding.startDate)
+            return@setOnClickListener
+        }
+        binding.endDateTextField.setOnClickListener {
+            selectDate(binding.endDate)
+            return@setOnClickListener
         }
         binding.endDate.setOnClickListener {
             selectDate(binding.endDate)
-
+            return@setOnClickListener
         }
     }
 
@@ -112,7 +248,7 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
     }
 
     private fun handleConfirmBt() {
-        binding.continuer.setOnClickListener {
+        binding.continuerFab.setOnClickListener {
             saveReminder()
         }
     }
@@ -207,6 +343,7 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
 
     private fun selectDate(textInput:TextInputEditText) {
 
+        datePicker=buildDatePicker()
         datePicker.show(requireFragmentManager(),null)
 
 
@@ -217,10 +354,31 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH) + 1 // Note that month is 0-indexed
             val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-            textInput.setText(""+dayOfMonth+"/"+month+"/"+year)
+            if(month>9){
+                textInput.setText(""+dayOfMonth+"/"+month+"/"+year)
+            }
+            else{
+                textInput.setText(""+dayOfMonth+"/"+"0"+month+"/"+year)
+
+            }
+            val startDate=binding.startDate.editableText.toString()
+            val endDate=binding.endDate.editableText.toString()
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+            val startDateinDateFormat = dateFormat.parse(startDate)
+            val startDateInMilliseconds = startDateinDateFormat!!.time
+            val endDateInDateFormat=dateFormat.parse(endDate)
+            val endDateInMilleseconds=endDateInDateFormat!!.time
+            if(startDateInMilliseconds>endDateInMilleseconds)
+            {
+                binding.dateErrorMsg.visibility= VISIBLE
+            }
+            else{
+                binding.dateErrorMsg.visibility= INVISIBLE
+            }
 
 
         }
+
     }
 
     private  fun setUpDaysRv(){

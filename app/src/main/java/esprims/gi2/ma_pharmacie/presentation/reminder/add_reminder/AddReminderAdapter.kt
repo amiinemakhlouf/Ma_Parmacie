@@ -3,6 +3,7 @@ package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.TypeItemBinding
 
 class AddReminderAdapter
@@ -40,6 +41,16 @@ class AddReminderAdapter
       holder.binding.myImageView.setOnClickListener {
           dayListener.onTypeClick(position)
       }
+        if(position==0){
+            holder.binding.myImageView.setBackgroundColor(
+                context.resources.getColor(
+                    R.color.dark_green,
+                    null
+                ))
+
+        }
+
+
 
 
 

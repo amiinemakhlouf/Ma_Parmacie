@@ -1,16 +1,22 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
 
-import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddReminderBinding
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
@@ -20,6 +26,7 @@ import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
 class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
     private  lateinit var binding:FragmentAddReminderBinding
     private var checkedDaysList = mutableListOf<Int>()
+    private val viewModel:AddReminderViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,7 +39,16 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(viewModel.isFirstActivityLifeCycle){
+            binding.quantityTv.setText("capsule")
+        }
         setUpMedicationTypesRv()
+
+        addSWhenQuantityHigherThan1()
+
+
+        val barCodeLauncher=provideBarCodeLauncher()
+
         binding.backButton.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -45,10 +61,32 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
                 navHostFragment.navController.navigate(action)
         }
         }
-        binding.medicationNameET.addOnEndIconChangedListener { textInputLayout, previousIcon ->
+        binding.medicationNameET.setEndIconOnClickListener{
 
+           barCodeLauncher.launch(ScanOptions())
         }
         clearErrorWhenTyping()
+
+    }
+
+    private fun addSWhenQuantityHigherThan1() {
+
+        binding.quantityEt.doOnTextChanged { text, start, before, count ->
+            val quantity=binding.quantityEt.editableText.toString()
+           if(quantity.isNotBlank()){
+               if (quantity.toInt()>1)
+               {
+                   binding.quantityEt.text?.let {
+                       binding.quantityTv.setText(
+                           binding.quantityTv.text.toString()+"s"
+                       )
+
+                   }
+
+               }
+           }
+           }
+
 
     }
 
@@ -56,14 +94,7 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
         val errorMsg="Merci de remplir ce champs"
         val emptyMsg=""
         var isValid=true
-        if(binding.NameET.editText?.text.isNullOrBlank()){
-            binding.NameET.helperText=errorMsg
-            isValid=false
-        }
-        else{
-            binding.NameET.helperText=emptyMsg
 
-        }
         if(binding.medicationNameET.editText?.text.isNullOrBlank()){
             binding.medicationNameET.helperText=errorMsg
             isValid=false
@@ -103,9 +134,7 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
     }
     private fun clearErrorWhenTyping(){
         val clearMsg=""
-        binding.NameET.editText?.doOnTextChanged { text, start, before, count ->
-            binding.NameET.helperText=clearMsg
-        }
+
         binding.medicationDoseET.editText?.doOnTextChanged {
                 text, start, before, count ->
             binding.medicationDoseET.helperText=clearMsg
@@ -141,6 +170,27 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
                                 R.color.dark_green,
                                 null
                             ))
+                        when(position)
+                        {
+                            0 -> binding.quantityTv.setText(getString(R.string.capsule))
+                            1-> binding.quantityTv.setText(getString(R.string.bottles))
+                            2 ->binding.quantityTv.setText(getString(R.string.injection))
+                            3 ->binding.quantityTv.setText(getString(R.string.pill))
+                        }
+                        val quantity=binding.quantityEt.editableText.toString()
+                        if(quantity.isNotBlank()){
+                            if (quantity.toInt()>1)
+                            {
+                                binding.quantityEt.text?.let {
+                                    binding.quantityTv.setText(
+                                        binding.quantityTv.text.toString()+"s"
+                                    )
+
+                                }
+
+                            }
+                        }
+
                         checkedDaysList.add(position)
                     }
 
@@ -167,6 +217,25 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
             }
 
     private fun isTypeChecked(position: Int)= position in checkedDaysList
+     private  fun provideBarCodeLauncher(): ActivityResultLauncher<ScanOptions>
+     {
+         return registerForActivityResult(ScanContract()
+         ) { result: ScanIntentResult ->
+             if (result.contents == null) {
+                 Toast.makeText(requireActivity(), "Cancelled", Toast.LENGTH_LONG).show()
+             } else {
+                 if(result.contents=="6192012110632")
+                 {
+                     Toast.makeText(requireContext(),"this is aflomad",Toast.LENGTH_LONG).show()
+                 }
+                 else if (result.contents=="6192402816519"){
+                     Toast.makeText(requireActivity(),
+                         "opalia",
+                         Toast.LENGTH_LONG).show()
+                     Log.d("my result",result.contents)
 
+                 }
+             }
+     }
 
-}
+}}
