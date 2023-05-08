@@ -1,15 +1,13 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
+import android.media.MediaRecorder
+import android.os.Build
 import android.os.Bundle
-import android.speech.RecognitionListener
-import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -19,9 +17,10 @@ import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -33,21 +32,26 @@ import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddReminder2Binding
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
 
+    private var shouldIRecord =true
     private val speechRecognizer: SpeechRecognizer by lazy { SpeechRecognizer.createSpeechRecognizer(requireContext()) }
     private var actualReminderITem: Int=-1
     private var checkedRadioBt: RadioButton?=null
     private  lateinit var binding:FragmentAddReminder2Binding
     private lateinit var datePicker: MaterialDatePicker<Long>
+    private  lateinit var  recorder: MediaRecorder
+    private   var player:MediaPlayer?=null
+    private var audioFile:File?=null
     val selectedDays= mutableListOf<String>()
+    private var clickToRecord=true
     var isClicked=false
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +65,21 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recorder = if(Build.VERSION.SDK_INT>=31){
+            MediaRecorder(requireActivity())
+        } else{
+            MediaRecorder()
+        }
         val listOfRAdioButtons=getRAddioButtonsChoices()
+
+        binding.deleteAudioImage.setOnClickListener {
+
+            it.visibility= INVISIBLE
+            binding.recordSeekBar.visibility= INVISIBLE
+            binding.recordImage.setImageDrawable(context?.getDrawable(R.drawable.micro))
+            shouldIRecord=true
+
+        }
 
         handleMedicationsTakeRadioButtons(listOfRAdioButtons)
         handleSelectAllDays()
@@ -78,15 +96,38 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
         }
         val requestPermissionLauncher= getRequestPermissionLauncher()
 
+        var firstLaunch=true
+        binding.recordImage.setOnClickListener {
+            if (shouldIRecord==false){
+
+
+            player=MediaPlayer.create(requireContext(),audioFile!!.toUri())
+            player?.start()
+            player?.setOnCompletionListener {
+                player?.stop()
+                Toast.makeText(requireActivity(),"i ended bro ",Toast.LENGTH_SHORT).show()
+                binding.recordSeekBar.updateSpeaking(false)
+
+            }
+
+            shouldIRecord=false
+            binding.recordSeekBar.updateSpeaking(true)
+            }
+
+
+
+        }
 
         binding.recordImage.setOnLongClickListener { _ ->
-            isClicked=true
           when{  ContextCompat.checkSelfPermission(
                 requireContext(),
                 android.Manifest.permission.RECORD_AUDIO
             ) ==PackageManager.PERMISSION_GRANTED ->{
-              Toast.makeText(requireActivity(),"clicked",Toast.LENGTH_SHORT).show()
-              recordAudio()
+              audioFile=File(requireActivity().cacheDir,"audiofe.mp3")
+              recordAudio(audioFile!!)
+              catchWhenUserReleaseBt()
+
+
 
 
           }
@@ -104,7 +145,6 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
             return@setOnLongClickListener true
         }
 
-        catchWhenUserReleaseBt()
 
 
 
@@ -116,15 +156,40 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
     private fun catchWhenUserReleaseBt() {
 
 
+
+
         binding.recordImage.setOnTouchListener { view, event ->
 
+            try {
 
-                                    speechRecognizer.stopListening()
-                                  binding.recordSeekBar.visibility= INVISIBLE
 
-                true
+            if(shouldIRecord==true)
+            {
+
+
+            if (event.action==  MotionEvent.ACTION_UP){
+                speechRecognizer.stopListening()
+                binding.recordSeekBar.updateSpeaking(false)
+                recorder.stop()
+                binding.recordImage.setImageDrawable(context?.getDrawable(R.drawable.ic_play))
+                binding.deleteAudioImage.visibility= VISIBLE
+
+                shouldIRecord=false
+
 
             }
+
+                true
+            }
+                false
+
+
+            }catch (e:Exception){
+
+
+            }
+            false
+        }
 
 
 
@@ -133,47 +198,21 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
 
     }
 
-    private fun recordAudio() {
-        isClicked=false
-        val intent= Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,Locale.getDefault())
-        speechRecognizer.setRecognitionListener  (object :RecognitionListener{
-            override fun onReadyForSpeech(params: Bundle?) {
-                binding.recordSeekBar.visibility= VISIBLE
-            }
+    private fun recordAudio(file: File) {
 
-            override fun onBeginningOfSpeech() {
+        recorder.apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            setOutputFile(FileOutputStream(file).fd)
+            prepare()
+            start()
 
-            }
+        }
+        binding.recordSeekBar.visibility= VISIBLE
+        binding.recordSeekBar.updateSpeaking(true)
 
-            override fun onRmsChanged(rmsdB: Float) {
-            }
 
-            override fun onBufferReceived(buffer: ByteArray?) {
-            }
-
-            override fun onEndOfSpeech() {
-            }
-
-            override fun onError(error: Int) {
-            }
-
-            override fun onResults(results: Bundle?) {
-            }
-
-            override fun onPartialResults(partialResults: Bundle?) {
-                Toasty.info(requireContext(),"enregistrement a commencé").show()
-
-            }
-
-            override fun onEvent(eventType: Int, params: Bundle?) {
-                Toasty.info(requireContext(),"enregistrement a commencé").show()
-
-            }
-
-        })
-        speechRecognizer.startListening(intent)
     }
 
     private fun getRequestPermissionLauncher(): ActivityResultLauncher<String> {
@@ -181,7 +220,6 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                Toasty.success(requireContext(),"granted Bro").show()
             } else {
                 // Explain to the user that the feature is unavailable because the
                 // feature requires a permission that the user has denied. At the
@@ -393,111 +431,10 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
     {
         Toasty.success(requireContext(),"Enregistré avec succes").show()
     }
-    private fun addTimeToTakeMedication()
-    {
-        if(binding.sixth.isVisible){
-            Toasty.error(requireActivity(),"limite de rappels dépassés").show()
-            return
-        }
 
-        val picker =
-            MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .setHour(12)
-                .setMinute(0)
-                .setTitleText("Select Appointment time")
-                .build()
-        picker.show(requireFragmentManager(),null)
-        picker.addOnPositiveButtonClickListener {
-            val hour: Int = picker.hour
-            val minute: Int = picker.minute
-            if(binding.first.visibility== GONE){
-                binding.first.visibility= VISIBLE
-                binding.firstTime.visibility= VISIBLE
-                binding.firstTrash.visibility= VISIBLE
-                var time=""+hour+"h:"+minute
-                if(minute.toString().length==1){
-                    time += "0"
-                }
-                binding.firstTime.setText(time)
-                return@addOnPositiveButtonClickListener
-            }
-            if(binding.first.visibility== VISIBLE && binding.second.visibility== GONE)
-            {
-                binding.second.visibility= VISIBLE
-                binding.secondTime.visibility= VISIBLE
-                binding.secondTrash.visibility= VISIBLE
-                var time=""+hour+"h:"+minute
-                if(minute.toString().length==1){
-                    time += "0"
-                }
-                binding.secondTime.setText(time)
-                return@addOnPositiveButtonClickListener
-            }
-            if(binding.second.visibility== VISIBLE && binding.third.visibility== GONE){
-                binding.thirdTime.visibility= VISIBLE
-                binding.third.visibility= VISIBLE
-                binding.thirdTrash.visibility= VISIBLE
-                var time=""+hour+"h:"+minute
-                if(minute.toString().length==1){
-                    time += "0"
-                }
-                binding.thirdTime.setText(time)
-                return@addOnPositiveButtonClickListener
-
-            }
-            if(binding.third.visibility== VISIBLE && binding.fourth.visibility== GONE)
-            {
-                binding.fourth.visibility= VISIBLE
-                binding.fourthTime.visibility= VISIBLE
-                binding.fourthTrash.visibility= VISIBLE
-                var time=""+hour+"h:"+minute
-                if(minute.toString().length==1){
-                    time += "0"
-                }
-                binding.fourthTime.setText(time)
-                return@addOnPositiveButtonClickListener
-
-            }
-            if(binding.fourth.visibility== VISIBLE && binding.fifth.visibility== GONE)
-            {
-                binding.fifth.visibility= VISIBLE
-                binding.fifthTime.visibility= VISIBLE
-                binding.fifthTrash.visibility= VISIBLE
-                var time=""+hour+"h:"+minute
-                if(minute.toString().length==1){
-                    time += "0"
-                }
-                binding.fifthTime.setText(time)
-                return@addOnPositiveButtonClickListener
-
-            }
-            if(binding.fifth.visibility== VISIBLE)
-            {
-                binding.sixth.visibility= VISIBLE
-                binding.sixthTime.visibility= VISIBLE
-                binding.sixthTrash.visibility= VISIBLE
-                (binding.root as ScrollView).isScrollbarFadingEnabled=false
-                (binding.root as ScrollView).isVerticalScrollBarEnabled = true
-                var time=""+hour+"h:"+minute
-                if(minute.toString().length==1){
-                    time += "0"
-                }
-                binding.sixthTime.setText(time)
-                return@addOnPositiveButtonClickListener
-
-            }
-
-
-
-
-        }
-
-    }
 
     override fun onDayClick(position:Int) {
 
-        Toast.makeText(requireActivity(),"razeaz",Toast.LENGTH_SHORT).show()
         val adapter= binding.daysRv.adapter as AddReminderDaysAdapter
         if(adapter.myDataList[position] in selectedDays){
             val cardView= binding.daysRv.getChildAt(position) as MaterialCardView
@@ -527,5 +464,14 @@ class AddReminder2Fragment : Fragment() ,AddReminderDaysAdapter.DayListener{
         )
      }
 
+    fun saveFileToInternalStorage(fileContents: String) {
+            try {
+                val fileOutputStream = FileOutputStream(audioFile)
+                fileOutputStream.write(fileContents.toByteArray())
+                fileOutputStream.close()
+            } catch (e: IOException) {
+                Toasty.error(requireContext(),"erreur dans l'enregistrément de l'audio")
+            }
+        }
+    }
 
-}

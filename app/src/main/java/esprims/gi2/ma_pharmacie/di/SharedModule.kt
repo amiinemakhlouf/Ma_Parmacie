@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
+import esprims.gi2.ma_pharmacie.data.repository.UserRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -29,5 +30,8 @@ object SharedModule {
     {
         return retrofit.create(UserService::class.java)
     }
+    @Provides
+    fun provideUserRepository(userService: UserService)=UserRepository(userService)
+
 }
 

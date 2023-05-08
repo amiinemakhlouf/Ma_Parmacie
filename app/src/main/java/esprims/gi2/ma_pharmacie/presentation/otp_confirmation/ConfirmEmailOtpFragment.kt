@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -17,8 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentEmailOtpBinding
-import esprims.gi2.ma_pharmacie.dto.ConfirmDto
-import esprims.gi2.ma_pharmacie.dto.RegisterDto
+import esprims.gi2.ma_pharmacie.requestModel.ConfirmRequestModel
+import esprims.gi2.ma_pharmacie.requestModel.RegisterRequestModel
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
@@ -121,7 +120,7 @@ class ConfirmEmailOtpFragment : Fragment() {
             lifecycleScope.launch(IO){
                 args.email!!
                 args.username!!
-                viewModel.resendOtpCode(RegisterDto(args.username!! , args.email!! , args.password !!) )
+                viewModel.resendOtpCode(RegisterRequestModel(args.username!! , args.email!! , args.password !!) )
 
             }
 
@@ -136,7 +135,7 @@ class ConfirmEmailOtpFragment : Fragment() {
             {
                 val forResult = args.source == 1
 
-                val result =viewModel.confirmEmail(ConfirmDto(args.email!!.trimEnd(), code), forResult)
+                val result =viewModel.confirmEmail(ConfirmRequestModel(args.email!!.trimEnd(), code), forResult)
 
 
             }

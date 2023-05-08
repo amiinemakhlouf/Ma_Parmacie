@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
+import esprims.gi2.ma_pharmacie.data.repository.UserRepository
 import esprims.gi2.ma_pharmacie.useCase.*
 import esprims.gi2.ma_pharmacie.useCase.authentication.*
 
@@ -13,21 +13,21 @@ import esprims.gi2.ma_pharmacie.useCase.authentication.*
 object AuthenticationModule {
 
     @Provides
-    fun provideRegisterUseCase(userService: UserService): SendOtpConfirmationUseCase = SendOtpConfirmationUseCase(userService)
+    fun provideRegisterUseCase(userRepository: UserRepository): SendOtpConfirmationUseCase = SendOtpConfirmationUseCase(userRepository)
 
     @Provides
-    fun provideLoginUseCase(userService: UserService)= LoginUseCase(userService)
+    fun provideLoginUseCase(userRepository: UserRepository)= LoginUseCase(userRepository)
 
     @Provides
-    fun provideConfirmEmailUseCase(userService: UserService)= ConfirmEmailUseCase(userService)
+    fun provideConfirmEmailUseCase(userRepository: UserRepository)= ConfirmEmailUseCase(userRepository)
 
     @Provides
-    fun ProvideForgetPasswordUSeCase(userService: UserService) = ForgetPasswordUseCase(userService)
+    fun ProvideForgetPasswordUSeCase(userRepository: UserRepository) = ForgetPasswordUseCase(userRepository)
 
     @Provides
-    fun provideResetPasswordUseCase(userService: UserService)= ResetPasswordUseCase(userService)
+    fun provideResetPasswordUseCase(userRepository: UserRepository)= ResetPasswordUseCase(userRepository)
 
     @Provides
-    fun provideRegisterGoogleClient(userService: UserService) = LoginGoogleClient(userService)
+    fun provideRegisterGoogleClient(userRepository: UserRepository) = LoginGoogleClient(userRepository)
 
 }

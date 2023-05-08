@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.databinding.FragmentResetPasswordEmailBinding
-import esprims.gi2.ma_pharmacie.dto.ForgetPasswordDto
+import esprims.gi2.ma_pharmacie.requestModel.ForgetPasswordRequestModel
 import esprims.gi2.ma_pharmacie.presentation.register.Utils
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -48,7 +48,7 @@ class EmailForResetFragment : Fragment() {
             {
                 val email=binding.emailEt.editText?.text.toString().trimEnd()
 
-                val result=viewModel.sendEmailToGetOtpCode(ForgetPasswordDto(email = email))
+                val result=viewModel.sendEmailToGetOtpCode(ForgetPasswordRequestModel(email = email))
                 withContext(Main)
                 {
                     when(result)

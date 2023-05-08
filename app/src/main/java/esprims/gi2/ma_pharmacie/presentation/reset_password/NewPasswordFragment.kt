@@ -17,7 +17,7 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentNewPasswordBinding
-import esprims.gi2.ma_pharmacie.dto.LoginDto
+import esprims.gi2.ma_pharmacie.requestModel.LoginRequestModel
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.register.Utils
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
@@ -55,7 +55,7 @@ class NewPasswordFragment : Fragment() {
                 lifecycleScope.launch(IO) {
 
                    val result =viewModel.resetPassword(
-                       LoginDto(
+                       LoginRequestModel(
                            "amiinemakhlouf@gmail.com",
                            email!!
                        )

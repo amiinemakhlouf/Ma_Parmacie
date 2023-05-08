@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentRegisterBinding
-import esprims.gi2.ma_pharmacie.dto.RegisterDto
+import esprims.gi2.ma_pharmacie.requestModel.RegisterRequestModel
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
@@ -237,15 +237,15 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun getUserDto(): RegisterDto {
+    private fun getUserDto(): RegisterRequestModel {
         val username = binding.usernameET.editText!!.text.toString()
         val email = binding.emailEt.editText!!.text.toString().trimEnd()
         val password = binding.password.editText!!.text.toString()
-        val registerDto = RegisterDto(
+        val registerRequestModel = RegisterRequestModel(
             username = username,
             email = email, password = password
         )
-        return registerDto
+        return registerRequestModel
     }
 
 

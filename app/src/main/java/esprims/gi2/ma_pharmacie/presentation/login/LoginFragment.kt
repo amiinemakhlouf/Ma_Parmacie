@@ -2,7 +2,6 @@ package esprims.gi2.ma_pharmacie.presentation.login
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -28,7 +26,7 @@ import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.data.entity.User
 import esprims.gi2.ma_pharmacie.databinding.FragmentLoginBinding
-import esprims.gi2.ma_pharmacie.dto.LoginDto
+import esprims.gi2.ma_pharmacie.requestModel.LoginRequestModel
 import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.onBoarding.dataStore
@@ -39,7 +37,6 @@ import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
 import esprims.gi2.ma_pharmacie.useCase.saveJwtLocally
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -129,7 +126,7 @@ class LoginFragment : Fragment() {
     private fun updateUiLoginFlow() {
         lifecycleScope.launch(Main) {
 
-            viewModel._loginState.collectLatest { uiState ->
+            viewModel._loginState.collect { uiState ->
                 when (uiState) {
 
                     is UIState.Success -> {
@@ -179,7 +176,7 @@ class LoginFragment : Fragment() {
                 val email=binding.emailEt.editText?.text.toString().trimEnd()
                 val password=binding.password.editText?.text.toString()
                 loadingDialog.showDialog()
-                viewModel.loginWithEmailAndPassword(LoginDto(email=email,password=password))
+                viewModel.loginWithEmailAndPassword(LoginRequestModel(email=email,password=password))
 
                 }
 

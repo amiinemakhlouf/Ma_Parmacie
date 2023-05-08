@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import esprims.gi2.ma_pharmacie.useCase.authentication.ConfirmEmailUseCase
-import esprims.gi2.ma_pharmacie.dto.ConfirmDto
+import esprims.gi2.ma_pharmacie.requestModel.ConfirmRequestModel
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
-import esprims.gi2.ma_pharmacie.dto.ForgetPasswordDto
-import esprims.gi2.ma_pharmacie.dto.RegisterDto
+import esprims.gi2.ma_pharmacie.requestModel.ForgetPasswordRequestModel
+import esprims.gi2.ma_pharmacie.requestModel.RegisterRequestModel
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import esprims.gi2.ma_pharmacie.useCase.authentication.ForgetPasswordUseCase
 import esprims.gi2.ma_pharmacie.useCase.authentication.SendOtpConfirmationUseCase
@@ -28,9 +28,9 @@ class ConfirmEmailOtpViewModel @Inject constructor(
     private  val resendCodeStateFlow= MutableStateFlow<UIState<String>>(UIState.Default)
     val _resendCodeStateFlow=resendCodeStateFlow
 
-    suspend fun confirmEmail(confirmDto: ConfirmDto,forRegister:Boolean){
+    suspend fun confirmEmail(confirmRequestModel: ConfirmRequestModel, forRegister:Boolean){
 
-        val result=confirmEmailUseCase.confirmEmail(confirmDto,forRegister)
+        val result=confirmEmailUseCase.confirmEmail(confirmRequestModel,forRegister)
         emailOtpStateFlow.emit(UIState.Loading())
        when(result)
        {
@@ -46,12 +46,12 @@ class ConfirmEmailOtpViewModel @Inject constructor(
        }
 
     }
-     fun  resendOtpCode(registerDto:RegisterDto){
+     fun  resendOtpCode(registerRequestModel:RegisterRequestModel){
 
         viewModelScope.launch(IO){
 
 
-       val result= sendOtpUseCaseForRegister.invoke(registerDto)
+       val result= sendOtpUseCaseForRegister.invoke(registerRequestModel)
 
         when(result)
         {
@@ -69,7 +69,7 @@ class ConfirmEmailOtpViewModel @Inject constructor(
         viewModelScope.launch (IO){
 
 
-        val result=sendOtpUseCaseForForgetPassword.invoke(ForgetPasswordDto(email))
+        val result=sendOtpUseCaseForForgetPassword.invoke(ForgetPasswordRequestModel(email))
 
        when(result)
        {

@@ -7,11 +7,11 @@ import esprims.gi2.ma_pharmacie.useCase.authentication.LoginUseCase
 import javax.inject.Inject
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.data.entity.User
-import esprims.gi2.ma_pharmacie.dto.LoginDto
+import esprims.gi2.ma_pharmacie.requestModel.LoginRequestModel
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import esprims.gi2.ma_pharmacie.useCase.authentication.LoginGoogleClient
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -22,15 +22,16 @@ class LoginViewModel @Inject constructor (
     )
     :ViewModel() {
 
-    private val loginState: MutableStateFlow<UIState<String>> = MutableStateFlow(UIState.Default)
-    val _loginState: MutableStateFlow<UIState<String>> = loginState
+    private val loginState: MutableSharedFlow<UIState<String>> = MutableSharedFlow()
+    val _loginState: MutableSharedFlow<UIState<String>> = loginState
 
 
-    fun loginWithEmailAndPassword(loginDto: LoginDto): Unit {
+
+    fun loginWithEmailAndPassword(loginRequestModel: LoginRequestModel): Unit {
         viewModelScope.launch(IO) {
             loginState.emit(UIState.Loading())
 
-            val result = loginUseCase.loginWithEmailAndPassword(loginDto)
+            val result = loginUseCase.loginWithEmailAndPassword(loginRequestModel)
             when (result) {
                 is Result.Success -> loginState.emit(UIState.Success<String>(result.data))
 

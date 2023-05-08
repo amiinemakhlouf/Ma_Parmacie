@@ -476,10 +476,76 @@
 
        />
     <TextView
-        android:id="@+id/toTake"
+        android:id="@+id/dose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/startDateTextField"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="10sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="Dosage"
+        android:textSize="18sp"
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/medicationDoseET"
+        app:layout_constraintTop_toBottomOf="@id/dose"
+        android:layout_marginTop="10dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        app:boxStrokeColor="@color/dark_green"
+
+        app:helperTextTextColor="@color/red"
+        android:textColorHint="@color/dark_green"
+        app:layout_constraintStart_toStartOf="parent"
+        app:hintTextColor="@color/dark_green"
+        app:boxBackgroundColor="@android:color/white"
+        app:hintEnabled="true"
+
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        android:theme="@style/CustomCursorStyle"
+
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/doseEt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:paddingTop="10dp"
+            android:paddingBottom="0dp"
+            android:textCursorDrawable="@color/dark_green"
+            android:textSize="22sp"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:gravity="center_horizontal"
+
+
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/quantityTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/medicationDoseET"
+        app:layout_constraintBottom_toBottomOf="@id/medicationDoseET"
+        app:layout_constraintStart_toEndOf="@id/medicationDoseET"
+        android:layout_marginStart="20dp"
+        android:text="comprimés"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/toTake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/medicationDoseET"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="28dp"
         android:layout_marginStart="10sp"
@@ -568,7 +634,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="20dp"
         android:layout_marginStart="10dp"
-        android:src="@drawable/keyboard"
+        android:src="@drawable/micro"
         android:focusable="true"
         android:clickable="true"
         android:backgroundTint="@color/dark_green"
@@ -586,9 +652,22 @@
         app:layout_constraintTop_toTopOf="@id/recordImage"
         app:layout_constraintBottom_toBottomOf="@id/recordImage"
         app:layout_constraintStart_toEndOf="@id/recordImage"
-        android:visibility="invisible"
         android:layout_marginStart="5dp"
+        android:visibility="invisible"
         />
+    <ImageView
+        android:id="@+id/deleteAudioImage"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/recordImage"
+        app:layout_constraintTop_toTopOf="@id/recordImage"
+        android:src="@drawable/trash"
+        app:layout_constraintStart_toEndOf="@id/recordSeekBar"
+        android:layout_marginStart="4dp"
+        android:visibility="invisible"
+
+        />
+
 
 
 

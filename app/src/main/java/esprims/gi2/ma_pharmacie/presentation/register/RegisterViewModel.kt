@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import esprims.gi2.ma_pharmacie.useCase.authentication.SendOtpConfirmationUseCase
-import esprims.gi2.ma_pharmacie.dto.RegisterDto
+import esprims.gi2.ma_pharmacie.requestModel.RegisterRequestModel
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import kotlinx.coroutines.Dispatchers.IO
@@ -20,11 +20,11 @@ class RegisterViewModel @Inject constructor(
     private val registerStateFlow=MutableStateFlow<UIState<String>>(UIState.Default)
     val _registerStateFlow=registerStateFlow
 
-     fun register(registerDto: RegisterDto):Unit{
+     fun register(registerRequestModel: RegisterRequestModel):Unit{
          viewModelScope.launch(IO) {
              registerStateFlow.emit(UIState.Loading())
 
-             val result=sendOtpConfirmationUseCase.invoke(registerDto)
+             val result=sendOtpConfirmationUseCase.invoke(registerRequestModel)
              when(result)
         {
             is Result.Success -> registerStateFlow.emit(UIState.Success())

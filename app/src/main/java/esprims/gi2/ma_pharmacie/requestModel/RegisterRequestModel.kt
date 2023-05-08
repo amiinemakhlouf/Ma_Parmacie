@@ -1,6 +1,6 @@
-package esprims.gi2.ma_pharmacie.dto
+package esprims.gi2.ma_pharmacie.requestModel
 
-data class RegisterDto (
+data class RegisterRequestModel (
     val username:String,
     val email:String,
     val password:String
