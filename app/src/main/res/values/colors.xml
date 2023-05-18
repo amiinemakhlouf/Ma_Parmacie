@@ -15,4 +15,7 @@
     <color name="soft_blue">#9eefff</color>
     <color name="dark_blue">#2709e6</color>
     <color name="red">#FF0000</color>
+    <color name="yellow_gold">#EAC117</color>
+    <color name="golden">#FFD700</color>
+    <color name="light_grey">#D3D3D3</color>
 </resources>

@@ -38,6 +38,8 @@
             android:layout_height="match_parent"
             android:padding="20dp"
             android:layout_marginTop="25dp"
+            android:scaleType="fitCenter"
+
             app:layout_constraintTop_toBottomOf="@id/appName"
             android:src="@drawable/medication"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -68,15 +70,21 @@
             app:boxCornerRadiusBottomStart="20dp"
             android:hint="Nom d'utilisateur "
             android:textColorHint="@null"
+
             android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
             app:hintTextColor="@color/dark_green"
             app:boxCornerRadiusTopEnd="20dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
+                android:inputType="text"
+                android:maxLines="1"
+                android:nextFocusForward="@id/email"
+
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
@@ -113,9 +121,14 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
+                android:inputType="text"
+                android:maxLines="1"
+                android:nextFocusForward="@id/password"
+
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,9 +149,8 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password"
+            android:id="@+id/passwordEt"
             app:layout_constraintTop_toBottomOf="@id/emailError"
-
             android:layout_width="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -159,10 +171,13 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
                 android:inputType="textPassword"
+                android:maxLines="1"
+                android:nextFocusForward="@id/confirmPassword"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -170,8 +185,8 @@
             android:id="@+id/passwordError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/password"
-            app:layout_constraintStart_toStartOf="@id/password"
+            app:layout_constraintTop_toBottomOf="@id/passwordEt"
+            app:layout_constraintStart_toStartOf="@id/passwordEt"
             android:text="mot de passe doit contenir plus de 8 carachteres."
             android:visibility="invisible"
             android:textColor="@color/red"
@@ -180,7 +195,7 @@
             />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confirmPassword"
+            android:id="@+id/confirmPasswordEt"
             app:layout_constraintTop_toBottomOf="@id/passwordError"
 
             android:layout_width="match_parent"
@@ -202,10 +217,14 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
                 android:inputType="textPassword"
+                android:maxLines="1"
+                android:nextFocusForward="@id/registerBt"
+
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -213,8 +232,8 @@
             android:id="@+id/confirmPasswordError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/confirmPassword"
-            app:layout_constraintStart_toStartOf="@id/confirmPassword"
+            app:layout_constraintTop_toBottomOf="@id/confirmPasswordEt"
+            app:layout_constraintStart_toStartOf="@id/confirmPasswordEt"
             android:text="Le mot de passe doit être identique à la confirmation du mot de passe."
             android:textColor="@color/red"
             android:visibility="invisible"
@@ -229,13 +248,15 @@
             android:layout_height="60dp"
             android:backgroundTint="@color/dark_green"
             android:text="S'inscrire"
+            android:textColor="@color/white"
             android:textSize="12sp"
             app:cornerRadius="40dp"
             app:iconGravity="textEnd"
             android:layout_marginTop="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/confirmPasswordError" />
+            app:layout_constraintTop_toBottomOf="@id/confirmPasswordError"
+            />
 
         <TextView
             android:id="@+id/iHaveAccount"

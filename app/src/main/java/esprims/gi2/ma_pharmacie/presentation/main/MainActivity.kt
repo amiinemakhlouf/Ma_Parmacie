@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
@@ -299,6 +300,16 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.mapsTopBar-> {
+                navigateToMapsFragment()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
 
     private fun deleteJwtFromLocalStorage() {
 
@@ -329,6 +340,10 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         navHostFragment.navController.navigate(R.id.loginFragment)
+    }
+    private fun navigateToMapsFragment(){
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        navHostFragment.navController.navigate(R.id.mapsFragment)
     }
 
     private fun showLogoutToast() {

@@ -2,17 +2,21 @@ package esprims.gi2.ma_pharmacie.presentation.register
 
 import android.os.Bundle
 import android.os.Handler
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
@@ -49,9 +53,43 @@ class RegisterFragment : Fragment() {
         handleRegisterBtLogic()
         updateUiAfterRegisterFlow()
         clearErrorMessageWhenUserTyping()
+        //passUserToNextTextField()
 
     }
 
+    private fun getListsOfInputs(): List<View> {
+
+        return   listOf(
+            binding.username,
+            binding.email,
+            binding.password,
+            binding.confirmPassword,
+
+
+        )
+    }
+
+    private fun passUserToNextTextField() {
+
+        try {
+
+
+        val listOfInputs = getListsOfInputs()
+        for (i in 0..listOfInputs.lastIndex) {
+            listOfInputs[i + 1].requestFocus()
+            (listOfInputs[i] as EditText).setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    Toast.makeText(requireActivity(), "vive la tunisie", Toast.LENGTH_SHORT).show()
+                    true
+                } else {
+                    false
+                }
+            }
+        }}catch (e:Exception){
+            Toast.makeText(requireActivity(), "gabes", Toast.LENGTH_SHORT).show()
+
+        }
+        }
     private fun updateUiAfterRegisterFlow() {
         lifecycleScope.launch(Main){
             viewModel._registerStateFlow.collectLatest {uiState->
@@ -130,8 +168,8 @@ class RegisterFragment : Fragment() {
 
     private fun handleConfirmPassword(): Boolean {
 
-        val password = binding.password.editText?.text.toString()
-        val confirmPassword = binding.confirmPassword.editText?.text.toString()
+        val password = binding.passwordEt.editText?.text.toString()
+        val confirmPassword = binding.confirmPasswordEt.editText?.text.toString()
 
         if (!Utils.isPasswordMatches(password, confirmPassword)) {
             binding.confirmPasswordError.visibility = View.VISIBLE
@@ -163,7 +201,7 @@ class RegisterFragment : Fragment() {
             requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         val email = binding.emailEt.editText!!.text.toString().trimEnd()
         val username = binding.usernameET.editText!!.text.toString()
-        val password =binding.password.editText!!.text.toString()
+        val password =binding.passwordEt.editText!!.text.toString()
         val action =
             RegisterFragmentDirections.actionRegisterFragmentToEmailOtpFragment(1, email, username,password)
         navHostFragment.navController.navigate(action)
@@ -182,7 +220,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun handlePasswordMatching(): Boolean {
-        if (!Utils.isPasswordValid(binding.password.editText?.text.toString())) {
+        if (!Utils.isPasswordValid(binding.passwordEt.editText?.text.toString())) {
 
             binding.passwordError.visibility = View.VISIBLE
             return false
@@ -209,7 +247,7 @@ class RegisterFragment : Fragment() {
             binding.emailError.visibility = View.INVISIBLE
 
         }
-        binding.password.editText?.doOnTextChanged { text, start, before, count ->
+        binding.passwordEt.editText?.doOnTextChanged { text, start, before, count ->
             binding.passwordError.visibility = View.INVISIBLE
         }
         binding.usernameET.editText?.doOnTextChanged { text, start, before, count ->
@@ -219,7 +257,7 @@ class RegisterFragment : Fragment() {
         binding.usernameET.editText?.doOnTextChanged { text, start, before, count ->
             binding.usernameError.visibility = INVISIBLE
         }
-        binding.password.editText?.doOnTextChanged { text, start, before, count ->
+        binding.passwordEt.editText?.doOnTextChanged { text, start, before, count ->
             binding.confirmPasswordError.visibility = INVISIBLE
         }
 
@@ -240,7 +278,7 @@ class RegisterFragment : Fragment() {
     private fun getUserDto(): RegisterRequestModel {
         val username = binding.usernameET.editText!!.text.toString()
         val email = binding.emailEt.editText!!.text.toString().trimEnd()
-        val password = binding.password.editText!!.text.toString()
+        val password = binding.passwordEt.editText!!.text.toString()
         val registerRequestModel = RegisterRequestModel(
             username = username,
             email = email, password = password

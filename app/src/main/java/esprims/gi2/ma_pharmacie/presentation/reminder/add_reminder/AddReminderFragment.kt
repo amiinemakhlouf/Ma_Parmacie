@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,6 +26,7 @@ import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
 
 
 class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
+    private var selectedForOfStockage: RadioButton?=null
     private  lateinit var binding:FragmentAddReminderBinding
     private var checkedDaysList = mutableListOf<Int>()
     private val viewModel:AddReminderViewModel by viewModels()
@@ -39,53 +42,87 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(viewModel.isFirstActivityLifeCycle){
-            binding.quantityTv.setText("capsule")
-        }
+
+        selectCapsuleForFirstFragmentStartUP()
         setUpMedicationTypesRv()
-
         addSWhenQuantityHigherThan1()
-
-
-        val barCodeLauncher=provideBarCodeLauncher()
-
-        binding.backButton.setOnClickListener {
-            findNavController().popBackStack()
-        }
-        binding.continuer.setOnClickListener {
-            if(isValidInputs()){
-
-            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-             val action=AddReminderFragmentDirections.actionAddReminderFragmentToAddReminder2Fragment()
-
-                navHostFragment.navController.navigate(action)
-        }
-        }
-        binding.medicationNameET.setEndIconOnClickListener{
-
-           barCodeLauncher.launch(ScanOptions())
-        }
+        navigateToPreviousFragment()
+        handleContinueBt()
+        scanBarCode()
+        selectStockageRadioButton()
         clearErrorWhenTyping()
 
     }
 
+    private fun selectCapsuleForFirstFragmentStartUP() {
+        if(viewModel.isFirstActivityLifeCycle){
+            binding.quantityTv.setText("capsule")
+        }
+    }
+
+    private fun scanBarCode() {
+        val barCodeLauncher=provideBarCodeLauncher()
+        binding.medicationNameET.setEndIconOnClickListener{
+
+            barCodeLauncher.launch(ScanOptions())
+        }
+    }
+
+    private fun handleContinueBt() {
+        binding.continuer.setOnClickListener {
+            if(isValidInputs()){
+
+            /*    val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+                val action=AddReminderFragmentDirections.actionAddReminderFragmentToAddReminder2Fragment()
+
+                navHostFragment.navController.navigate(action)*/
+                navigateToBarCodeFragment()
+            }
+        }
+    }
+
+    private fun navigateToBarCodeFragment() {
+        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        val action=AddReminderFragmentDirections.actionAddReminderFragmentToScannerFragment()
+
+        navHostFragment.navController.navigate(action)
+    }
+
+    private fun navigateToPreviousFragment() {
+        binding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
     private fun addSWhenQuantityHigherThan1() {
 
-        binding.quantityEt.doOnTextChanged { text, start, before, count ->
-            val quantity=binding.quantityEt.editableText.toString()
-           if(quantity.isNotBlank()){
-               if (quantity.toInt()>1)
+
+
+
+
+
+        binding.quantityEt.doOnTextChanged { number, start, before, count ->
+
+            var quantity=binding.quantityTv.text.toString()
+            if(quantity[quantity.lastIndex]=='s'){
+                quantity=quantity.removeRange(quantity.lastIndex,quantity.lastIndex+1)
+                binding.quantityTv.text=quantity
+            }
+           if(number?.trim().toString().isNotBlank()){
+               Log.d("are you blank","no")
+               if (number.toString().toInt()>1)
                {
-                   binding.quantityEt.text?.let {
-                       binding.quantityTv.setText(
-                           binding.quantityTv.text.toString()+"s"
-                       )
+
+                 binding.quantityTv.text=quantity+"s"
 
                    }
 
+
+
                }
+
            }
-           }
+
 
 
     }
@@ -135,14 +172,18 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
     private fun clearErrorWhenTyping(){
         val clearMsg=""
 
-        binding.medicationDoseET.editText?.doOnTextChanged {
-                text, start, before, count ->
+        binding.medicationDoseET.editText?.doAfterTextChanged {
+
             binding.medicationDoseET.helperText=clearMsg
         }
         binding.medicationDoseET.editText?.doOnTextChanged {
                 text, start, before, count ->
             binding.medicationDoseET.helperText=clearMsg
         }
+        binding.medicationNameET.editText?.doOnTextChanged { text, start, before, count ->
+            binding.medicationNameET.helperText=""
+        }
+
     }
 
 
@@ -182,9 +223,13 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
                             if (quantity.toInt()>1)
                             {
                                 binding.quantityEt.text?.let {
-                                    binding.quantityTv.setText(
-                                        binding.quantityTv.text.toString()+"s"
-                                    )
+                                    val quantity= binding.quantityTv.text.toString()
+                                    if(quantity[quantity.lastIndex]!='s'){
+                                        binding.quantityTv.setText(
+                                            binding.quantityTv.text.toString()+"s"
+                                        )
+                                    }
+
 
                                 }
 
@@ -215,6 +260,31 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
 
 
             }
+    private fun selectStockageRadioButton()
+    {
+        val radioButtons=getStockageRAdioButtons()
+        for(form in radioButtons)
+        {
+            form.setOnCheckedChangeListener { buttonView, isChecked ->
+
+                if(isChecked){
+                    selectedForOfStockage?.isChecked=false
+                    selectedForOfStockage=form
+                }
+
+            }
+        }
+    }
+
+    private fun getStockageRAdioButtons(): List<RadioButton> {
+
+        return  listOf(
+            binding.RoomTemperatureRadio,
+            binding.RefrigerationRadio,
+            binding.FreezingRadio,
+            binding.ProtectionFromLightRadio
+        )
+    }
 
     private fun isTypeChecked(position: Int)= position in checkedDaysList
      private  fun provideBarCodeLauncher(): ActivityResultLauncher<ScanOptions>
@@ -238,4 +308,6 @@ class AddReminderFragment : Fragment(),AddReminderAdapter.OnTypeListener {
              }
      }
 
-}}
+
+}
+}

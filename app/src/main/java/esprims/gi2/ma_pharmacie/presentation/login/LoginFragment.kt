@@ -174,7 +174,7 @@ class LoginFragment : Fragment() {
         binding.loginBt.setOnClickListener {
              if(isInputsValid()){
                 val email=binding.emailEt.editText?.text.toString().trimEnd()
-                val password=binding.password.editText?.text.toString()
+                val password=binding.passwordEt.editText?.text.toString()
                 loadingDialog.showDialog()
                 viewModel.loginWithEmailAndPassword(LoginRequestModel(email=email,password=password))
 
@@ -242,18 +242,18 @@ class LoginFragment : Fragment() {
         val emptyFieldErrorMessage="merci de remplir ce champs"
         val invalidPasswordErrorMessage="mot de passe doit contenir plus de 8  carachteres"
         val clearMessage= ""
-        if(binding.password.editText?.text.isNullOrBlank())
+        if(binding.passwordEt.editText?.text.isNullOrBlank())
         {
-            binding.password.helperText=emptyFieldErrorMessage
+            binding.passwordEt.helperText=emptyFieldErrorMessage
             return false
         }
-        else if(!Utils.isPasswordValid(password = binding.password.editText?.text.toString()))
+        else if(!Utils.isPasswordValid(password = binding.passwordEt.editText?.text.toString()))
         {
-            binding.password.helperText=invalidPasswordErrorMessage
+            binding.passwordEt.helperText=invalidPasswordErrorMessage
             return false
         }
         else{
-            binding.password.helperText=clearMessage
+            binding.passwordEt.helperText=clearMessage
 
         }
         return true
@@ -296,8 +296,8 @@ class LoginFragment : Fragment() {
         binding.emailEt.editText?.doOnTextChanged { text, start, before, count ->
             binding.emailEt.helperText=clearMessage
         }
-        binding.password.editText?.doOnTextChanged { text, start, before, count ->
-            binding.password.helperText=clearMessage
+        binding.passwordEt.editText?.doOnTextChanged { text, start, before, count ->
+            binding.passwordEt.helperText=clearMessage
         }
     }
     suspend private fun userIsLoggedIn(): Boolean {

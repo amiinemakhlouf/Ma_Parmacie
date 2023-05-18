@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pharmacy_nav_graph"
-    app:startDestination="@id/addReminder2Fragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/pharmacyFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.pharmacie.PharmacyFragment"
         android:label="mes pharmacies"
-        tools:layout="@layout/fragment_pharmacy" />
+        tools:layout="@layout/fragment_pharmacy" >
+        <action
+            android:id="@+id/action_pharmacyFragment_to_pharmacyBottomSheet"
+            app:destination="@id/pharmacyBottomSheet" />
+    </fragment>
     <fragment
         android:id="@+id/checkUpFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.checkup.CheckUpFragment"
@@ -37,12 +41,12 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.maps.MapsFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.pharmacie.PharmacyFragment"
         android:label="les pharmacies porches"
         tools:layout="@layout/fragment_maps" />
     <fragment
         android:id="@+id/addMedicineDialog"
-        android:name="esprims.gi2.ma_pharmacie.presentation.medication.add_medication.AddMedication"
+        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderFragment"
         android:label="nouveau médicament"
 
 
@@ -121,6 +125,9 @@
         <action
             android:id="@+id/action_addReminderFragment_to_addReminder2Fragment"
             app:destination="@id/addReminder2Fragment" />
+        <action
+            android:id="@+id/action_addReminderFragment_to_scannerFragment"
+            app:destination="@id/scannerFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -192,5 +199,37 @@
         android:id="@+id/addReminder2Fragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminder2Fragment"
         android:label="fragment_add_reminder2"
-        tools:layout="@layout/fragment_add_reminder2" />
+        tools:layout="@layout/fragment_add_reminder2" >
+        <action
+            android:id="@+id/action_addReminder2Fragment_to_reminderFragment"
+            app:destination="@id/reminderFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/pharmacyBottomSheet"
+        android:name="esprims.gi2.ma_pharmacie.presentation.pharmacie.PharmacyBottomSheet"
+        android:label="PharmacyBottomSheet" >
+        <argument
+            android:name="isOpen"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="endTime"
+            app:argType="long" />
+        <argument
+            android:name="adress"
+            app:argType="string" />
+        <argument android:name="phoneNumber"
+            app:argType="string" />
+        <argument android:name="rates"
+            app:argType="float" />
+
+
+    </dialog>
+    <fragment
+        android:id="@+id/scannerFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.ScannerFragment"
+        android:label="fragment_scanner"
+        tools:layout="@layout/fragment_scanner" />
 </navigation>

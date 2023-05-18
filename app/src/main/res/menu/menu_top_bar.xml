@@ -8,6 +8,7 @@
         app:showAsAction="always"
         />
     <item
+        android:id="@+id/mapsTopBar"
         android:title=""
         android:icon="@drawable/maps_logo"
         app:showAsAction="always"

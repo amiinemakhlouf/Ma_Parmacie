@@ -14,7 +14,7 @@
         android:title="@string/my_medicines"
         android:checkable="true"/>
     <item
-        android:id="@+id/mapsFragment"
+        android:id="@id/mapsFragment"
         android:icon="@drawable/maps_logo"
 
         android:title="pharmacies proches"

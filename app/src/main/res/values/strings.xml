@@ -50,6 +50,12 @@
     <string name="bottles">bouteille</string>
     <string name="injection">Injection</string>
     <string name="pill">Comprimé</string>
+    <string name="permission_required">Permission requise</string>
+    <string name="microphone_permission_explanation">Pour enregistrer de l\'audio, l\'application a besoin de la permission d\'accéder au microphone de votre appareil. Cliquez sur \'Accorder\' pour permettre à l\'application d\'accéder au microphone.</string>
+    <string name="accept">Accorder</string>
+    <string name="deny">Annuler</string>
+    <string name="access_to_micro_refused">Accès au microphone refusé</string>
+    <string name="explanation">Explication</string>
 
 
 </resources>
