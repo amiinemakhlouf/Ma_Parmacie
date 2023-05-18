@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "834189707894",
+    "project_id": "test-50bd7",
+    "storage_bucket": "test-50bd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834189707894:android:a7055d5f4f9558d74fad57",
+        "android_client_info": {
+          "package_name": "esprims.gi2.ma_pharmacie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834189707894-p2d345slkal0ojc2kdu45srtid4vi8o4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "esprims.gi2.ma_pharmacie",
+            "certificate_hash": "ebe2ce6c43aaf460f5af462ac7c0a84b6af553aa"
+          }
+        },
+        {
+          "client_id": "834189707894-bk3kq4r1o374qmvni8d5445f9snn2h2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJB4f-yAwkHGI7k_ghpyLG-3Y64jb3xpk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834189707894-b3g0d86n1rql6vn39ipq6q3sk1ck2dlh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

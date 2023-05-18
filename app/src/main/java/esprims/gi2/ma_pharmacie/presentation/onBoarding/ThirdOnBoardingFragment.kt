@@ -5,10 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.viewpager2.widget.ViewPager2
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentThirdOnBoardingBinding
+import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 
 
 class ThirdOnBoardingFragment : Fragment() {
@@ -26,6 +31,9 @@ class ThirdOnBoardingFragment : Fragment() {
         binding.nextText.setOnClickListener {
             navigateToLoginScreen()
         }
+
+        val viewPager2= requireActivity().findViewById<ViewPager2>(R.id.onboarding_view_pager)
+
 
 
 

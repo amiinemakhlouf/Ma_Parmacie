@@ -27,20 +27,22 @@
             />
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/back_image"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:scaleType="fitCenter"
+
             android:layout_marginTop="15dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/pillule"/>
+            android:src="@drawable/pills"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="EFFERALGAN"
-            app:layout_constraintTop_toBottomOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/back_image"
             android:gravity="center_horizontal"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:transitionName="@string/medicationNameTransition"
             android:textColor="@color/dark_green"
             android:textStyle="bold"/>
@@ -64,23 +66,34 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:text="@string/dose"
-            android:textSize="23sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/dark_green"
             android:textStyle="bold"/>
+        <ImageView
+            android:id="@+id/editDose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/doseTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/baseline_edit_24"
 
-        <TextView
+            app:tint="@color/dark_green" />
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/doseValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
+            android:inputType="none"
             android:text="2 capsules | 400 mg"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/doseTitle"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/black"
             />
 
         <com.google.android.material.divider.MaterialDivider
@@ -98,14 +111,24 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:text="@string/programme"
-            android:textSize="23sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/firstDivider"
             android:textColor="@color/dark_green"
             android:textStyle="bold"/>
+        <ImageView
+            android:id="@+id/editProgram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/ProgramTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/baseline_edit_24"
 
-        <TextView
-            android:id="@+id/ProgramValue"
+            app:tint="@color/dark_green" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/programValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -114,9 +137,11 @@
 8:00 | 15:00 | 20:00     "
             android:textSize="16sp"
             android:lineSpacingExtra="2dp"
+            android:textColor="@color/black"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ProgramTitle"
-            android:textColor="@android:color/darker_gray"
+
             />
 
         <com.google.android.material.divider.MaterialDivider
@@ -125,7 +150,7 @@
             android:layout_height="0.5dp"
             android:layout_marginTop="12dp"
             app:dividerColor="@android:color/darker_gray"
-            app:layout_constraintTop_toBottomOf="@id/ProgramValue"/>
+            app:layout_constraintTop_toBottomOf="@id/programValue"/>
 
 
         <TextView
@@ -133,15 +158,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15sp"
             android:text="@string/quantity"
-            android:textSize="23sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/secondDivider"
             android:textColor="@color/dark_green"
             android:textStyle="bold"/>
 
-        <TextView
+        <ImageView
+            android:id="@+id/editQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/Quantity"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/baseline_edit_24"
+
+            app:tint="@color/dark_green" />
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/quantityValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -151,7 +187,8 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Quantity"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/black"
+
             />
 
 

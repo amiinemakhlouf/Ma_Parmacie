@@ -4,7 +4,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import esprims.gi2.ma_pharmacie.data.local.database.AppDatabase
-import esprims.gi2.ma_pharmacie.data.local.entity.Medicine
+import esprims.gi2.ma_pharmacie.data.entity.Medicine
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

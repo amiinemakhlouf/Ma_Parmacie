@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.otp_confirmation.ConfirmEmailOtpFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/back_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/email_otp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/hello_blank_fragment" />
+
+    <TextView
+        android:id="@+id/message"
+        android:padding="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Un code de confirmation de l'email a été envoyé à votre e-mail. Veuillez vérifier votre boîte de réception"
+        app:layout_constraintTop_toBottomOf="@id/back_image"
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_margin="4dp"
+        android:textCursorDrawable="@color/dark_green"
+        android:backgroundTint="@color/dark_green"
+        app:layout_constraintTop_toBottomOf="@id/message"
+        android:hint="code de confirmation"
+        />
+
+    <TextView
+        android:id="@+id/notReceived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/code"
+        android:gravity="center_horizontal"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="pas récu le code ?? "
+        />
+    <TextView
+        android:id="@+id/resend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/code"
+        android:gravity="center_horizontal"
+        android:textSize="14sp"
+        android:textColor="@color/dark_green"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@id/notReceived"
+        android:text="Renvoyer."
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/confirmBt"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/resend"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="confirmer"
+        app:cornerRadius="20dp"
+        android:backgroundTint="@color/dark_green"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

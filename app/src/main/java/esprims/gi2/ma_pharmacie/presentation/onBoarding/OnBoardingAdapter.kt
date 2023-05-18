@@ -17,4 +17,5 @@ class OnBoardingAdapter( fragment:FragmentManager,
 
         return   fragmentList[position]
     }
+
 }

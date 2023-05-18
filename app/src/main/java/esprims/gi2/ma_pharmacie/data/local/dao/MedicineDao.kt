@@ -1,7 +1,7 @@
 package esprims.gi2.ma_pharmacie.data.local.dao
 
 import androidx.room.*
-import esprims.gi2.ma_pharmacie.data.local.entity.Medicine
+import esprims.gi2.ma_pharmacie.data.entity.Medicine
 import esprims.gi2.ma_pharmacie.data.local.relations.MedicineWithSchedules
 import kotlinx.coroutines.flow.Flow
 

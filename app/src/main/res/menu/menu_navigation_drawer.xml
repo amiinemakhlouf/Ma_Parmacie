@@ -8,17 +8,18 @@
         android:title="@string/my_notifications"
         android:checkable="true"/>
     <item
-        android:id="@+id/mapsFragment"
-        android:icon="@drawable/notification_icon"
-
-        android:title="maps"
-        android:checkable="true"/>
-    <item
         android:id="@+id/medicineFragment"
         android:icon="@drawable/pills"
 
         android:title="@string/my_medicines"
         android:checkable="true"/>
+    <item
+        android:id="@+id/mapsFragment"
+        android:icon="@drawable/maps_logo"
+
+        android:title="pharmacies proches"
+        android:checkable="true"/>
+
     <item
         android:id="@+id/checkUpFragment"
         android:icon="@drawable/check_up"
@@ -30,21 +31,8 @@
         android:title="@string/donation"
         android:checkable="true"/>
 
-    <item
-        android:id="@+id/pharmacyFragment"
-        android:icon="@drawable/pharmacy"
-        android:title="@string/pharmacy"
-        android:checkable="true"/>
-    <item
-        android:id="@+id/familyFragment"
-        android:icon="@drawable/family"
-        android:title="@string/family"
-        android:checkable="true"/>
-    <item
-        android:id="@+id/protector"
-        android:icon="@drawable/friend"
-        android:title="@string/protector"
-        android:checkable="true"/>
+
+
     <item
         android:id="@+id/tracker"
         android:icon="@drawable/tracker"
@@ -55,6 +43,12 @@
         android:icon="@drawable/feedback"
         android:title="@string/feedback"
         android:checkable="true"/>
+
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/logout"
+        android:title="logout"
+        />
 
 
 </menu>

@@ -2,8 +2,8 @@ package esprims.gi2.ma_pharmacie.data.local.relations
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import esprims.gi2.ma_pharmacie.data.local.entity.Medicine
-import esprims.gi2.ma_pharmacie.data.local.entity.MedicineSchedule
+import esprims.gi2.ma_pharmacie.data.entity.Medicine
+import esprims.gi2.ma_pharmacie.data.entity.MedicineSchedule
 import org.jetbrains.annotations.NotNull
 
 data class MedicineWithSchedules(

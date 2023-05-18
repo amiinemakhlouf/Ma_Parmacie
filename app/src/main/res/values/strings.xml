@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Ma Pharmacie</string>
     <string name="my_notifications">mes notifications</string>
-    <string name="my_medicines">medicaments</string>
+    <string name="my_medicines">mes  medicaments</string>
     <string name="appointment">rendez-vous</string>
     <string name="donation">donation</string>
     <string name="pharmacy">pharmacies</string>
@@ -36,8 +36,20 @@
     <string name="forget_password">mot de passe oublié</string>
     <string name="dose">Dose</string>
     <string name="programme">Programme</string>
-    <string name="quantity">quantité</string>
+    <string name="quantity">Quantité</string>
     <string name="medicationNameTransition">medication_name_transition</string>
+    <string name="welcome">bienvenue</string>
+    <string name="Invalid_email_address">adresse email inexistante</string>
+    <string name="wrong_password">mot de passe incorrect</string>
+    <string name="i_already_have_an_account">j\'ai deja un compte,</string>
+    <string name="otp_false_code">Code incorrect</string>
+    <string name="email">email</string>
+    <string name="email_invalid">adresse e-mail invalide.</string>
+    <string name="no_internet">Vous n\'avez pas d\'Internet.</string>
+    <string name="capsule">Capsule</string>
+    <string name="bottles">bouteille</string>
+    <string name="injection">Injection</string>
+    <string name="pill">Comprimé</string>
 
 
 </resources>
