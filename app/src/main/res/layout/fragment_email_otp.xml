@@ -24,7 +24,7 @@
         app:layout_constraintTop_toBottomOf="@id/back_image"
         />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +34,10 @@
         android:backgroundTint="@color/dark_green"
         app:layout_constraintTop_toBottomOf="@id/message"
         android:hint="code de confirmation"
+        android:inputType="text"
+        android:nextFocusForward="@id/confirmBt"
+
+
         />
 
     <TextView
