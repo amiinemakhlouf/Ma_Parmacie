@@ -231,5 +231,9 @@
         android:id="@+id/scannerFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.ScannerFragment"
         android:label="fragment_scanner"
-        tools:layout="@layout/fragment_scanner" />
+        tools:layout="@layout/fragment_scanner" >
+        <action
+            android:id="@+id/action_scannerFragment_to_addReminder2Fragment"
+            app:destination="@id/addReminder2Fragment" />
+    </fragment>
 </navigation>
