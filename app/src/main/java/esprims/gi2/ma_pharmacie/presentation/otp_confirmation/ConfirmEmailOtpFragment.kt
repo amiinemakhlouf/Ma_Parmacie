@@ -43,7 +43,6 @@ class ConfirmEmailOtpFragment : Fragment() {
     ): View? {
         binding = FragmentEmailOtpBinding.inflate(layoutInflater)
         loadingDialog = LoadingDialog(requireActivity() as MainActivity)
-        loadingDialog.hideDialog()
 
 
         return binding.root
@@ -191,7 +190,7 @@ class ConfirmEmailOtpFragment : Fragment() {
         lifecycleScope.launch(Main)
         {
 
-            loadingDialog.hideDialog()
+
 
             when (args.source) {
             Source.REGISTER.indice -> {

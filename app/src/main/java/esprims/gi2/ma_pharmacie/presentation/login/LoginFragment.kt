@@ -55,7 +55,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         loadingDialog=LoadingDialog(requireActivity() as MainActivity)
-        loadingDialog.showDialog()
+
         (  requireActivity() as MainActivity).binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         binding= FragmentLoginBinding.inflate(layoutInflater)
         val text="dqsdqs"

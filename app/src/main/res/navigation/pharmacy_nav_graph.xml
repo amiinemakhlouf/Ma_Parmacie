@@ -46,7 +46,7 @@
         tools:layout="@layout/fragment_maps" />
     <fragment
         android:id="@+id/addMedicineDialog"
-        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddMedicationFragment"
         android:label="nouveau médicament"
 
 
@@ -119,9 +119,9 @@
     </fragment>
     <fragment
         android:id="@+id/addReminderFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddMedicationFragment"
         android:label="fragment_add_reminder"
-        tools:layout="@layout/fragment_add_reminder" >
+        tools:layout="@layout/fragment_add_medication" >
         <action
             android:id="@+id/action_addReminderFragment_to_addReminder2Fragment"
             app:destination="@id/addReminder2Fragment" />
@@ -197,9 +197,9 @@
     </fragment>
     <fragment
         android:id="@+id/addReminder2Fragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminder2Fragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderFragment"
         android:label="fragment_add_reminder2"
-        tools:layout="@layout/fragment_add_reminder2" >
+        tools:layout="@layout/fragment_add_reminder" >
         <action
             android:id="@+id/action_addReminder2Fragment_to_reminderFragment"
             app:destination="@id/reminderFragment" />

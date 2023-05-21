@@ -254,7 +254,6 @@ class PharmacyFragment : Fragment(),PinchSaceListenner {
                     marker.position=geoPoint
                     marker.setAnchor(Marker.ANCHOR_CENTER,Marker.ANCHOR_BOTTOM)
                     controller.setCenter(geoPoint)
-                    Toast.makeText(requireActivity(),"ena men beja",Toast.LENGTH_SHORT).show()
                     binding.maps.overlays.add( marker)
                     marker.title="vous etes ici"
 
