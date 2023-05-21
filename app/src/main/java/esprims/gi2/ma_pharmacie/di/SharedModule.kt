@@ -15,12 +15,11 @@ object SharedModule {
 
     @Provides
     fun provideRetrofitInstance():Retrofit{
-       val myServerLocalIpAdress="http://192.168.1.16:3000/"
+       val myServerLocalIpAdress="http://192.168.1.198:3000/"
        // val myServerLocalIpAdress="http://10.0.2.2:3000/"
         val retrofit = Retrofit.Builder()
             .baseUrl(myServerLocalIpAdress)
             .addConverterFactory(GsonConverterFactory.create())
-
             .build()
         return   retrofit
     }

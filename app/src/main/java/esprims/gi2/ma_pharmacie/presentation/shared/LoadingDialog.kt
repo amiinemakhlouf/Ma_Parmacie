@@ -10,7 +10,7 @@ class LoadingDialog(
     private var dialog:AlertDialog?=null
 
     init {
-        val builder= AlertDialog.Builder(activity)
+        val builder= AlertDialog.Builder(activity,R.style.CustomAlertDialogTheme)
         builder.setView(R.layout.custom_progress_bar)
         dialog=builder.create()
         dialog!!.show()

@@ -126,5 +126,12 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="CustomAlertDialogTheme" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:windowMinWidthMajor">50dp</item>
+        <item name="android:windowMinWidthMinor">50dp</item>
+        <item name="android:windowBackground">@drawable/rounded_corner</item>
+
+    </style>
+
 
 </resources>

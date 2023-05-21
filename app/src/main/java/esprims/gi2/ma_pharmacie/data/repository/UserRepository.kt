@@ -95,7 +95,7 @@ class UserRepository  @Inject constructor(
 
 
             result.errorBody()?.let {
-                return Result.Error(message = it.toString())
+                return Result.Error(message = "Identifiants incorrects")
 
             }
             return Result.Error(message = "Erreur de serveur")
