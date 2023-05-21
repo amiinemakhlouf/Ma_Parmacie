@@ -19,6 +19,19 @@
 
 
         />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="10dp"
+        android:tint="@color/white"
+        android:backgroundTint="@color/light_green"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+
+        />
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -57,6 +70,7 @@
         app:boxBackgroundColor="@android:color/white"
         android:backgroundTint="@android:color/darker_gray"
         android:hint="Nom de malade"
+        app:helperText=""
         app:endIconMode="custom"
         app:endIconDrawable="@drawable/baseline_face_24"
         app:endIconTint="@color/dark_green"
@@ -346,6 +360,7 @@
         android:checked="false"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
+
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/days_rv"
@@ -493,39 +508,34 @@
         app:layout_constraintTop_toBottomOf="@id/dose"
         android:layout_marginTop="10dp"
         android:layout_width="150dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
         app:boxStrokeColor="@color/dark_green"
+        app:boxStrokeWidth="4dp"
 
+        app:boxStrokeErrorColor="@color/dark_green"
         app:helperTextTextColor="@color/red"
         android:textColorHint="@color/dark_green"
         app:layout_constraintStart_toStartOf="parent"
         app:hintTextColor="@color/dark_green"
         app:boxBackgroundColor="@android:color/white"
         app:hintEnabled="true"
-
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusTopStart="10dp"
         android:theme="@style/CustomCursorStyle"
 
         >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/doseEt"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:paddingTop="10dp"
-            android:paddingBottom="0dp"
             android:textCursorDrawable="@color/dark_green"
             android:textSize="22sp"
+            android:paddingBottom="0dp"
+            android:drawableBottom="@color/dark_green"
             android:inputType="numberDecimal"
             android:text="0"
             android:gravity="center_horizontal"
-
-
 
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -533,7 +543,6 @@
         android:id="@+id/quantityTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/medicationDoseET"
         app:layout_constraintBottom_toBottomOf="@id/medicationDoseET"
         app:layout_constraintStart_toEndOf="@id/medicationDoseET"
         android:layout_marginStart="20dp"
@@ -613,7 +622,7 @@
     </RadioGroup>
 
 
-    <TextView
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -632,11 +641,12 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:src="@drawable/micro"
         android:focusable="true"
         android:clickable="true"
+        android:visibility="invisible"
         android:backgroundTint="@color/dark_green"
         android:background="?android:attr/selectableItemBackground"
         app:layout_constraintTop_toBottomOf="@id/record"

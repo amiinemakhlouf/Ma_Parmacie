@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_background"
+    android:layout_gravity="center_horizontal"
+    >
+    <TextView
+        android:id="@+id/pharmacyName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_green"
+        android:text="Pharmacie Ben Slama"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <ImageView
+        android:id="@+id/pharmacyLocationIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pharmacyName"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/location"
+        app:tint="@color/black" />
+    <TextView
+        android:id="@+id/pharmacyLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Cité bessatine ,monastir"
+        android:textSize="20sp"
+        android:layout_marginStart="15dp"
+        android:gravity="top"
+        app:layout_constraintTop_toTopOf="@id/pharmacyLocationIcon"
+        app:layout_constraintStart_toEndOf="@id/pharmacyLocationIcon"
+        />
+
+    <ImageView
+        android:id="@+id/pharmacyClockIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pharmacyLocationIcon"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/now"
+        app:tint="@color/black" />
+    <TextView
+        android:id="@+id/pharmacyState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_green"
+        android:text="Ouvert. "
+
+        android:textSize="20sp"
+        android:layout_marginStart="15dp"
+        android:gravity="top"
+        app:layout_constraintTop_toTopOf="@id/pharmacyClockIcon"
+        app:layout_constraintStart_toEndOf="@id/pharmacyLocationIcon"
+        />
+    <TextView
+        android:id="@+id/pharmacyCloseTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Ferme a 18h:00"
+
+        android:textSize="20sp"
+        android:layout_marginStart="6dp"
+        android:gravity="top"
+        app:layout_constraintTop_toTopOf="@id/pharmacyClockIcon"
+        app:layout_constraintStart_toEndOf="@id/pharmacyState"
+        />
+
+    <ImageView
+        android:id="@+id/pharmacyPhoneIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pharmacyClockIcon"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/phone_icon"
+        app:tint="@color/black" />
+    <TextView
+        android:id="@+id/pharmacyPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_blue_dark"
+        android:text="73452127"
+        android:textSize="20sp"
+        android:layout_marginStart="15dp"
+        android:gravity="top"
+        app:layout_constraintTop_toTopOf="@id/pharmacyPhoneIcon"
+        app:layout_constraintStart_toEndOf="@id/pharmacyLocationIcon"
+        />
+    <TextView
+        android:id="@+id/ratingBarText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Avis d'autres utilisateurs"
+        android:textSize="20sp"
+        android:layout_marginStart="5dp"
+        android:gravity="top"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pharmacyPhoneIcon"
+        />
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:rating="3.5"
+        android:numStars="5"
+        android:progressTint="@color/golden"
+        android:progressBackgroundTint="@color/light_grey"
+        android:background="@color/white"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ratingBarText"
+
+        />
+
+    <TextView
+        android:id="@+id/evaluatePharmacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_green"
+        android:text="évaluer le pharmacie"
+        android:textSize="20sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@id/ratingBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center_horizontal"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

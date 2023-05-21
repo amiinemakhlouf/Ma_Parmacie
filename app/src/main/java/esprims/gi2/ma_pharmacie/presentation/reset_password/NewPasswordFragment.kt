@@ -50,7 +50,7 @@ class NewPasswordFragment : Fragment() {
         binding.resetBt.setOnClickListener {
 
             if (isInputValid()) {
-                val email = binding.password.editText?.text?.toString()
+                val email = binding.passwordEt.editText?.text?.toString()
 
                 lifecycleScope.launch(IO) {
 
@@ -90,9 +90,9 @@ class NewPasswordFragment : Fragment() {
     fun isInputValid():Boolean {
 
         var isValid = true
-        val password = binding.password.editText?.text.toString()
+        val password = binding.passwordEt.editText?.text.toString()
 
-        val confirmPassword = binding.confirmPassword.editText?.text.toString()
+        val confirmPassword = binding.confirmPasswordEt.editText?.text.toString()
         if (!Utils.isPasswordValid(password)) {
 
             binding.passwordError.visibility = VISIBLE
@@ -117,10 +117,10 @@ class NewPasswordFragment : Fragment() {
 
     fun clearErrorWhenTyping()
     {
-        binding.password.editText?.doOnTextChanged { text, start, before, count ->
+        binding.passwordEt.editText?.doOnTextChanged { text, start, before, count ->
             binding.passwordError.visibility=INVISIBLE
         }
-        binding.confirmPassword.editText?.doOnTextChanged { text, start, before, count ->
+        binding.confirmPasswordEt.editText?.doOnTextChanged { text, start, before, count ->
             binding.confirmPasswordError.visibility= INVISIBLE
         }
     }

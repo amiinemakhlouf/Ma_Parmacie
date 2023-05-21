@@ -45,6 +45,7 @@ class ConfirmEmailOtpFragment : Fragment() {
         loadingDialog = LoadingDialog(requireActivity() as MainActivity)
         loadingDialog.hideDialog()
 
+
         return binding.root
     }
 
@@ -84,6 +85,8 @@ class ConfirmEmailOtpFragment : Fragment() {
                     is UIState.Error->  updateUiAfterFaillure()
                     is UIState.Success -> updateUiAfterSuccess(uiState.data)
                     is UIState.Loading  -> loadingDialog.showDialog()
+                    else -> loadingDialog.hideDialog()
+
                 }
 
             }
@@ -136,6 +139,7 @@ class ConfirmEmailOtpFragment : Fragment() {
                 val forResult = args.source == 1
 
                 val result =viewModel.confirmEmail(ConfirmRequestModel(args.email!!.trimEnd(), code), forResult)
+
 
 
             }
@@ -193,6 +197,7 @@ class ConfirmEmailOtpFragment : Fragment() {
             Source.REGISTER.indice -> {
                 navigateTOReminderScreen()
                 saveJwtLocally(jwt=data!!, context = requireContext())
+                loadingDialog.hideDialog()
             }
             Source.FORGETPASSWORD.indice -> navigateToNewPasswordScreen()
         }

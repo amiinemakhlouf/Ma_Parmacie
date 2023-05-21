@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="35dp"
+    android:background="@drawable/bottom_sheet_background"
+    tools:context=".presentation.pharmacie.PharmacyFilterBottomSheet">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/openIV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/open_icon"
+        android:text="@string/hello_blank_fragment" />
+
+    <TextView
+        android:id="@+id/openOnlyTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ouvert seulements"
+        app:layout_constraintBottom_toBottomOf="@id/openIV"
+        app:layout_constraintTop_toTopOf="@id/openIV"
+        app:layout_constraintStart_toEndOf="@id/openIV"
+        android:layout_marginStart="5dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/openSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/openIV"
+        app:layout_constraintBottom_toBottomOf="@id/openIV"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="18sp"
+        android:checked="true"
+        app:thumbTint="@color/dark_green"
+        app:trackTint="@color/light_green"
+        />
+
+    <ImageView
+        android:id="@+id/distanceIv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/distance"
+        app:layout_constraintTop_toBottomOf="@id/openIV"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:id="@+id/distanceTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="distance"
+        app:layout_constraintBottom_toBottomOf="@id/distanceIv"
+        app:layout_constraintTop_toTopOf="@id/distanceIv"
+        app:layout_constraintStart_toEndOf="@id/distanceIv"
+        android:layout_marginStart="5dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        />
+    <com.google.android.material.slider.Slider
+        android:id="@+id/distanceSlider"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="10"
+        android:value="5"
+        android:stepSize="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/distanceIv"
+        app:layout_constraintBottom_toBottomOf="@id/distanceIv"
+        app:trackColor="#9E9E9E"
+        app:thumbColor="@color/dark_green"
+        app:labelBehavior="gone" />
+    <TextView
+        android:id="@+id/labelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-12dp"
+        android:textColor="@color/white"
+        android:elevation="100dp"
+        android:textSize="12sp"
+        android:background="@android:color/darker_gray"
+        android:visibility="gone"
+        android:paddingStart="5dp"
+        android:paddingEnd="6dp"
+        app:layout_constraintStart_toStartOf="@id/distanceSlider"
+        app:layout_constraintEnd_toEndOf="@id/distanceSlider"
+        app:layout_constraintBottom_toTopOf="@id/distanceSlider" />
+
+    <ImageView
+        android:id="@+id/rateIv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/rate"
+        app:layout_constraintTop_toBottomOf="@id/distanceIv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/minimumRatingTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Évaluation minimale"
+        android:layout_marginStart="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/rateIv"
+        app:layout_constraintTop_toTopOf="@id/rateIv"
+        app:layout_constraintBottom_toBottomOf="@id/rateIv" />
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:rating="2.5"
+        android:numStars="5"
+        android:progressTint="@color/golden"
+        android:layout_marginEnd="10dp"
+        android:progressBackgroundTint="@color/light_grey"
+        app:layout_constraintStart_toEndOf="@id/minimumRatingTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/minimumRatingTV"
+        app:layout_constraintBottom_toBottomOf="@id/minimumRatingTV"
+        style="@style/CustomRatingBarStyle"
+        android:isIndicator="false"
+
+
+
+        />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/ratingBar"
+        android:layout_height="1dp"
+        />
+    
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        android:backgroundTint="@color/dark_green"
+        android:textSize="14sp"
+        style="@style/applyBt"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:textColor="@color/white"
+        app:iconGravity="textStart"
+        app:icon="@drawable/done"
+        android:text="Appliquer"/>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
