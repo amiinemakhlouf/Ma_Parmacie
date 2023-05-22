@@ -43,6 +43,7 @@ import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -157,13 +158,25 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     }
 
     private fun startAudioRecord() {
-        binding.recordImage.setOnClickListener {
-            if (shouldIRecord == false) {
+
+         binding.recordImage.setOnClickListener {
+             Toast.makeText(requireActivity(),"hechmijilani",Toast.LENGTH_SHORT).show()
+            if (!shouldIRecord) {
                 player = MediaPlayer.create(requireContext(), audioFile!!.toUri())
+                 Toast.makeText(requireActivity(),"la tunisie",Toast.LENGTH_SHORT).show()
                 player?.start()
-                handleStopAudioRecord()
-                shouldIRecord = false
-                binding.recordSeekBar.updateSpeaking(true)
+                binding.recordImage.setImageDrawable(resources.getDrawable(R.drawable.baseline_pause_24))
+                binding.recordImage.setOnClickListener {
+                    player?.pause()
+                    binding.recordImage.setImageDrawable(context?.getDrawable(R.drawable.ic_play))
+
+                }
+
+                    handleStopAudioRecord()
+                    shouldIRecord = false
+                    binding.recordSeekBar.updateSpeaking(false)
+
+
             }
 
 
@@ -171,9 +184,14 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     }
 
     private fun handleStopAudioRecord() {
+
         player?.setOnCompletionListener {
             player?.stop()
             binding.recordSeekBar.updateSpeaking(false)
+            binding.recordImage.setImageDrawable(context?.getDrawable(R.drawable.ic_play))
+            shouldIRecord = false
+            startAudioRecord()
+
 
         }
     }
@@ -575,6 +593,11 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         navHostFragment.navController.navigate(action)
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadingDialog.hideDialog()
     }
 }
 

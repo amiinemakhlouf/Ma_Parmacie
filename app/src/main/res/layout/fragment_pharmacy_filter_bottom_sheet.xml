@@ -87,8 +87,9 @@
         android:textColor="@color/white"
         android:elevation="100dp"
         android:textSize="12sp"
+
         android:background="@android:color/darker_gray"
-        android:visibility="gone"
+        android:visibility="visible"
         android:paddingStart="5dp"
         android:paddingEnd="6dp"
         app:layout_constraintStart_toStartOf="@id/distanceSlider"
