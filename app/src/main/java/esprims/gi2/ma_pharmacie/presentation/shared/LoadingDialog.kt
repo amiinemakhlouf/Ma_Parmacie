@@ -14,7 +14,7 @@ class LoadingDialog(
         builder.setView(R.layout.custom_progress_bar)
         dialog=builder.create()
         dialog!!.show()
-        dialog!!.setCancelable(false)
+        dialog!!.setCancelable(true)
 
     }
 

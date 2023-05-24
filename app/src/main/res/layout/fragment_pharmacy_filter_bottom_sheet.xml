@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="@id/openIV"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="18sp"
-        android:checked="true"
+        android:checked="false"
         app:thumbTint="@color/dark_green"
         app:trackTint="@color/light_green"
         />
@@ -87,7 +87,7 @@
         android:textColor="@color/white"
         android:elevation="100dp"
         android:textSize="12sp"
-
+        android:text="5km"
         android:background="@android:color/darker_gray"
         android:visibility="visible"
         android:paddingStart="5dp"

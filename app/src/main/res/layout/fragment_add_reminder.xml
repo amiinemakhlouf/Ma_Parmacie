@@ -102,6 +102,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
         app:icon="@drawable/clock"
+        app:iconSize="35dp"
         app:iconTint="@color/dark_green"
         android:text="Ajouter un rappel"
         android:textColor="@color/dark_green"

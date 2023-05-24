@@ -9,6 +9,6 @@ data class PharmacyModel(
     val address:String?=null,
     val rate:Float?=null,
     val closeTime:String?=null,
-    val phoneNumber:String?=null
+    val phoneNumber:String?=null,
 
 )

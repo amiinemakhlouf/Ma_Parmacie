@@ -13,12 +13,13 @@
 
         android:title="@string/my_medicines"
         android:checkable="true"/>
-    <item
-        android:id="@id/mapsFragment"
+   <!--> <item
+        android:id="@+id/"
         android:icon="@drawable/maps_logo"
 
         android:title="pharmacies proches"
         android:checkable="true"/>
+        <-->
 
     <item
         android:id="@+id/checkUpFragment"

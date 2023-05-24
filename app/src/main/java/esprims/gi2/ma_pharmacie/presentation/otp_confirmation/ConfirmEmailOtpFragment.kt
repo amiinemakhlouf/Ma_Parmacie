@@ -67,7 +67,15 @@ class ConfirmEmailOtpFragment : Fragment() {
 
         when (uiState)
         {
-            is UIState.Success  -> Toasty.success(requireActivity(),"code renvoyé").show()
+            is UIState.Loading ->{
+                loadingDialog.showDialog()
+            }
+            is UIState.Success  ->{
+                Toasty.success(requireActivity(),"code renvoyé").show()
+            }
+            else ->loadingDialog.hideDialog()
+
+
         }
 
         }

@@ -40,11 +40,6 @@
             app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
-        android:id="@+id/mapsFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.pharmacie.PharmacyFragment"
-        android:label="les pharmacies porches"
-        tools:layout="@layout/fragment_maps" />
-    <fragment
         android:id="@+id/addMedicineDialog"
         android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddMedicationFragment"
         android:label="nouveau médicament"

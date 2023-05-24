@@ -42,6 +42,48 @@
 
         />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchMedication"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/backButton"
+        app:layout_constraintStart_toEndOf="@id/backButton"
+        app:boxBackgroundColor="@color/light_grey"
+        app:boxCornerRadiusBottomEnd="40dp"
+        app:boxCornerRadiusTopStart="40dp"
+        app:boxCornerRadiusTopEnd="40dp"
+        android:layout_marginStart="5dp"
+        app:hintTextColor="@android:color/transparent"
+        android:textColorHint="@color/black"
+        android:hint="chercher un médicament"
+        android:layout_marginEnd="5dp"
+        app:boxCornerRadiusBottomStart="40dp"
+        app:layout_constraintEnd_toStartOf="@id/filter"
+        app:endIconDrawable="@drawable/search"
+        app:endIconTint="@color/black"
+        android:elevation="10dp"
+        app:boxStrokeColor="@color/dark_green"
+
+        app:endIconMode="custom"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+
+
+        >
+     <com.google.android.material.textfield.TextInputEditText
+         android:id="@+id/searchMedicationEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+         android:textSize="12sp"
+         android:paddingTop="0dp"
+         android:paddingBottom="0dp"
+         android:maxLines="1"
+         android:inputType="text"
+         android:imeOptions="actionSearch"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <org.osmdroid.views.MapView
         android:id="@+id/maps"
@@ -49,38 +91,6 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
- <!-->   <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:hintTextColor="@color/white"
-
-        app:boxBackgroundColor="@color/dark_green"
-        app:boxCornerRadiusBottomEnd="20dp"
-        app:boxCornerRadiusTopStart="20dp"
-        app:boxCornerRadiusTopEnd="20dp"
-        app:boxCornerRadiusBottomStart="20dp"
-        android:hint="chercher un medicament"
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/arrow_forward"
-        app:endIconTint="@color/white"
-        android:textColorHint="@color/white"
-
-
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-             android:textColor="@color/white"
-            android:textCursorDrawable="@color/dark_green"
-
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-<-->
 
 
 

@@ -36,9 +36,11 @@ import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.ActivityMainBinding
 import esprims.gi2.ma_pharmacie.presentation.alarm.AlarmActivity
 import esprims.gi2.ma_pharmacie.presentation.onBoarding.dataStore
+import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.onSystemBackButtonClicked
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -49,6 +51,9 @@ class MainActivity : AppCompatActivity() {
     public lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private  val loadingDialog :LoadingDialog by lazy {
+        LoadingDialog(this)
+    }
     private val TAG = "Main activity"
     private val firstVisit = true
     var isFRomReminder:Boolean=false
@@ -181,7 +186,11 @@ class MainActivity : AppCompatActivity() {
         }
         setUpDrawer()
         binding.navigationView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
-
+            lifecycleScope.launch(Main)
+            {
+                loadingDialog.showDialog()
+                delay(2000)
+            }
             logout()
             isFRomReminder=true
             return@setOnMenuItemClickListener true
@@ -240,7 +249,7 @@ class MainActivity : AppCompatActivity() {
         binding.navigationView.setupWithNavController(navController)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.mapsFragment,
+                R.id.pharmacyFragment,
                 R.id.notificationFragment,
                 R.id.checkUpFragment,
                 R.id.notificationFragment,
@@ -343,7 +352,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun navigateToMapsFragment(){
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        navHostFragment.navController.navigate(R.id.mapsFragment)
+        navHostFragment.navController.navigate(R.id.pharmacyFragment)
     }
 
     private fun showLogoutToast() {
@@ -366,7 +375,6 @@ class MainActivity : AppCompatActivity() {
         deleteJwtFromLocalStorage()
         showLogoutToast()
         dialog.dismiss()
-        navigateTologinScreen()
     }
 
 

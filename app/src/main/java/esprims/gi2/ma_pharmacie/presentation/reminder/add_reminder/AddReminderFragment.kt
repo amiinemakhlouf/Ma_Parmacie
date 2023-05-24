@@ -10,6 +10,8 @@ import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.LayoutInflater
@@ -368,11 +370,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
     private fun handleConfirmBt() {
         binding.continuerFab.setOnClickListener {
-            for (day in selectedDays) {
-                Log.d("add reminder" + " day", day)
-                Toast.makeText(requireActivity(), day, Toast.LENGTH_SHORT).show()
 
-            }
             saveReminder()
         }
     }
@@ -531,8 +529,11 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
             {
 
                 loadingDialog.hideDialog()
-                Toasty.success(requireContext(), "Enregistré avec succes").show()
-                returnTODashboard()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    returnTODashboard()
+
+                }, Toast.LENGTH_SHORT.toLong())
+                Toasty.success(requireContext(), "Enregistré avec succes",Toast.LENGTH_SHORT).show()
 
 
             }
@@ -582,8 +583,9 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
     private fun returnToSaveMedication() {
         binding.backButton.setOnClickListener {
-            findNavController().popBackStack()
-            Toast.makeText(requireActivity(), "goujou", Toast.LENGTH_SHORT).show()
+           // findNavController().popBackStack()
+           // Toast.makeText(requireActivity(), "goujou", Toast.LENGTH_SHORT).show()
+            returnTODashboard()
         }
     }
     private  fun returnTODashboard()

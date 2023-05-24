@@ -34,14 +34,13 @@ class ConfirmEmailOtpViewModel @Inject constructor(
         emailOtpStateFlow.emit(UIState.Loading())
        when(result)
        {
+
            is Result.Success  ->  {
                emailOtpStateFlow.emit(UIState.Success(result.message))
 
            }
 
-           else ->  {
-             emailOtpStateFlow.emit(UIState.Error())
-           }
+
 
        }
 
