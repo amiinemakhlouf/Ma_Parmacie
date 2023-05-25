@@ -1,32 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.drawerlayout.widget.DrawerLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/design_default_color_surface"
     tools:context=".presentation.main.MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/top_app_bar"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:menu="@menu/menu_top_bar"
-        app:popupTheme="@style/MyDarkToolbarStyle"
 
-        android:background="?attr/colorSurface"
-        app:titleTextColor="?attr/colorOnSurface"
-
-        />
      <androidx.fragment.app.FragmentContainerView
          android:id="@+id/my_fragment"
          android:layout_width="match_parent"
@@ -34,37 +16,58 @@
          android:background="@drawable/rounded_corners_on_top"
          android:name="androidx.navigation.fragment.NavHostFragment"
          app:navGraph="@navigation/pharmacy_nav_graph"
-         app:layout_constraintTop_toBottomOf="@id/top_app_bar"
-         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
+         android:layout_marginBottom="20dp"
          />
-    <Button
-        android:id="@+id/bt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+
+     <com.google.android.material.bottomnavigation.BottomNavigationView
+         android:id="@+id/bottom_nav_view"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:menu="@menu/menu_navigation_drawer" />
+          <androidx.coordinatorlayout.widget.CoordinatorLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              android:elevation="12dp"
+              app:layout_constraintBottom_toBottomOf="parent">
+
+               <com.google.android.material.floatingactionbutton.FloatingActionButton
+                   android:id="@+id/fab"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:elevation="200dp"
+                   android:src="@android:drawable/ic_input_add"
+                   android:backgroundTint="@color/white"
+                   app:tint="@color/dark_green"
+                   app:layout_anchor="@id/bottom_app_bar" />
+
+               <com.google.android.material.bottomappbar.BottomAppBar
+                   android:id="@+id/bottom_app_bar"
+                   android:layout_width="match_parent"
+                   android:layout_height="0dp"
+                   android:layout_gravity="bottom"
+                   app:fabCradleMargin="20dp"
+                   app:fabCradleVerticalOffset="10dp"
+                   app:fabCradleRoundedCornerRadius="20dp"
+
+                   app:backgroundTint="@color/black" />
+          </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    <esprims.gi2.ma_pharmacie.presentation.main.CustomNavigationView
-        android:id="@+id/navigationView"
-        android:paddingTop="12dp"
-        android:paddingStart="8dp"
-        app:itemIconSize="35dp"
-        android:layout_gravity="start"
-        app:menu="@menu/menu_navigation_drawer"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        app:itemTextAppearance="@style/Theme.Ma_Pharmacie"
-
-
-        />
 
 
 
-</androidx.drawerlayout.widget.DrawerLayout>
+
 

@@ -178,23 +178,9 @@ class MainActivity : AppCompatActivity() {
 
         }*/
 
-        binding.bt.setOnClickListener {
 
-            showCalendar()
-            showTimePcker()
 
-        }
-        setUpDrawer()
-        binding.navigationView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
-            lifecycleScope.launch(Main)
-            {
-                loadingDialog.showDialog()
-                delay(2000)
-            }
-            logout()
-            isFRomReminder=true
-            return@setOnMenuItemClickListener true
-        }
+
 
 
     }
@@ -246,7 +232,7 @@ class MainActivity : AppCompatActivity() {
         navController = hostNavFragment.findNavController()
 
 
-        binding.navigationView.setupWithNavController(navController)
+       /* binding.navigationView.setupWithNavController(navController)
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.pharmacyFragment,
@@ -260,7 +246,7 @@ class MainActivity : AppCompatActivity() {
         )
         setSupportActionBar(binding.topAppBar)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        binding.navigationView.setupWithNavController(navController)
+        binding.navigationView.setupWithNavController(navController)*/
 
     }
 
@@ -362,20 +348,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private  fun logout()
-    {
-        val loadingMessage="déconnexion en cours..."
-        binding.drawer.close()
-        binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        val dialog = ProgressDialog.show(
-            this, "",
-            loadingMessage, true
-        )
 
-
-        deleteJwtFromLocalStorage()
-        showLogoutToast()
-    }
 
 
     override fun onResume() {

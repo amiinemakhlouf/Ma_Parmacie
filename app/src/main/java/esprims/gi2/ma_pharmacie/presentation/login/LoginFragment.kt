@@ -56,7 +56,6 @@ class LoginFragment : Fragment() {
     ): View? {
         loadingDialog=LoadingDialog(requireActivity() as MainActivity)
 
-        (  requireActivity() as MainActivity).binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         binding= FragmentLoginBinding.inflate(layoutInflater)
         val text="dqsdqs"
         if((requireActivity() as MainActivity).isFRomReminder==true)
@@ -65,11 +64,6 @@ class LoginFragment : Fragment() {
             loadingDialog.hideDialog()
             return  binding.root
         }
-        (requireActivity() as MainActivity).binding.drawer.visibility= View.INVISIBLE
-
-
-
-
 
 
         lifecycleScope.launch(IO){

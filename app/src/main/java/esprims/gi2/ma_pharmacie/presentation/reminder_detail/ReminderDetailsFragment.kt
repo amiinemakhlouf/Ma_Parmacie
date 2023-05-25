@@ -48,7 +48,6 @@ class ReminderDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         onSystemBackButtonClicked(this)
         disableTopBar()
-        (  requireActivity() as MainActivity).binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         binding.backImage.setOnClickListener {
             requireActivity().onBackPressed();

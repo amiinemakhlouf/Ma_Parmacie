@@ -35,8 +35,6 @@ class ReminderFragment : Fragment() , ReminderCallback {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
 
-        (requireActivity() as MainActivity).binding.drawer.visibility= View.VISIBLE
-        enableDrawer()
         handleAppBackButton()
         onSystemBackButtonClicked(this)
         binding.addFab.setOnClickListener {
@@ -90,11 +88,7 @@ class ReminderFragment : Fragment() , ReminderCallback {
     }
 
 
-    fun enableDrawer(){
-
-        (requireActivity() as MainActivity).binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-
-    }
+    
 
     override fun navigateToDetailsScreen() {
         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment

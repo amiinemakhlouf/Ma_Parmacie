@@ -165,11 +165,7 @@ class ConfirmEmailOtpFragment : Fragment() {
 
     }
 
-    private fun handleAppBackButton() {
-        (requireActivity() as MainActivity).binding.topAppBar.setNavigationOnClickListener {
-            returnToLoginScreenImp()
-        }
-    }
+
 
     private fun returnToLoginScreenImp() {
 
