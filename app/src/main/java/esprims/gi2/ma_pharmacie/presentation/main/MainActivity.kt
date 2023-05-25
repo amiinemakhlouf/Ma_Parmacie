@@ -333,6 +333,7 @@ class MainActivity : AppCompatActivity() {
                        }
 
                         withContext(Main) {
+                            loadingDialog.hideDialog()
                             navigateTologinScreen()
                             showLogoutToast()
                         }
@@ -374,7 +375,6 @@ class MainActivity : AppCompatActivity() {
 
         deleteJwtFromLocalStorage()
         showLogoutToast()
-        dialog.dismiss()
     }
 
 

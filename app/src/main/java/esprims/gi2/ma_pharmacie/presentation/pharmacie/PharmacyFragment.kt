@@ -7,13 +7,10 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
-import android.os.Handler
-import android.os.SystemClock
 import android.util.Log
 import android.view.*
 import android.view.MotionEvent.ACTION_MOVE
 import android.view.View.*
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,9 +22,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.internal.ViewUtils
+import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.BuildConfig
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentPharmacyBinding
+import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
 import kotlinx.coroutines.delay
@@ -78,45 +78,72 @@ class PharmacyFragment : Fragment(),PinchSaceListenner,DataPassListener {
         getUserLocation()
         showFilterBottomSheet()
         binding.searchMedication.setEndIconOnClickListener {
-            if (isSearchIcon){
-
-
-             lifecycleScope.launch {
-                loadingDialog.showDialog()
-                 delay(2000)
-                 loadingDialog.hideDialog()
-                 binding.maps.overlays.removeAll(binding.maps.overlays)
-
-                 showPharmacieWhereMedicationAvailableMarker(getListOfPharmacies()[1],"disponible ici")
-                 controller.zoomIn()
-                 binding.searchMedication.endIconDrawable=requireActivity().getDrawable(R.drawable.ic_baseline_close_24)
-             }
-                isSearchIcon=false
+           handleSearchMedication()
         }
-            else
+       binding.searchMedicationEt.setOnEditorActionListener {
+               v, actionId, event ->
+           handleSearchMedication()
+           true
+
+       }
+        binding.searchMedicationEt.setOnFocusChangeListener {
+                v, hasFocus ->
+            when(hasFocus)
             {
-                lifecycleScope.launch {
-                    loadingDialog.showDialog()
-                    delay(2000)
-                    loadingDialog.hideDialog()
-                    removeMarker()
-                    showAllPharmacies(getListOfPharmacies())
-                   binding.maps.invalidate()
-                   isSearchIcon=true
-                    binding.searchMedication.endIconDrawable=requireActivity().getDrawable(R.drawable.search)
-                    binding.searchMedication.setEndIconTintList(ColorStateList.valueOf(resources.getColor(R.color.dark_green)))
-
-
-                }
-
+                true -> binding.searchMedication.hint=""
+                false -> binding.searchMedication.hint=requireActivity().getString(R.string.choose_medication_hint)
             }
-        }
 
+        }
 
 
     }
 
-    private fun showPharmacieWhereMedicationAvailableMarker(pharmacyModel: PharmacyModel ,message:String?) {
+    private fun handleSearchMedication()  {
+        if (isSearchIcon){
+
+            if(binding.searchMedicationEt.text.toString().isNullOrBlank()){
+
+                return
+            }
+
+            requireActivity().hideKeyboard(binding.searchMedication)
+            lifecycleScope.launch {
+                loadingDialog.showDialog()
+                delay(2000)
+                loadingDialog.hideDialog()
+                binding.maps.overlays.removeAll(binding.maps.overlays)
+                if(binding.searchMedicationEt.text.toString().uppercase()=="Efferalgan".uppercase()){
+                    showPharmaciesWhereMedicationAvailableMarker(getListOfPharmacies()[1],"disponible ici")
+
+                }
+                else{
+                    Toasty.error(requireActivity(),"ce médicament est indisponible").show()
+                }
+                binding.searchMedication.endIconDrawable=requireActivity().getDrawable(R.drawable.ic_baseline_close_24)
+            }
+            isSearchIcon=false
+        }
+        else
+        {
+            lifecycleScope.launch {
+
+                removeMarker()
+                showAllPharmacies(getListOfPharmacies())
+                binding.maps.invalidate()
+                isSearchIcon=true
+                binding.searchMedicationEt.setText("")
+                binding.searchMedication.clearFocus()
+                binding.searchMedication.endIconDrawable=requireActivity().getDrawable(R.drawable.search)
+                binding.searchMedication.setEndIconTintList(ColorStateList.valueOf(resources.getColor(R.color.dark_green)))
+
+
+            }
+
+        }
+    }
+
+    private fun showPharmaciesWhereMedicationAvailableMarker(pharmacyModel: PharmacyModel, message:String?) {
 
          marker=Marker(binding.maps).apply {
 
@@ -140,8 +167,8 @@ class PharmacyFragment : Fragment(),PinchSaceListenner,DataPassListener {
     private  fun removeMarker()
     {
 
-        marker!!.closeInfoWindow()
-        marker!!.setInfoWindow(null)
+        marker?.closeInfoWindow()
+        marker?.setInfoWindow(null)
 
 
     }

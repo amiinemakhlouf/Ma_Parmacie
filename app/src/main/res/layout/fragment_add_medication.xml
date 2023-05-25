@@ -148,6 +148,7 @@
             android:textSize="22sp"
             android:inputType="number"
             android:text="0"
+            android:imeOptions="actionNone"
             android:gravity="center_horizontal"
 
 

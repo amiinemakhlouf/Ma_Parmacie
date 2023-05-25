@@ -51,7 +51,19 @@ class AddMedicationFragment : Fragment(),AddReminderAdapter.OnTypeListener {
         scanBarCode()
         selectStockageRadioButton()
         clearErrorWhenTyping()
+        handleFocusOnQuantityEt()
 
+    }
+
+    private fun handleFocusOnQuantityEt() {
+        binding.quantityEt.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus)
+            {
+                if(binding.quantityEt.text.toString()=="0"){
+                    binding.quantityEt.setText("")
+                }
+            }
+        }
     }
 
     private fun selectCapsuleForFirstFragmentStartUP() {
