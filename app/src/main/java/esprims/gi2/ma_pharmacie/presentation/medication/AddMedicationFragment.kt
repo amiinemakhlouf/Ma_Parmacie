@@ -1,14 +1,26 @@
-package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
+package esprims.gi2.ma_pharmacie.presentation.medication
 
+import android.app.Activity
+import android.content.Context.MODE_PRIVATE
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -19,17 +31,29 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
+import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddMedicationBinding
+import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
+import esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderAdapter
+import esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderViewModel
 import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
-
-class AddMedicationFragment : Fragment(),AddReminderAdapter.OnTypeListener {
+@AndroidEntryPoint
+class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
+    private var medicationImageUri: Uri?=null
+    private var resultLauncher: ActivityResultLauncher<Uri>?=null
     private var selectedForOfStockage: RadioButton?=null
     private  lateinit var binding:FragmentAddMedicationBinding
     private var checkedDaysList = mutableListOf<Int>()
-    private val viewModel:AddReminderViewModel by viewModels()
+    lateinit var currentPhotoPath: String
+
+    private val viewModel: AddReminderViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,7 +66,48 @@ class AddMedicationFragment : Fragment(),AddReminderAdapter.OnTypeListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ( requireActivity() as MainActivity).binding.bottomNavView.visibility= View.GONE
+        ( requireActivity() as MainActivity).binding.fab.visibility= View.GONE
+        binding.backButton.setOnClickListener {
+            returnToShowMedicationFragment()
+        }
 
+        binding.medicationNameETT.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus){
+                requireContext().hideKeyboard(v)
+            }
+        }
+        binding.quantityEt.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus){
+                requireContext().hideKeyboard(v)
+
+            }
+        }
+        binding.medicationDescriptionET.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus){
+                requireContext().hideKeyboard(v)
+            }
+        }
+
+        binding.root.setOnClickListener {
+            /*Toast.makeText(requireContext(),"bujumbura",Toast.LENGTH_SHORT).show()
+            (requireActivity() as MainActivity).currentFocus?.clearFocus()
+            requireActivity().hideKeyboard(it)*/
+        }
+
+        resultLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { isPictureTaked ->
+
+
+            if(isPictureTaked)
+            {
+                binding.addMedicationTV.text=""
+                binding.optionnalMsg.text=""
+                binding.addImageIcon.visibility=INVISIBLE
+                binding.uploadBackgroundImage.setImageURI(medicationImageUri)
+
+            }
+
+        }
         selectCapsuleForFirstFragmentStartUP()
         setUpMedicationTypesRv()
         addSWhenQuantityHigherThan1()
@@ -52,7 +117,45 @@ class AddMedicationFragment : Fragment(),AddReminderAdapter.OnTypeListener {
         selectStockageRadioButton()
         clearErrorWhenTyping()
         handleFocusOnQuantityEt()
+        binding.uploadBackgroundImage.setOnClickListener {
 
+            if(ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.CAMERA)
+             ==PackageManager.PERMISSION_GRANTED
+            ){
+                medicationImageUri=createPhotoUri()
+
+                medicationImageUri?.let {
+                    dispatchTakePictureIntent(imageUri = it)
+
+                }
+
+            }
+            else{
+
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CAMERA),0)
+
+            }
+
+        }
+
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode ==0 && grantResults.isNotEmpty())
+        {
+            medicationImageUri=createPhotoUri()
+
+            medicationImageUri?.let {
+                dispatchTakePictureIntent(imageUri = it)
+
+            }
+            Toast.makeText(requireActivity(),"la tunsiie",Toast.LENGTH_SHORT).show()
+
+        }
     }
 
     private fun handleFocusOnQuantityEt() {
@@ -62,6 +165,9 @@ class AddMedicationFragment : Fragment(),AddReminderAdapter.OnTypeListener {
                 if(binding.quantityEt.text.toString()=="0"){
                     binding.quantityEt.setText("")
                 }
+            }
+            else{
+                requireContext().hideKeyboard(v)
             }
         }
     }
@@ -322,4 +428,66 @@ class AddMedicationFragment : Fragment(),AddReminderAdapter.OnTypeListener {
 
 
 }
-}
+    private fun dispatchTakePictureIntent(imageUri: Uri) {
+
+        resultLauncher?.launch(imageUri)
+    }
+
+    private fun savePhotoToInternalStorage(name:String,bmp:Bitmap){
+        requireActivity().openFileOutput(name+"jpg",MODE_PRIVATE).use {stream->
+
+            if(!bmp.compress(Bitmap.CompressFormat.JPEG,95,stream)){
+                Toasty.error(requireContext(),"un  erreur est survenu").show()
+            }
+
+        }
+    }
+
+    private  fun loadImageFromInternalStorage():Bitmap?{
+            val files=requireActivity().filesDir.listFiles()
+            var bmp:Bitmap?=null
+            files?.filter { it.canRead() && it.isFile && it.name.endsWith("jpg")
+            }?.map {
+                val bytes=it.readBytes()
+                 bmp=BitmapFactory.decodeByteArray(bytes,0,bytes.size)
+
+            }
+
+        return  bmp
+
+
+    }
+
+
+    private fun createPhotoUri(): Uri {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val photoFile = File.createTempFile("IMG_$timeStamp", ".jpg", storageDir)
+        return FileProvider.getUriForFile(requireContext(), "com.example.myapp.fileprovider", photoFile)
+    }
+
+    private fun returnToShowMedicationFragment()
+    {
+        requireActivity().supportFragmentManager.popBackStack();
+
+    }
+    private fun getRequestPermissionLauncher(): ActivityResultLauncher<String> {
+
+        return registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                medicationImageUri=createPhotoUri()
+                medicationImageUri?.let {
+                    dispatchTakePictureIntent(imageUri = it)
+
+                }
+                Toast.makeText(requireActivity(),"la tunsiie",Toast.LENGTH_SHORT).show()
+
+            }
+
+             else {
+            //  requireActivity().requestPermissions()
+            }
+        }}}
+

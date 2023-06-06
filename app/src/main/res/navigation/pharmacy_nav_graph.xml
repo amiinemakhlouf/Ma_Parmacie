@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pharmacy_nav_graph"
-    app:startDestination="@id/reminderFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/pharmacyFragment"
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/addMedicineDialog"
-        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddMedicationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.medication.AddMedicationFragment"
         android:label="nouveau médicament"
 
 
@@ -93,6 +93,9 @@
         <action
             android:id="@+id/action_reminderFragment_to_addReminderFragment"
             app:destination="@id/addReminderFragment" />
+        <action
+            android:id="@+id/action_reminderFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/reminderDetailsFragment"
@@ -114,7 +117,7 @@
     </fragment>
     <fragment
         android:id="@+id/addReminderFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddMedicationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.medication.AddMedicationFragment"
         android:label="fragment_add_reminder"
         tools:layout="@layout/fragment_add_medication" >
         <action
@@ -230,5 +233,13 @@
         <action
             android:id="@+id/action_scannerFragment_to_addReminder2Fragment"
             app:destination="@id/addReminder2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showMedicationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.medication.ShowMedicationFragment"
+        android:label="ShowMedicationFragment" >
+        <action
+            android:id="@+id/action_showMedicationFragment_to_addReminderFragment"
+            app:destination="@id/addReminderFragment" />
     </fragment>
 </navigation>

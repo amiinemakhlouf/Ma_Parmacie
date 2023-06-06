@@ -26,6 +26,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -36,11 +37,16 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddReminderBinding
+import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
+import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
+import esprims.gi2.ma_pharmacie.presentation.shared.Constants
 import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
+import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -54,7 +60,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@AndroidEntryPoint
 class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
     private val loadingDialog:LoadingDialog by lazy {
@@ -73,6 +79,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     private lateinit var recorder: MediaRecorder
     private var player: MediaPlayer? = null
     private var audioFile: File? = null
+    private  val viewModel :AddReminderViewModel by viewModels()
     val selectedDays = mutableListOf<String>()
     private var clickToRecord = true
     var isClicked = false
@@ -88,6 +95,9 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("my  jwt",Constants.JWT)
+        hideAppBarWhenViewLooseFocus()
+        hidBottomNavigation()
         returnToSaveMedication()
         handleRecordImageVisibility()
         handleDeleteAudioRecord()
@@ -96,6 +106,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         handleMedicationsTakeRadioButtons(listOfRAdioButtons)
         handleSelectAllDays()
         handleConfirmBt()
+        handleUpdateUIAfterConfirmBt()
         setUpDaysRv()
         handleAddReminders(getReminderView())
         handleDeleteReminder(getReminderView())
@@ -107,6 +118,39 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         handleRecordAudio(recordAudioPermission)
 
 
+    }
+
+    private fun handleUpdateUIAfterConfirmBt() {
+        lifecycleScope.launch(Main){
+            viewModel._reminderState.collect{
+
+                when(it){
+                    is UIState.Loading-> loadingDialog.showDialog()
+                    is UIState.Success -> {
+                        loadingDialog.hideDialog()
+                        Toasty.success(requireActivity(),"le rappel est bien enregistré",Toast.LENGTH_SHORT).show()
+                    }
+                    is UIState.Error ->{
+                        loadingDialog.hideDialog()
+                        Toasty.error(requireContext(),"un erreur est survenu au niveau serveur",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun hideAppBarWhenViewLooseFocus() {
+        binding.NameETT.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus){
+                requireContext().hideKeyboard(v)
+            }
+        }
+        binding.doseEt.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus){
+                requireContext().hideKeyboard(v)
+            }
+        }
     }
 
     private fun handleRecordAudio(recordAudioPermission: ActivityResultLauncher<String>) {
@@ -242,7 +286,6 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     @SuppressLint("ClickableViewAccessibility")
     private fun catchWhenUserReleaseBt() {
      binding.recordImage.setOnTouchListener { view, event ->
-
 
             try {
 
@@ -446,7 +489,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 Log.d("my day", selectedDays.toString())
                 for (i in 0 until binding.daysRv.childCount) {
                     val cardView = binding.daysRv.getChildAt(i) as MaterialCardView
-                    cardView.setCardBackgroundColor(resources.getColor(R.color.light_green, null))
+                    cardView.setCardBackgroundColor(resources.getColor(R.color.day_green, null))
 
                 }
 
@@ -522,22 +565,13 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     }
 
     private fun saveReminder() {
-        loadingDialog.showDialog()
-        lifecycleScope.launch(IO) {
-            delay(2000)
-            withContext(Main)
-            {
 
-                loadingDialog.hideDialog()
-                Handler(Looper.getMainLooper()).postDelayed({
-                    returnTODashboard()
-
-                }, Toast.LENGTH_SHORT.toLong())
-                Toasty.success(requireContext(), "Enregistré avec succes",Toast.LENGTH_SHORT).show()
+            val currentTimestamp = System.currentTimeMillis()
+            val reminder=Reminder("efferalgan","3 pilules"
+                ,currentTimestamp.toString(),"amine","amiinemakhlouf@gmail.com")
+            viewModel.saveReminder(reminder)
 
 
-            }
-        }
     }
 
 
@@ -551,7 +585,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
         } else {
             val cardView = binding.daysRv.getChildAt(position) as MaterialCardView
-            cardView.setCardBackgroundColor(resources.getColor(R.color.light_green, null))
+            cardView.setCardBackgroundColor(resources.getColor(R.color.day_green, null))
             selectedDays.add(adapter.myDataList[position])
 
         }
@@ -600,6 +634,11 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     override fun onResume() {
         super.onResume()
         loadingDialog.hideDialog()
+    }
+    private fun hidBottomNavigation() {
+        ( requireActivity() as MainActivity).binding.bottomNavView.visibility= GONE
+        ( requireActivity() as MainActivity).binding.fab.visibility= GONE
+
     }
 }
 

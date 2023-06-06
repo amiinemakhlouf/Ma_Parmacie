@@ -1,8 +1,11 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import esprims.gi2.ma_pharmacie.app.MyPharmacyApplication
 import esprims.gi2.ma_pharmacie.databinding.DaysReminderItemBinding
 
 
@@ -34,6 +37,7 @@ class AddReminderDaysAdapter(
         holder.binding.textView.setText(myDataList[position])
         holder.binding.root.setOnClickListener {
             dayListener.onDayClick(position)
+            Log.d("AddReminderDaysAdapter", " i'm here fro")
         }
     }
     interface DayListener {

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:background="@drawable/rounded_corner"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:paddingStart="7dp"
+        android:paddingEnd="7dp"
+        android:text=" Pharmacies disposants de médicament"
+        android:textColor="@color/black"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+    <TextView
+        android:id="@+id/explanation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Veuillez entrer le code-barres du médicament pour afficher les pharmacies qui le possèdent."
+
+        />
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/okay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cornerRadius="30dp"
+        app:layout_constraintTop_toBottomOf="@id/explanation"
+        android:layout_marginTop="5dp"
+        android:text="ok"
+        android:textSize="20dp"
+        android:textColor="@color/dark_green"
+        android:gravity="center"
+        android:layout_marginBottom="15dp"
+
+        />
+
+
+    <TextView
+        android:id="@+id/warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/okay"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="25dp"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:text="Ce message ne sera plus afficher."
+        android:textColor="@color/red"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        app:layout_constraintTop_toBottomOf="@id/warning"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

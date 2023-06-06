@@ -22,14 +22,14 @@ class RegisterViewModel @Inject constructor(
 
      fun register(registerRequestModel: RegisterRequestModel):Unit{
          viewModelScope.launch(IO) {
-             registerStateFlow.emit(UIState.Loading())
+             registerStateFlow.emit(UIState.Loading)
 
              val result=sendOtpConfirmationUseCase.invoke(registerRequestModel)
              when(result)
         {
-            is Result.Success -> registerStateFlow.emit(UIState.Success())
+            is Result.Success -> registerStateFlow.emit(UIState.Success(""))
 
-            is Result.Error -> registerStateFlow.emit(UIState.Error(result.message))
+            is Result.Error -> registerStateFlow.emit(UIState.Error(result.message!!))
         }
 
          }

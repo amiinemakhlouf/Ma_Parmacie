@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.Slider
@@ -15,7 +14,8 @@ import esprims.gi2.ma_pharmacie.databinding.FragmentPharmacyFilterBottomSheetBin
 
 
 class PharmacyFilterBottomSheet(
-    private val  dataPassListener: DataPassListener
+    private val  dataPassListener: DataPassListener,
+    private val actualDistance:Float?=null
 )
     : BottomSheetDialogFragment() {
     private  val binding by lazy {
@@ -34,6 +34,9 @@ class PharmacyFilterBottomSheet(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val data = arguments?.getBoolean("open")
+        actualDistance?.let {
+            showDistanceSeekBar(actualDistance)
+        }
 
         data?.let {
             binding.openSwitch.isChecked=data
@@ -42,7 +45,6 @@ class PharmacyFilterBottomSheet(
         binding.filter.setOnClickListener {
             val onlyOpen=binding.openSwitch.isChecked
             val distance=binding.distanceSlider.value
-            Toast.makeText(requireContext(),""+distance.toDouble(),Toast.LENGTH_SHORT).show()
             val minimumEvaluation=binding.ratingBar.rating
             dismiss()
             dataPassListener.onDataPassed(onlyOpen,distance,minimumEvaluation)
@@ -58,7 +60,7 @@ class PharmacyFilterBottomSheet(
     }
 
 
-    private fun showDistanceSeekBar() {
+    private fun showDistanceSeekBar(userValue:Float?=null) {
         val labelFormatter = LabelFormatter { value -> // Customize the label text based on the slider value
             // For example, you can display the value as a percentage
             return@LabelFormatter "" +value+"km"
@@ -67,6 +69,13 @@ class PharmacyFilterBottomSheet(
         binding.distanceSlider.setLabelFormatter(labelFormatter)
 
 
+        if(userValue!=null)
+        {
+            binding.labelTextView.visibility=VISIBLE
+            binding.labelTextView.text=labelFormatter.getFormattedValue(userValue)
+            binding.distanceSlider.value=userValue
+            return
+        }
         binding.distanceSlider.addOnChangeListener(Slider.OnChangeListener { slider, value, fromUser -> // Update the label text
             binding.labelTextView.visibility=VISIBLE
             binding.labelTextView.text=labelFormatter.getFormattedValue(value)
@@ -77,9 +86,10 @@ class PharmacyFilterBottomSheet(
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
+
     }
 
 }
 interface DataPassListener {
-    fun onDataPassed(isOpen: Boolean,distance:Float,minimumEvaluation:Float)
+    fun onDataPassed(applyOpenFilter: Boolean, distance:Float, minimumEvaluation:Float)
 }

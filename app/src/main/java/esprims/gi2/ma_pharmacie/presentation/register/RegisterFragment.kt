@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentRegisterBinding
+import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.requestModel.RegisterRequestModel
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
@@ -53,8 +54,15 @@ class RegisterFragment : Fragment() {
         handleRegisterBtLogic()
         updateUiAfterRegisterFlow()
         clearErrorMessageWhenUserTyping()
+        hideKeyBordWhenInputLooseFocus()
         //passUserToNextTextField()
 
+    }
+
+    private fun hideKeyBordWhenInputLooseFocus() {
+        binding.root.setOnClickListener {
+            requireActivity().hideKeyboard(it)
+        }
     }
 
     private fun getListsOfInputs(): List<View> {
@@ -107,7 +115,7 @@ class RegisterFragment : Fragment() {
               }
 
               is UIState.Error ->{
-                  uiState.message?.let { updateUiAfterRegisterFailed(it) }
+                  (uiState as UIState.Success).data?.let { updateUiAfterRegisterFailed(it) }
                   loadingDialog.hideDialog()
 
               }

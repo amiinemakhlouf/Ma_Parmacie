@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface PharmacyService {
 
-    @GET("api/pharmacies/all")
-    public fun getAllPharmacies() :Response<Pharmacy>
+    @GET("api/pharmacy")
+       public suspend  fun getAllPharmacies() :Response<List<Pharmacy>>
 }

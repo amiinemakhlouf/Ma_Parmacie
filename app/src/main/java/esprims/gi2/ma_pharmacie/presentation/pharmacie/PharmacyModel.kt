@@ -11,4 +11,4 @@ data class PharmacyModel(
     val closeTime:String?=null,
     val phoneNumber:String?=null,
 
-)
+    )

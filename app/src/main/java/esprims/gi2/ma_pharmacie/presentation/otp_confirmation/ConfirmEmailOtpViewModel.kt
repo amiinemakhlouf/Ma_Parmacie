@@ -31,13 +31,16 @@ class ConfirmEmailOtpViewModel @Inject constructor(
     suspend fun confirmEmail(confirmRequestModel: ConfirmRequestModel, forRegister:Boolean){
 
         val result=confirmEmailUseCase.confirmEmail(confirmRequestModel,forRegister)
-        emailOtpStateFlow.emit(UIState.Loading())
+        emailOtpStateFlow.emit(UIState.Loading)
        when(result)
        {
 
            is Result.Success  ->  {
-               emailOtpStateFlow.emit(UIState.Success(result.message))
+               emailOtpStateFlow.emit(UIState.Success(result.message!!))
 
+           }
+           is Result.Error ->{
+               emailOtpStateFlow.emit(UIState.Error(""))
            }
 
 
@@ -54,8 +57,8 @@ class ConfirmEmailOtpViewModel @Inject constructor(
 
         when(result)
         {
-            is Result.Success ->  resendCodeStateFlow.emit(UIState.Success())
-            is Result.Error ->  resendCodeStateFlow.emit(UIState.Error())
+            is Result.Success ->  resendCodeStateFlow.emit(UIState.Success(""))
+            is Result.Error ->  resendCodeStateFlow.emit(UIState.Error(""))
         }
         }
 
@@ -72,8 +75,8 @@ class ConfirmEmailOtpViewModel @Inject constructor(
 
        when(result)
        {
-           is Result.Success -> resendCodeStateFlow.emit(UIState.Success())
-           is Result.Error ->  resendCodeStateFlow.emit(UIState.Error())
+           is Result.Success -> resendCodeStateFlow.emit(UIState.Success(""))
+           is Result.Error ->  resendCodeStateFlow.emit(UIState.Error(""))
        }
         }
 

@@ -1,16 +1,21 @@
 package esprims.gi2.ma_pharmacie.presentation.pharmacie
 
+import java.lang.Math.*
 
-fun calculateDistanceBetweenUserAndPharmacy(userLocation: Location ,pharmacieLocation: Location ):Float
-{
-    val location1 = android.location.Location("")
-    location1.latitude = userLocation.latitude.toDouble()
-    location1.longitude = userLocation.longitude.toDouble()
 
-    val location2 = android.location.Location("")
-    location2.latitude = pharmacieLocation.latitude.toDouble()
-    location2.longitude = pharmacieLocation.longitude.toDouble()
+fun calculateDistanceBetweenUserAndPharmacy(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+    val earthRadius = 6371.0 // Radius of the Earth in kilometers
 
-    return location1.distanceTo(location2)
+    val dLat = Math.toRadians(lat2 - lat1)
+    val dLon = Math.toRadians(lon2 - lon1)
 
+    val a = sin(dLat / 2) * sin(dLat / 2) +
+            cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
+            sin(dLon / 2) * sin(dLon / 2)
+
+    val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    val distance = earthRadius * c
+
+    return distance
 }

@@ -29,13 +29,22 @@ class LoginViewModel @Inject constructor (
 
     fun loginWithEmailAndPassword(loginRequestModel: LoginRequestModel): Unit {
         viewModelScope.launch(IO) {
-            loginState.emit(UIState.Loading())
+            loginState.emit(UIState.Loading)
 
             val result = loginUseCase.loginWithEmailAndPassword(loginRequestModel)
             when (result) {
-                is Result.Success -> loginState.emit(UIState.Success<String>(result.data))
+                is Result.Success ->{
+                    result.data?.let {
+                        loginState.emit(UIState.Success<String>(result.data))
+                    }
+                }
 
-                is Result.Error -> loginState.emit(UIState.Error(result.message))
+                is Result.Error -> {
+                    result.message?.let {
+                        loginState.emit(UIState.Error(result.message))
+
+                    }
+                }
 
             }
 
@@ -46,16 +55,21 @@ class LoginViewModel @Inject constructor (
 
     suspend fun loginWithGoogleAccount(user: User): Unit {
         viewModelScope.launch(IO) {
-            loginState.emit(UIState.Loading())
+            loginState.emit(UIState.Loading)
             val result = loginGoogleClient.invoke(user)
-            loginState.emit(UIState.Default)
             when (result) {
                 is Result.Success -> {
                     val success = result as Result.Success
-                    loginState.emit(UIState.Success(success.data))
+                    success.data?.let {
+                        loginState.emit(UIState.Success(success.data))
+
+                    }
                 }
                 is Result.Error -> {
-                    loginState.emit(UIState.Error(result.message))
+                    result.message?.let {
+                        loginState.emit(UIState.Error(result.message))
+
+                    }
 
                 }
             }

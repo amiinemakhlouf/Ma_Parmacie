@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -54,14 +56,13 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        hidBottomNavigation()
         loadingDialog=LoadingDialog(requireActivity() as MainActivity)
-
         binding= FragmentLoginBinding.inflate(layoutInflater)
         val text="dqsdqs"
         if((requireActivity() as MainActivity).isFRomReminder==true)
         {
             (requireActivity() as MainActivity).isFRomReminder=false
-            loadingDialog.hideDialog()
             return  binding.root
         }
 
@@ -75,7 +76,7 @@ class LoginFragment : Fragment() {
                 withContext(Main){
                     Log.d("bogi","i'm logged in ")
 
-                    moveToReminderScreen()
+                    //moveToReminderScreen()
 
 
 
@@ -100,12 +101,17 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+    private fun hidBottomNavigation() {
+        ( requireActivity() as MainActivity).binding.bottomNavView.visibility= GONE
+        ( requireActivity() as MainActivity).binding.fab.visibility= GONE
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         hideAppBar(requireActivity() as AppCompatActivity)
         checkCredentials()
         updateUiLoginFlow()
-        disableDrawer()
         hideKeyboardWhenUserTouchOut()
         handleGoogleSignIn()
         moveToRegisterScreen()
@@ -138,7 +144,7 @@ class LoginFragment : Fragment() {
 
                     is UIState.Error ->{
                         loadingDialog.hideDialog()
-                        uiState.message?.let { Toasty.error(requireActivity(), it,Toast.LENGTH_LONG).show() }
+                        uiState.errorMessage.let { Toasty.error(requireActivity(), it,Toast.LENGTH_LONG).show() }
                         //showSnackBar(getString(R.string.no_internet))
                     }
                 }
@@ -153,8 +159,6 @@ class LoginFragment : Fragment() {
             .show()
     }
 
-    private fun disableDrawer() {
-    }
 
     private fun moveToForgetPassword() {
         binding.forgetPassword.setOnClickListener{

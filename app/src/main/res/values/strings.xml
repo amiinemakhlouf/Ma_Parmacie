@@ -57,6 +57,7 @@
     <string name="access_to_micro_refused">Accès au microphone refusé</string>
     <string name="explanation">Explication</string>
     <string name="choose_medication_hint">chercher un médicament</string>
+    <string name="my_reminders">mes rappels</string>
 
 
 </resources>

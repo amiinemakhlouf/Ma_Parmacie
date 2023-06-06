@@ -133,5 +133,15 @@
 
     </style>
 
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/light_green</item>
+        <item name="cornerRadius">20dp</item>
+    </style>
+
+    <style name="roundedCornerImage">
+        <item name="cornerSize">10%</item>
+
+    </style>
+
 
 </resources>

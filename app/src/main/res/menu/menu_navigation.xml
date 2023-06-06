@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/reminderFragment"
+        android:icon="@drawable/reminders"
+        android:title="rappels"
+        android:iconTint="@color/white"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/showMedicationFragment"
+        android:title="médicaments"
+        android:icon="@drawable/medications_list"
+        android:iconTint="@color/white"
+       />
+
+   <item
+         android:icon="@drawable/baseline_fireplace_24"
+         app:showAsAction="never"
+         android:iconTint="@android:color/transparent"
+       android:title="cqdsdqs"
+         android:checkable="false"/>
+
+
+    <item
+        android:id="@+id/pharmacyFragment"
+        android:icon="@drawable/maps_logo"
+        android:title="@string/pharmacy"
+        android:iconTint="@color/white"
+        />
+    <item
+        android:id="@+id/loginFragment"
+        android:icon="@drawable/donation"
+        android:title="@string/donation"
+        android:iconTint="@color/white"
+        />
+
+
+
+
+
+</menu>

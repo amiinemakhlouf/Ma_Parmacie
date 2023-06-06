@@ -64,124 +64,39 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-       /* lifecycleScope.launch(IO){
-            if(userIsLoggedIn()){
-
-                withContext(Main){
-                    Log.d("bogi","i'm logged in ")
-                    navigateToReminderScreen()
-                }
-            }
-            else{
-                withContext(Main){
-                    Log.d("bogi","not logged in ")
-                    navigateTologinScreen()
-
-                }
-
-            }
-
-        }*/
-
-
-
-        /*lifecycleScope.launch(IO)
-        {
-            val result=  userApi.register(RegisterDto("fromAndroidAfterRefactor@gmail.com","tunisiasat","password"))
-            withContext(Main){
-                Toast.makeText(this@MainActivity,result.toString(),Toast.LENGTH_SHORT).show()
-            }
-            Log.d(TAG +"fayo",result.toString())
-        }*/
-
-        val navHostFragment =
+       val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        navController=navHostFragment.navController
+        binding.bottomNavView.setupWithNavController(navController)
+        setContentView(binding.root)
+        binding.fab.setOnClickListener {
 
-        val graph = navHostFragment.navController.graph
-        graph.setStartDestination(R.id.loginFragment)
-        navHostFragment.navController.graph = graph
-        blockDrawerBeforeMenuScreen()
-        val intent = Intent(this, AlarmActivity::class.java)
+            navController.navigate(R.id.addReminder2Fragment)
+        }
+           /*  lifecycleScope.launch(IO) {
+                 val  isUserLogin=userIsLoggedIn()
 
-
-
-
-        Log.d(TAG, "i'm here")
-        onSystemBackButtonClicked(supportFragmentManager.fragments.last())
-
-
-        //  val vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        // vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-
-
-        // ScheduleNotificationUseCase().invoke(this)
-
-
-        /*  val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, AppDatabase.databaseName
-        ).fallbackToDestructiveMigration().build()
-        val myMedicines= mutableListOf<List<Medicine>>()
-         lifecycleScope.launch(IO)
-         {
-
-            db.medicineDao().getAll().collectLatest{it->
-
-                if (it.isNotEmpty())
+                withContext(Main)
                 {
-                    for(medicine in it )
-                    {
-                        Log.d("my medicine",medicine.toString())
-                    }
-                }
+                  if(isUserLogin){
+
+                    Toast.makeText(this@MainActivity,"boubumbura",Toast.LENGTH_SHORT).show()
+                    val inflater = navHostFragment.navController.navInflater
+                    val graph = inflater.inflate(R.navigation.pharmacy_nav_graph)
+                    graph.setStartDestination(R.id.reminderFragment)
+                    navHostFragment.navController.graph = graph
+                      setContentView(binding.root)
+
+
+                  }
+                    else{
+
+                       setContentView(binding.root)
+                  }
             }
-
-         }
-        startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION))
-        val t=Toast.makeText(this,"i'm amine",Toast.LENGTH_SHORT).show()
-        binding.bt.setOnClickListener {
-            lifecycleScope.launch(IO)
-            {
-
-                    db.medicineDao().insert(
-                        Medicine(name = "nari", codabar = "tunisiei",id=5,
-                        gender = Gender.AGNOSTIC, ageCategory = AgeCategory.ADULT.toString(),
-                            expirationDate = 33333, additionalDescription = "hola ya matarr",
-                            form = MedicineForm.CREAM, type = MedicineType.ANTIDEPRESSANT
-
-                    )
-                    )
-            }
-
-            db.runInTransaction(Runnable {
-
-            })
-
-
-            val alarmManager =getSystemService(AlarmManager::class.java)
-            AlarmManagerCompat.setExactAndAllowWhileIdle(
-                alarmManager,
-                AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis()+(1000*10),
-                PendingIntent.getActivity(
-                    this@MainActivity,
-                    0,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-
-                )
-
-            )
 
 
         }*/
-
-
-
-
-
 
     }
 
@@ -194,6 +109,7 @@ class MainActivity : AppCompatActivity() {
     }
 
      suspend private fun userIsLoggedIn(): Boolean {
+
 
         val jwtKey = stringPreferencesKey("jwt")
 
@@ -219,6 +135,7 @@ class MainActivity : AppCompatActivity() {
 
     }*/
 
+
     override fun onSupportNavigateUp(): Boolean {
         navController.graph.setStartDestination(R.id.loginFragment)
         return navController.navigateUp(appBarConfiguration)
@@ -226,29 +143,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setUpDrawer() {
-        val hostNavFragment =
-            supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        navController = hostNavFragment.findNavController()
-
-
-       /* binding.navigationView.setupWithNavController(navController)
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.pharmacyFragment,
-                R.id.notificationFragment,
-                R.id.checkUpFragment,
-                R.id.notificationFragment,
-                R.id.familyFragment,
-                R.id.healthTrackFragment,
-                R.id.reminderFragment,
-            ), binding.drawer
-        )
-        setSupportActionBar(binding.topAppBar)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        binding.navigationView.setupWithNavController(navController)*/
-
-    }
 
     private fun showCalendar() {
         val myCalendar = MaterialDatePicker.Builder.dateRangePicker()
@@ -349,7 +243,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onPause() {
+        super.onPause()
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
 
     override fun onResume() {
         super.onResume()

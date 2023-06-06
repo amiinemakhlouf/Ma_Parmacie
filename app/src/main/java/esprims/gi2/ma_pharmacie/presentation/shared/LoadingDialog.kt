@@ -13,7 +13,6 @@ class LoadingDialog(
         val builder= AlertDialog.Builder(activity,R.style.CustomAlertDialogTheme)
         builder.setView(R.layout.custom_progress_bar)
         dialog=builder.create()
-        dialog!!.show()
         dialog!!.setCancelable(true)
 
     }
@@ -25,6 +24,6 @@ class LoadingDialog(
     }
     fun hideDialog()
     {
-        dialog!!.hide()
+        dialog!!.dismiss()
     }
 }

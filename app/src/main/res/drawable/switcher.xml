@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Thumb when checked -->
+    <item android:drawable="@color/dark_green"
+        android:state_checked="true" />
+
+    <!-- Thumb when not checked -->
+    <item android:drawable="@color/light_green" />
+
+    <!-- Track when checked -->
+    <item android:drawable="@color/light_green"
+        android:state_checked="true" />
+
+    <!-- Track when not checked -->
+    <item android:drawable="@color/white" />
+</selector>
