@@ -12,7 +12,4 @@ data class Medication(
     val unit :String?=null,
     val quantity:Float?=null,
     val image: Drawable?=null
-
-
-
-    )
+)

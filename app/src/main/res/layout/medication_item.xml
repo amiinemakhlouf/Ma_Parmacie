@@ -93,6 +93,7 @@
         />
 
     <TextView
+        android:id="@+id/seeMore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -102,6 +103,14 @@
         android:layout_marginEnd="20dp"
         android:textColor="@color/dark_green"
         />
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:dividerThickness="2dp"
+        app:layout_constraintStart_toStartOf="@id/seeMore"
+        app:layout_constraintEnd_toEndOf="@id/seeMore"
+        app:layout_constraintTop_toBottomOf="@id/seeMore"
+        app:dividerColor="@color/dark_green"        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

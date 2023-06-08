@@ -24,6 +24,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +39,8 @@ import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderAdapter
 import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -127,8 +130,8 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
             if(ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.CAMERA)
              ==PackageManager.PERMISSION_GRANTED
             ){
-                viewModel.medicationImageUri=createPhotoUri()
 
+                viewModel.medicationImageUri=createPhotoUri()
                 viewModel.medicationImageUri?.let {
                     dispatchTakePictureIntent(imageUri = it)
 
@@ -158,9 +161,9 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
                 dispatchTakePictureIntent(imageUri = it)
 
             }
-            Toast.makeText(requireActivity(),"la tunsiie",Toast.LENGTH_SHORT).show()
 
         }
+
     }
 
     private fun handleFocusOnQuantityEt() {
@@ -467,7 +470,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
     }
 
 
-    private fun createPhotoUri(): Uri {
+    private  fun createPhotoUri(): Uri {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val photoFile = File.createTempFile("IMG_$timeStamp", ".jpg", storageDir)

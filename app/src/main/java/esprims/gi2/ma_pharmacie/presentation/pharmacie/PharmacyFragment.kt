@@ -62,7 +62,8 @@ class PharmacyFragment : Fragment(),PinchSaceListenner,DataPassListener {
     private var isSearchIcon: Boolean=true
     private var userLong:Double?=null
     private var userLat:Double?=null
-    private  var userValue:Float?=null
+    private  var selectedDistance:Float?=null
+    private  var selectedRate :Float?=null
     private   val viewmodel :PharmacyViewModel by viewModels()
     private val loadingDialog: LoadingDialog by lazy {
         LoadingDialog(requireActivity())
@@ -339,7 +340,7 @@ class PharmacyFragment : Fragment(),PinchSaceListenner,DataPassListener {
 
     private fun showFilterBottomSheet() {
         binding.filter.setOnClickListener {
-            val pharmacyFilterBottomSheet =PharmacyFilterBottomSheet(this,userValue)
+            val pharmacyFilterBottomSheet =PharmacyFilterBottomSheet(this,selectedDistance,selectedRate)
             val bundle = Bundle()
             bundle.putBoolean("open", showOnlyopenedPharmacy) // Replace "key" with the desired key and "value" with the actual data
             pharmacyFilterBottomSheet.arguments = bundle
@@ -571,7 +572,8 @@ class PharmacyFragment : Fragment(),PinchSaceListenner,DataPassListener {
 
     override fun onDataPassed(applyOpenFilter: Boolean, distance: Float, minimumEvaluation: Float) {
         val allPharmacies = viewmodel.listOfPharmacies
-        userValue=distance
+        selectedDistance=distance
+        selectedRate=minimumEvaluation
         showOnlyopenedPharmacy=applyOpenFilter
         binding.maps.overlays.removeAll(binding.maps.overlays)
         binding.maps.invalidate()

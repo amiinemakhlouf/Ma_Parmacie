@@ -46,6 +46,7 @@ class PharmacyFilterBottomSheet(
             val onlyOpen=binding.openSwitch.isChecked
             val distance=binding.distanceSlider.value
             val minimumEvaluation=binding.ratingBar.rating
+
             dismiss()
             dataPassListener.onDataPassed(onlyOpen,distance,minimumEvaluation)
 

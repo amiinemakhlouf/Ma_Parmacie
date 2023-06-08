@@ -46,10 +46,7 @@ import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.login.LoginFragmentDirections
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
-import esprims.gi2.ma_pharmacie.presentation.shared.Constants
-import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
-import esprims.gi2.ma_pharmacie.presentation.shared.UIState
-import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
+import esprims.gi2.ma_pharmacie.presentation.shared.*
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import java.io.File
@@ -691,7 +688,16 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
     private fun popBackStack() {
         binding.backButton.setOnClickListener {
-          findNavController().popBackStack()
+            try {
+                addReminderFragmentArgs.source
+                val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+                val action = AddReminderFragmentDirections.actionAddReminderFragmentToMedicineFragment()
+                navHostFragment.navController.navigate(action)
+            }
+            catch (e:java.lang.Exception){
+                findNavController().popBackStack()
+
+            }
 
         }
     }
