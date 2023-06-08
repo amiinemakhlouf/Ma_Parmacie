@@ -1,6 +1,5 @@
 package esprims.gi2.ma_pharmacie.presentation.medication
 
-import android.app.Activity
 import android.content.Context.MODE_PRIVATE
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -28,7 +27,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
@@ -36,11 +34,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddMedicationBinding
-import esprims.gi2.ma_pharmacie.databinding.SearchByCodabarDialogBinding
 import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderAdapter
-import esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderViewModel
 import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
 import java.io.File
 import java.text.SimpleDateFormat
@@ -210,8 +206,9 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
     }
 
     private fun navigateToBarCodeFragment() {
+
         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        val action=AddMedicationFragmentDirections.actionAddReminderFragmentToScannerFragment()
+        val action=AddMedicationFragmentDirections.actionAddReminderFragmentToScannerFragment(viewModel.medicationImageUri.toString())
 
         navHostFragment.navController.navigate(action)
     }
@@ -339,6 +336,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
                                 R.color.dark_green,
                                 null
                             ))
+                        binding.quantityEt.setText("0")
                         when(position)
                         {
                             0 -> binding.quantityTv.setText(getString(R.string.capsule))

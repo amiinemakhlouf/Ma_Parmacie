@@ -43,6 +43,7 @@ import esprims.gi2.ma_pharmacie.data.entity.Medication
 import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineType
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddReminderBinding
 import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
+import esprims.gi2.ma_pharmacie.presentation.login.LoginFragmentDirections
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
 import esprims.gi2.ma_pharmacie.presentation.shared.Constants
@@ -82,6 +83,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     private var clickToRecord = true
    val items = listOf("Zartan", "Lipitor", "Advil", "Zoloft","Tylenol","Ajouter  médicament")
    private lateinit var myDataList :List<Medication>
+   private val addReminderFragmentArgs:AddReminderFragmentArgs by navArgs()
 
     var isClicked = false
     override fun onCreateView(
@@ -106,6 +108,9 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         try {
             val args:AddReminderFragmentArgs by navArgs()
             args.source
+            val uriInStringFormat=addReminderFragmentArgs.uri
+            val uri=Uri.parse(uriInStringFormat)
+            binding.uploadBackgroundImage.setImageURI(uri)
             binding.selectMedication.visibility= GONE
         }
         catch (e:Exception){
@@ -195,6 +200,9 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                     is UIState.Success -> {
                         loadingDialog.hideDialog()
                         Toasty.success(requireActivity(),"le rappel est bien enregistré",Toast.LENGTH_SHORT).show()
+                        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+                        val action = AddReminderFragmentDirections.actionAddReminderFragmentToReminderFragment()
+                        navHostFragment.navController.navigate(action)
                     }
                     is UIState.Error ->{
                         loadingDialog.hideDialog()

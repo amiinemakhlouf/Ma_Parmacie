@@ -1,5 +1,6 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
@@ -27,6 +29,7 @@ import kotlinx.coroutines.launch
 
 
 class ScannerFragment : Fragment() {
+    private val scannerFragmentArgs :ScannerFragmentArgs by navArgs()
     private val navHostFragment: NavHostFragment by lazy {
         requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
 
@@ -94,7 +97,11 @@ class ScannerFragment : Fragment() {
     }
 
     private fun navigateToSaveReminderFragment() {
-        val action = ScannerFragmentDirections.actionScannerFragmentToAddReminder2Fragment(FragmentSource.FROM_ADDMEDICATION.ordinal)
+        var uri: String?=null
+          scannerFragmentArgs.uri?.let {
+              uri=it
+         }
+        val action = ScannerFragmentDirections.actionScannerFragmentToAddReminder2Fragment(FragmentSource.FROM_ADDMEDICATION.ordinal,uri)
         navHostFragment.navController.navigate(action)
 
     }
