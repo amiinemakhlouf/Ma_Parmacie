@@ -1,768 +1,752 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/dark_green"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-<ScrollView
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
->
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/light_green"
-    tools:context=".presentation.reminder.add_reminder.AddReminderFragment">
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:elevation="10dp"
-        android:tint="@color/white"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_baseline_arrow_back_24"
-
-        />
+    android:background="@color/dark_green">
 
 
-
-
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/upload_background_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/add_photo"
-        app:shapeAppearanceOverlay="@style/roundedImageViewRoundedExemple"
-
-        app:layout_constraintTop_toBottomOf="@id/backButton"
-
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/backButton"
-        app:layout_constraintTop_toTopOf="@id/backButton"
-        app:layout_constraintBottom_toBottomOf="@id/backButton"
-        android:text="Ajouter un rappel"
-        android:textStyle="bold"
-        android:textColor="@color/dark_green"
-        android:layout_marginStart="10dp"
-        />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/NameET"
-        app:layout_constraintTop_toBottomOf="@id/upload_background_image"
-        android:layout_marginTop="10dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        app:boxStrokeColor="@color/dark_green"
-        app:boxStrokeWidth="2dp"
-        app:helperTextTextColor="@color/red"
-        app:hintTextColor="@color/dark_green"
-        app:boxBackgroundColor="@android:color/white"
-        android:hint="Nom de malade"
-        app:helperText=""
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/baseline_face_24"
-        app:endIconTint="@color/dark_green"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:theme="@style/CustomCursorStyle"
-        android:textColorHint="@color/dark_green"
-
-
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/NameETT"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="@color/black"
-            android:textCursorDrawable="@color/dark_green"
-
-
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/addReminder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
-        app:icon="@drawable/clock"
-        app:iconSize="35dp"
-        app:iconTint="@color/dark_green"
-        android:text="Ajouter les heurs"
-        android:elevation="20dp"
-        android:shadowColor="@color/dark_green"
-        android:textColor="@color/dark_green"
-        android:textSize="16sp"
-        app:cornerRadius="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectMedication"
-        android:backgroundTint="@color/white"
-        />
-
-     <androidx.constraintlayout.widget.ConstraintLayout
-         android:id="@+id/reminder"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         app:layout_constraintStart_toStartOf="parent"
-         android:layout_marginStart="8dp"
-         android:layout_marginTop="8dp"
-
-         app:layout_constraintTop_toBottomOf="@id/addReminder"
-         >
-
-         <TextView
-             android:id="@+id/first"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="1 prise"
-             android:layout_marginTop="6dp"
-             android:textSize="16sp"
-
-             android:textColor="@color/black"
-             android:textColorHint="@color/black"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toTopOf="parent"
-             android:visibility="gone"
-             />
-
-         <TextView
-             android:id="@+id/firstTime"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="@color/black"
-             android:layout_marginTop="6dp"
-             android:visibility="gone"
-             android:text="10h"
-             android:textSize="16sp"
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintTop_toTopOf="parent"
-             android:layout_marginEnd="40dp"
-             />
-         <TextView
-             android:id="@+id/second"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="6dp"
-             android:textSize="16sp"
-             android:text="2 prise"
-             android:textColor="@color/black"
-             android:textColorHint="@color/black"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/first"
-             android:visibility="gone"
-             />
-         <TextView
-             android:id="@+id/secondTime"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="@color/black"
-             android:layout_marginTop="6dp"
-             android:visibility="gone"
-             android:textSize="16sp"
-             android:text="14h"
-             
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/firstTime"
-             android:layout_marginEnd="40dp"
-             />
-         <ImageView
-             android:id="@+id/secondTrash"
-             android:layout_width="25dp"
-             android:layout_height="25dp"
-             android:src="@drawable/trash"
-             app:layout_constraintEnd_toEndOf="parent"
-             android:paddingEnd="5dp"
-             app:layout_constraintBottom_toBottomOf="@id/second"/>
-         <TextView
-             android:id="@+id/third"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="6dp"
-             android:textSize="16sp"
-             android:text="3 prise"
-             android:textColor="@color/black"
-             android:textColorHint="@color/black"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/second"
-             android:visibility="gone"
-             />
-
-         <TextView
-             android:id="@+id/thirdTime"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="@color/black"
-             android:layout_marginTop="6dp"
-             android:visibility="gone"
-             android:textSize="16sp"
-             android:text="16h:00"
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/second"
-             android:layout_marginEnd="40dp"
-             />
-         <TextView
-             android:id="@+id/fourth"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:hint="4 prise"
-             android:layout_marginTop="6dp"
-             android:textSize="16sp"
-
-             android:textColor="@color/black"
-             android:textColorHint="@color/black"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/third"
-             android:visibility="gone"
-             />
-
-         <TextView
-             android:id="@+id/fourthTime"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="@color/black"
-             android:layout_marginTop="6dp"
-             android:visibility="gone"
-             android:textSize="16sp"
-
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/third"
-             android:layout_marginEnd="40dp"
-             />
-         <TextView
-             android:id="@+id/fifth"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:hint="5 prise"
-             android:layout_marginTop="6dp"
-             android:textSize="16sp"
-
-             android:textColor="@color/black"
-             android:textColorHint="@color/black"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/fourthTime"
-             android:visibility="gone"
-             />
-
-         <TextView
-             android:id="@+id/fifthTime"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="@color/black"
-             android:layout_marginTop="6dp"
-             android:visibility="gone"
-             android:textSize="16sp"
-
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/fourthTime"
-             android:layout_marginEnd="40dp"
-             />
-         <TextView
-             android:id="@+id/sixth"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:hint="6 prise"
-             android:layout_marginTop="6dp"
-             android:textSize="16sp"
-
-             android:textColor="@color/black"
-             android:textColorHint="@color/black"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/fifth"
-             android:visibility="gone"
-             />
-
-         <TextView
-             android:id="@+id/sixthTime"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="@color/black"
-             android:layout_marginTop="6dp"
-             android:visibility="gone"
-             android:textSize="16sp"
-
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintTop_toBottomOf="@id/fifth"
-             android:layout_marginEnd="40dp"
-             />
-         <ImageView
-             android:id="@+id/thirdTrash"
-             android:layout_width="25dp"
-             android:layout_height="25dp"
-             android:src="@drawable/trash"
-             app:layout_constraintEnd_toEndOf="parent"
-             android:paddingEnd="5dp"
-             android:visibility="visible"
-             app:layout_constraintBottom_toBottomOf="@id/third"/>
-         <ImageView
-             android:id="@+id/sixthTrash"
-             android:layout_width="25dp"
-             android:layout_height="25dp"
-             android:src="@drawable/trash"
-             app:layout_constraintEnd_toEndOf="parent"
-             android:paddingEnd="5dp"
-             app:layout_constraintBottom_toBottomOf="@id/sixth"/>
-         <ImageView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             app:layout_constraintBottom_toBottomOf="@id/firstTime"
-             app:layout_constraintEnd_toEndOf="parent"
-             android:src="@drawable/trash"
-             android:elevation="10dp"
-             android:scaleType="fitXY"
-
-             />
-         <ImageView
-             android:id="@+id/fourthTrash"
-             android:layout_width="25dp"
-             android:layout_height="25dp"
-             android:src="@drawable/trash"
-             app:layout_constraintEnd_toEndOf="parent"
-             android:paddingEnd="5dp"
-             app:layout_constraintBottom_toBottomOf="@id/fourth"/>
-         <ImageView
-             android:id="@+id/fifthTrash"
-             android:layout_width="25dp"
-             android:layout_height="25dp"
-             android:src="@drawable/trash"
-             app:layout_constraintEnd_toEndOf="parent"
-             android:paddingEnd="5dp"
-             app:layout_constraintBottom_toBottomOf="@id/fifth"/>
-         <ImageView
-             android:id="@+id/firstTrash"
-             android:layout_width="25dp"
-             android:layout_height="25dp"
-             android:src="@drawable/trash"
-             app:layout_constraintEnd_toEndOf="parent"
-             android:paddingEnd="5dp"
-             app:layout_constraintBottom_toBottomOf="@id/first"/>
-
-     </androidx.constraintlayout.widget.ConstraintLayout>
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/daysSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        app:useMaterialThemeColors="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reminder"
-        android:text="Tout les jours"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:checked="false"
-
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="10dp"
-
-
-
-        />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/days_rv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/daysSwitch"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="10dp"
-        tools:listitem="@layout/days_reminder_item"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="horizontal"
-        android:clipToPadding="false"
-        android:paddingEnd="10dp"
-        android:layout_marginEnd="10dp"
-
-
-        />
-    <TextView
-        android:id="@+id/duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/days_rv"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="la durée"
-        android:textSize="18sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/startDateTextField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/duration"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:boxStrokeColor="@color/dark_green"
-        app:startIconScaleType="fitXY"
-        app:boxBackgroundColor="@color/white"
-        android:clickable="true"
-        android:focusable="false"
-        style="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+        android:layout_height="match_parent"
 
         >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/startDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="24/07/2023"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:editable="false"
-            android:clickable="true"
-            android:drawableStart="@drawable/calendar"
-            android:drawableTint="@color/black"
-
-            android:focusable="false"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-
-
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/selectMedication"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/NameET"
-        app:boxStrokeColor="@color/dark_green"
-        app:boxStrokeWidth="2dp"
-        app:hintEnabled="true"
-        android:hint="selectionner un médicament"
-        android:textColorHint="@color/dark_green"
-        app:helperTextTextColor="@color/red"
-        app:hintTextColor="@color/dark_green"
-        app:endIconTint="@color/dark_green"
-        app:boxBackgroundColor="@android:color/white"
-        android:backgroundTint="@android:color/darker_gray"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-
-        <AutoCompleteTextView
-            android:id="@+id/dropdown"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="none"
-
-
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/endDateTextField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/duration"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="10dp"
-        app:startIconTint="@color/black"
-
-        android:layout_marginEnd="10dp"
-        app:boxStrokeColor="@color/dark_green"
-        app:boxBackgroundColor="@color/white"
-        android:clickable="true"
-        android:focusable="false"
-        style="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
-
-
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/endDate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="24/07/2023"
-            android:textColor="@color/black"
-
-            android:focusable="false"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:textSize="14sp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:editable="false"
-            android:clickable="true"
-            android:drawableStart="@drawable/calendar"
-            android:drawableTint="@color/black"
-
-
-
-
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-   <TextView
-       android:id="@+id/dateErrorMsg"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       app:layout_constraintTop_toBottomOf="@id/startDateTextField"
-       android:textSize="12sp"
-       android:layout_marginStart="10dp"
-       android:textColor="@color/red"
-       android:visibility="invisible"
-       android:text="la date de début ne peut pas dépasser la date de fin"
-
-       />
-    <TextView
-        android:id="@+id/dose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/startDateTextField"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="28dp"
-        android:layout_marginStart="10sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="Dosage"
-        android:textSize="18sp"
-        />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/medicationDoseET"
-        app:layout_constraintTop_toBottomOf="@id/dose"
-        android:layout_marginTop="10dp"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        app:boxStrokeColor="@color/dark_green"
-        app:boxStrokeWidth="4dp"
-
-        app:boxStrokeErrorColor="@color/dark_green"
-        app:helperTextTextColor="@color/red"
-        android:textColorHint="@color/dark_green"
-        app:layout_constraintStart_toStartOf="parent"
-        app:hintTextColor="@color/dark_green"
-        app:boxBackgroundColor="@android:color/white"
-        app:hintEnabled="true"
-        android:theme="@style/CustomCursorStyle"
-
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/doseEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textCursorDrawable="@color/dark_green"
-            android:textSize="22sp"
-            android:layout_marginTop="0dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="0dp"
-            android:drawableBottom="@color/dark_green"
-            android:inputType="numberDecimal"
-            android:text="0"
-
-            android:gravity="center_horizontal"
-
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-    <TextView
-        android:id="@+id/quantityTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/medicationDoseET"
-        app:layout_constraintStart_toEndOf="@id/medicationDoseET"
-        android:layout_marginStart="20dp"
-        android:text="comprimés"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        />
-    <TextView
-        android:id="@+id/toTake"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/medicationDoseET"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="28dp"
-        android:layout_marginStart="10sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="Moment de prise"
-        android:textSize="18sp"
-        />
-
-    <RadioGroup
-        android:id="@+id/myRAdioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toTake"
-        app:layout_constraintStart_toStartOf="@id/toTake"
-        android:layout_marginStart="10dp"
-
-        android:layout_marginTop="2dp"
-        >
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
-            <RadioButton
-                android:id="@+id/beforeMealsRadio"
+            android:background="@color/light_green"
+            tools:context=".presentation.reminder.add_reminder.AddReminderFragment">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="15sp"
+                android:backgroundTint="@color/white"
+                android:elevation="10dp"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:tint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="   Avant repas"
-                android:textSize="14sp"
-                app:buttonTint="@color/dark_green"
-
-                />
-            <RadioButton
-                android:id="@+id/afterMealsRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/beforeMealsRadio"
-                android:layout_marginStart="50dp"
-                android:text="   Apres repas"
-                android:textSize="14sp"
-                app:buttonTint="@color/dark_green"
 
                 />
-            <RadioButton
-                android:id="@+id/beforeSleepingRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/beforeMealsRadio"
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/upload_background_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="15dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/add_photo"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="   Avant dormir"
-                android:textSize="14sp"
-                app:buttonTint="@color/dark_green"
+                app:layout_constraintTop_toBottomOf="@id/backButton"
+
+                app:shapeAppearanceOverlay="@style/roundedImageViewRoundedExemple"
+
                 />
 
-            <RadioButton
-                android:id="@+id/nevermindRadio"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="   Peu importe"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/afterMealsRadio"
-                app:layout_constraintTop_toBottomOf="@id/afterMealsRadio"
-                app:buttonTint="@color/dark_green"
+                android:layout_marginStart="10dp"
+                android:text="Ajouter un rappel"
+                android:textColor="@color/dark_green"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/backButton"
+                app:layout_constraintStart_toEndOf="@id/backButton"
+                app:layout_constraintTop_toTopOf="@id/backButton" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/NameET"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:hint="Nom de malade"
+                android:textColorHint="@color/dark_green"
+                android:theme="@style/CustomCursorStyle"
+                app:boxBackgroundColor="@android:color/white"
+                app:boxStrokeColor="@color/dark_green"
+                app:boxStrokeWidth="2dp"
+                app:endIconDrawable="@drawable/baseline_face_24"
+                app:endIconMode="custom"
+                app:endIconTint="@color/dark_green"
+                app:helperText=""
+                app:helperTextTextColor="@color/red"
+                app:hintTextColor="@color/dark_green"
+                app:layout_constraintTop_toBottomOf="@id/upload_background_image"
+
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/NameETT"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@color/dark_green"
+
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addReminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/white"
+                android:elevation="20dp"
+                android:shadowColor="@color/dark_green"
+                android:text="Ajouter les heurs"
+                android:textColor="@color/dark_green"
+                android:textSize="16sp"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/clock"
+                app:iconSize="35dp"
+                app:iconTint="@color/dark_green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/selectMedication" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/reminder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addReminder">
+
+                <TextView
+                    android:id="@+id/first"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="1 prise"
+                    android:textColor="@color/black"
+
+                    android:textColorHint="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/firstTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="40dp"
+                    android:text="10h"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="2 prise"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/first" />
+
+                <TextView
+                    android:id="@+id/secondTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="40dp"
+                    android:text="14h"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/firstTime" />
+
+                <ImageView
+                    android:id="@+id/secondTrash"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:paddingEnd="5dp"
+                    android:src="@drawable/trash"
+                    app:layout_constraintBottom_toBottomOf="@id/second"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/third"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="3 prise"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/second" />
+
+                <TextView
+                    android:id="@+id/thirdTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="40dp"
+                    android:text="16h:00"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/second" />
+
+                <TextView
+                    android:id="@+id/fourth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:hint="4 prise"
+                    android:textColor="@color/black"
+
+                    android:textColorHint="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/third" />
+
+                <TextView
+                    android:id="@+id/fourthTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="40dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/third" />
+
+                <TextView
+                    android:id="@+id/fifth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:hint="5 prise"
+                    android:textColor="@color/black"
+
+                    android:textColorHint="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fourthTime" />
+
+                <TextView
+                    android:id="@+id/fifthTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="40dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fourthTime" />
+
+                <TextView
+                    android:id="@+id/sixth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:hint="6 prise"
+                    android:textColor="@color/black"
+
+                    android:textColorHint="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fifth" />
+
+                <TextView
+                    android:id="@+id/sixthTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="40dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fifth" />
+
+                <ImageView
+                    android:id="@+id/thirdTrash"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:paddingEnd="5dp"
+                    android:src="@drawable/trash"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@id/third"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <ImageView
+                    android:id="@+id/sixthTrash"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:paddingEnd="5dp"
+                    android:src="@drawable/trash"
+                    app:layout_constraintBottom_toBottomOf="@id/sixth"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <ImageView
+                    android:id="@+id/fourthTrash"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:paddingEnd="5dp"
+                    android:src="@drawable/trash"
+                    app:layout_constraintBottom_toBottomOf="@id/fourth"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <ImageView
+                    android:id="@+id/fifthTrash"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:paddingEnd="5dp"
+                    android:src="@drawable/trash"
+                    app:layout_constraintBottom_toBottomOf="@id/fifth"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <ImageView
+                    android:id="@+id/firstTrash"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:paddingEnd="5dp"
+                    android:src="@drawable/trash"
+                    app:layout_constraintBottom_toBottomOf="@id/first"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/daysSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:checked="false"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="Tout les jours"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@id/reminder"
+                app:useMaterialThemeColors="false"
+
+
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/days_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/daysSwitch"
+                tools:listitem="@layout/days_reminder_item"
+
+
+                />
+
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="la durée"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/days_rv" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/startDateTextField"
+                style="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:clickable="true"
+                android:focusable="false"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/dark_green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/duration"
+                app:startIconScaleType="fitXY"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/startDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/calendar"
+                    android:drawableTint="@color/black"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:gravity="center_vertical"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+
+                    android:text="24/07/2023"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/selectMedication"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:hint="selectionner un médicament"
+                android:textColorHint="@color/dark_green"
+                app:boxBackgroundColor="@android:color/white"
+                app:boxStrokeColor="@color/dark_green"
+                app:boxStrokeWidth="2dp"
+                app:endIconTint="@color/dark_green"
+                app:helperTextTextColor="@color/red"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/dark_green"
+                app:layout_constraintTop_toBottomOf="@id/NameET">
+
+
+                <AutoCompleteTextView
+                    android:id="@+id/dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/endDateTextField"
+                style="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:clickable="true"
+
+                android:focusable="false"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/dark_green"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/duration"
+                app:startIconTint="@color/black"
+
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/endDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+
+                    android:layout_marginBottom="5dp"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/calendar"
+                    android:drawableTint="@color/black"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:gravity="center_vertical"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="24/07/2023"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/dateErrorMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="la date de début ne peut pas dépasser la date de fin"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/startDateTextField"
+
+                />
+
+            <TextView
+                android:id="@+id/dose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="28dp"
+                android:text="Dosage"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/startDateTextField" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/medicationDoseET"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:textColorHint="@color/dark_green"
+                android:theme="@style/CustomCursorStyle"
+                app:boxBackgroundColor="@android:color/white"
+
+                app:boxStrokeColor="@color/dark_green"
+                app:boxStrokeErrorColor="@color/dark_green"
+                app:boxStrokeWidth="4dp"
+                app:helperTextTextColor="@color/red"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/dark_green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dose"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/doseEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:drawableBottom="@color/dark_green"
+                    android:gravity="center_horizontal"
+                    android:inputType="numberDecimal"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="0dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@color/dark_green"
+
+                    android:textSize="22sp"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/quantityTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="comprimés"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/medicationDoseET"
+                app:layout_constraintStart_toEndOf="@id/medicationDoseET" />
+
+            <TextView
+                android:id="@+id/toTake"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="28dp"
+                android:text="Moment de prise"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/medicationDoseET" />
+
+            <RadioGroup
+                android:id="@+id/myRAdioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                app:layout_constraintStart_toStartOf="@id/toTake"
+
+                app:layout_constraintTop_toBottomOf="@id/toTake">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/beforeMealsRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="   Avant repas"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/dark_green"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        />
+
+                    <RadioButton
+                        android:id="@+id/afterMealsRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:text="   Apres repas"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/dark_green"
+                        app:layout_constraintStart_toEndOf="@id/beforeMealsRadio"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        />
+
+                    <RadioButton
+                        android:id="@+id/beforeSleepingRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="   Avant dormir"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/dark_green"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/beforeMealsRadio" />
+
+                    <RadioButton
+                        android:id="@+id/nevermindRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="   Peu importe"
+                        android:textSize="14sp"
+                        app:buttonTint="@color/dark_green"
+                        app:layout_constraintStart_toStartOf="@+id/afterMealsRadio"
+                        app:layout_constraintTop_toBottomOf="@id/afterMealsRadio"
+
+                        />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </RadioGroup>
+
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Enregister un rappel vocal "
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/myRAdioGroup"
+
+                app:useMaterialThemeColors="false" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/recordImage"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:backgroundTint="@color/white"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/micro"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/record"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+
+                />
+
+
+            <esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.SiriVisualView
+                android:id="@+id/recordSeekBar"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="100dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/recordImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/recordImage"
+                app:layout_constraintTop_toTopOf="@id/recordImage" />
+
+            <ImageView
+                android:id="@+id/deleteAudioImage"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/trash"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/recordImage"
+                app:layout_constraintStart_toEndOf="@id/recordSeekBar"
+                app:layout_constraintTop_toTopOf="@id/recordImage"
+
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/continuerFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="@color/dark_green"
+                android:elevation="30dp"
+                android:paddingStart="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/done_48px"
+                android:text="confirmer"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:cornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/record"
+                app:tint="@color/white"
 
                 />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </RadioGroup>
-
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/myRAdioGroup"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="Enregister un rappel vocal "
-        android:layout_marginStart="10dp"
-        android:textStyle="bold"
-        app:useMaterialThemeColors="false"
-
-        android:textSize="18sp"
-        />
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/recordImage"
-        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp"
-        android:src="@drawable/micro"
-        android:focusable="true"
-        android:clickable="true"
-        android:visibility="invisible"
-        android:backgroundTint="@color/white"
-        android:background="?android:attr/selectableItemBackground"
-        app:layout_constraintTop_toBottomOf="@id/record"
-
-        />
-
-
-    <esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.SiriVisualView
-        android:id="@+id/recordSeekBar"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintTop_toTopOf="@id/recordImage"
-        app:layout_constraintBottom_toBottomOf="@id/recordImage"
-        app:layout_constraintStart_toEndOf="@id/recordImage"
-        android:layout_marginStart="5dp"
-        android:visibility="invisible"
-        />
-    <ImageView
-        android:id="@+id/deleteAudioImage"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/recordImage"
-        app:layout_constraintTop_toTopOf="@id/recordImage"
-        android:src="@drawable/trash"
-        app:layout_constraintStart_toEndOf="@id/recordSeekBar"
-        android:layout_marginStart="4dp"
-        android:visibility="invisible"
-
-        />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/continuerFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/done_48px"
-        android:backgroundTint="@color/dark_green"
-        app:cornerRadius="15dp"
-        app:layout_constraintTop_toBottomOf="@id/record"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/white"
-        android:paddingStart="10dp"
-        android:paddingRight="10dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginEnd="16dp"
-        android:elevation="30dp"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:text="confirmer"
-
-        />
-
-
-
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

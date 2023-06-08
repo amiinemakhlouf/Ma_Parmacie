@@ -58,6 +58,7 @@
     <string name="explanation">Explication</string>
     <string name="choose_medication_hint">chercher un médicament</string>
     <string name="my_reminders">mes rappels</string>
+    <string name="see_more_label"><u> voir plus</u></string>
 
 
 </resources>

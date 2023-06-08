@@ -14,19 +14,18 @@ import esprims.gi2.ma_pharmacie.databinding.FragmentPharmacyFilterBottomSheetBin
 
 
 class PharmacyFilterBottomSheet(
-    private val  dataPassListener: DataPassListener,
-    private val actualDistance:Float?=null
-)
-    : BottomSheetDialogFragment() {
-    private  val binding by lazy {
+    private val dataPassListener: DataPassListener,
+    private val actualDistance: Float? = null,
+    private val selectedRate: Float?
+) : BottomSheetDialogFragment() {
+    private val binding by lazy {
         FragmentPharmacyFilterBottomSheetBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
 
         return binding.root
     }
@@ -39,20 +38,22 @@ class PharmacyFilterBottomSheet(
         }
 
         data?.let {
-            binding.openSwitch.isChecked=data
+            binding.openSwitch.isChecked = data
         }
-         showDistanceSeekBar()
+        showDistanceSeekBar()
         binding.filter.setOnClickListener {
-            val onlyOpen=binding.openSwitch.isChecked
-            val distance=binding.distanceSlider.value
-            val minimumEvaluation=binding.ratingBar.rating
+            val onlyOpen = binding.openSwitch.isChecked
+            val distance = binding.distanceSlider.value
+            val minimumEvaluation = binding.ratingBar.rating
 
             dismiss()
-            dataPassListener.onDataPassed(onlyOpen,distance,minimumEvaluation)
+            dataPassListener.onDataPassed(onlyOpen, distance, minimumEvaluation)
 
 
         }
-
+        selectedRate?.let {
+            binding.ratingBar.rating = it
+        }
 
     }
 
@@ -61,25 +62,25 @@ class PharmacyFilterBottomSheet(
     }
 
 
-    private fun showDistanceSeekBar(userValue:Float?=null) {
-        val labelFormatter = LabelFormatter { value -> // Customize the label text based on the slider value
-            // For example, you can display the value as a percentage
-            return@LabelFormatter "" +value+"km"
-        }
+    private fun showDistanceSeekBar(userValue: Float? = null) {
+        val labelFormatter =
+            LabelFormatter { value -> // Customize the label text based on the slider value
+                // For example, you can display the value as a percentage
+                return@LabelFormatter "" + value + "km"
+            }
 
         binding.distanceSlider.setLabelFormatter(labelFormatter)
 
 
-        if(userValue!=null)
-        {
-            binding.labelTextView.visibility=VISIBLE
-            binding.labelTextView.text=labelFormatter.getFormattedValue(userValue)
-            binding.distanceSlider.value=userValue
+        if (userValue != null) {
+            binding.labelTextView.visibility = VISIBLE
+            binding.labelTextView.text = labelFormatter.getFormattedValue(userValue)
+            binding.distanceSlider.value = userValue
             return
         }
         binding.distanceSlider.addOnChangeListener(Slider.OnChangeListener { slider, value, fromUser -> // Update the label text
-            binding.labelTextView.visibility=VISIBLE
-            binding.labelTextView.text=labelFormatter.getFormattedValue(value)
+            binding.labelTextView.visibility = VISIBLE
+            binding.labelTextView.text = labelFormatter.getFormattedValue(value)
         })
 
 
@@ -91,6 +92,7 @@ class PharmacyFilterBottomSheet(
     }
 
 }
+
 interface DataPassListener {
-    fun onDataPassed(applyOpenFilter: Boolean, distance:Float, minimumEvaluation:Float)
+    fun onDataPassed(applyOpenFilter: Boolean, distance: Float, minimumEvaluation: Float)
 }

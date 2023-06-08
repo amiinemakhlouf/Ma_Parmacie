@@ -12,7 +12,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.*
 import android.view.MotionEvent.ACTION_MOVE
-import android.view.View.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
