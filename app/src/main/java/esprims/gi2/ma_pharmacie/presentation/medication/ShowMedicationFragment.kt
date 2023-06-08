@@ -6,20 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import esprims.gi2.ma_pharmacie.R
-import esprims.gi2.ma_pharmacie.data.entity.Medicine
-import esprims.gi2.ma_pharmacie.data.local.enums_helpers.Gender
-import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineForm
+import esprims.gi2.ma_pharmacie.data.entity.Medication
 import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineType
 import esprims.gi2.ma_pharmacie.databinding.FragmentShowMedicationBinding
-import esprims.gi2.ma_pharmacie.presentation.login.LoginFragmentDirections
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.medication.adapters.MedicationAdapter
-import esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderDaysAdapter
-import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.ReminderParentAdapter
 
 
 class ShowMedicationFragment : Fragment() {
@@ -53,12 +47,12 @@ class ShowMedicationFragment : Fragment() {
 
     private fun setUpMedicationRecyclerView() {
 
-        val myDataList = listOf<Medicine>(Medicine
-            (0,"","",Gender.AGNOSTIC,"",MedicineForm.CREAM,MedicineType.ANTIBIOTIC,7,""),
-            Medicine(0,"","",Gender.AGNOSTIC,"",MedicineForm.CREAM,MedicineType.ANTIBIOTIC,7,""),
-            Medicine(0,"","",Gender.AGNOSTIC,"",MedicineForm.CREAM,MedicineType.ANTIBIOTIC,7,""),
-            Medicine(0,"","",Gender.AGNOSTIC,"",MedicineForm.CREAM,MedicineType.ANTIBIOTIC,7,""),
-            Medicine(0,"","",Gender.AGNOSTIC,"",MedicineForm.CREAM,MedicineType.ANTIBIOTIC,7,""),)
+        val myDataList = listOf<Medication>(Medication
+            (0,"Zartan",type = MedicineType.CAPSULE, unit =  "10 mg", quantity = 20f),
+            Medication(0,"Lipitor","", type = MedicineType.CAPSULE, unit =  "10 mg", quantity = 20f),
+            Medication(0,"Advil ","", type = MedicineType.CAPSULE, unit = "40 mg",quantity = 10f),
+            Medication(0,"Zoloft", type = MedicineType.CAPSULE, unit = "80 mg",quantity = 30f),
+            Medication(0,"Tylenol",type = MedicineType.CAPSULE, unit = "80 mg",quantity = 15f),)
 
         val medicationAdapter= MedicationAdapter(myDataList)
         binding.medicationRV.apply {
@@ -72,7 +66,7 @@ class ShowMedicationFragment : Fragment() {
 
     private fun navigateToAddMedicationReminder() {
         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        val action = ShowMedicationFragmentDirections.actionShowMedicationFragmentToAddReminderFragment()
+        val action = ShowMedicationFragmentDirections.actionShowMedicationFragmentToAddMedicationFragment()
         navHostFragment.navController.navigate(action)
 
     }

@@ -131,7 +131,6 @@ class LoginFragment : Fragment() {
 
                     is UIState.Success -> {
                         loadingDialog.hideDialog()
-                        Toasty.success(requireActivity(), "Bienvenue", Toast.LENGTH_SHORT, true).show();
                         uiState.data?.let {
                             saveJwtLocally(it,requireActivity())
                         }

@@ -59,7 +59,10 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
-
+    <style name="roundedImageViewRoundedExemple">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20%</item>
+    </style>
     <style name="permission_dialog" parent="Theme.MaterialComponents.Dialog.Alert">
         <!-- Customize the background color of the dialog -->
         <item name="android:background">@color/white</item>

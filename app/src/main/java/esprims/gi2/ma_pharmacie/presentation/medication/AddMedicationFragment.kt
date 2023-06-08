@@ -28,6 +28,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
@@ -35,6 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddMedicationBinding
+import esprims.gi2.ma_pharmacie.databinding.SearchByCodabarDialogBinding
 import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderAdapter
@@ -46,14 +48,13 @@ import java.util.*
 
 @AndroidEntryPoint
 class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
-    private var medicationImageUri: Uri?=null
     private var resultLauncher: ActivityResultLauncher<Uri>?=null
     private var selectedForOfStockage: RadioButton?=null
     private  lateinit var binding:FragmentAddMedicationBinding
     private var checkedDaysList = mutableListOf<Int>()
     lateinit var currentPhotoPath: String
+    private val viewModel:AddMedicationViewModel by viewModels()
 
-    private val viewModel: AddReminderViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,6 +67,13 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.medicationImageUri?.let {
+            binding.uploadBackgroundImage.setImageURI(it)
+            binding.addMedicationTV.text=""
+            binding.optionnalMsg.text=""
+            binding.addImageIcon.visibility=INVISIBLE
+
+        }
         ( requireActivity() as MainActivity).binding.bottomNavView.visibility= View.GONE
         ( requireActivity() as MainActivity).binding.fab.visibility= View.GONE
         binding.backButton.setOnClickListener {
@@ -103,11 +111,12 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
                 binding.addMedicationTV.text=""
                 binding.optionnalMsg.text=""
                 binding.addImageIcon.visibility=INVISIBLE
-                binding.uploadBackgroundImage.setImageURI(medicationImageUri)
+                binding.uploadBackgroundImage.setImageURI(viewModel.medicationImageUri)
 
             }
 
         }
+
         selectCapsuleForFirstFragmentStartUP()
         setUpMedicationTypesRv()
         addSWhenQuantityHigherThan1()
@@ -122,9 +131,9 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
             if(ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.CAMERA)
              ==PackageManager.PERMISSION_GRANTED
             ){
-                medicationImageUri=createPhotoUri()
+                viewModel.medicationImageUri=createPhotoUri()
 
-                medicationImageUri?.let {
+                viewModel.medicationImageUri?.let {
                     dispatchTakePictureIntent(imageUri = it)
 
                 }
@@ -147,9 +156,9 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
     ) {
         if(requestCode ==0 && grantResults.isNotEmpty())
         {
-            medicationImageUri=createPhotoUri()
+            viewModel.medicationImageUri=createPhotoUri()
 
-            medicationImageUri?.let {
+            viewModel.medicationImageUri?.let {
                 dispatchTakePictureIntent(imageUri = it)
 
             }
@@ -173,9 +182,9 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
     }
 
     private fun selectCapsuleForFirstFragmentStartUP() {
-        if(viewModel.isFirstActivityLifeCycle){
+
             binding.quantityTv.setText("capsule")
-        }
+
     }
 
     private fun scanBarCode() {
@@ -194,6 +203,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
                 val action=AddReminderFragmentDirections.actionAddReminderFragmentToAddReminder2Fragment()
 
                 navHostFragment.navController.navigate(action)*/
+
                 navigateToBarCodeFragment()
             }
         }
@@ -477,8 +487,8 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                medicationImageUri=createPhotoUri()
-                medicationImageUri?.let {
+                viewModel.medicationImageUri=createPhotoUri()
+                viewModel.medicationImageUri?.let {
                     dispatchTakePictureIntent(imageUri = it)
 
                 }

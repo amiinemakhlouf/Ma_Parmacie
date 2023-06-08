@@ -1,16 +1,10 @@
 package esprims.gi2.ma_pharmacie.data.local.dao
 
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import esprims.gi2.ma_pharmacie.data.local.database.AppDatabase
-import esprims.gi2.ma_pharmacie.data.entity.Medicine
-import org.junit.Before
-import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MedicineDaoTest {
+class MedicationDaoTest {
 
    /* private  lateinit var myFakeDatabase: AppDatabase
     private  lateinit var medicineDao: MedicineDao

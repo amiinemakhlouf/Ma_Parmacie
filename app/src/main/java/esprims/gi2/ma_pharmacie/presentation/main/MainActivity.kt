@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.fab.setOnClickListener {
 
-            navController.navigate(R.id.addReminder2Fragment)
+            navController.navigate(R.id.addReminderFragment)
         }
            /*  lifecycleScope.launch(IO) {
                  val  isUserLogin=userIsLoggedIn()

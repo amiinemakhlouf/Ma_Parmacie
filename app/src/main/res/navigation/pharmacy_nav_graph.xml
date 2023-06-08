@@ -116,13 +116,13 @@
             app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addReminderFragment"
+        android:id="@+id/addMedicationFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.medication.AddMedicationFragment"
         android:label="fragment_add_reminder"
         tools:layout="@layout/fragment_add_medication" >
         <action
             android:id="@+id/action_addReminderFragment_to_addReminder2Fragment"
-            app:destination="@id/addReminder2Fragment" />
+            app:destination="@id/addReminderFragment" />
         <action
             android:id="@+id/action_addReminderFragment_to_scannerFragment"
             app:destination="@id/scannerFragment" />
@@ -194,13 +194,17 @@
             app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addReminder2Fragment"
+        android:id="@+id/addReminderFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderFragment"
         android:label="fragment_add_reminder2"
         tools:layout="@layout/fragment_add_reminder" >
+
         <action
-            android:id="@+id/action_addReminder2Fragment_to_reminderFragment"
-            app:destination="@id/reminderFragment" />
+            android:id="@+id/action_addReminderFragment_to_addMedicineDialog"
+            app:destination="@id/addMedicineDialog" />
+        <argument
+            android:name="source"
+            app:argType="integer" />
     </fragment>
     <dialog
         android:id="@+id/pharmacyBottomSheet"
@@ -232,14 +236,17 @@
         tools:layout="@layout/fragment_scanner" >
         <action
             android:id="@+id/action_scannerFragment_to_addReminder2Fragment"
-            app:destination="@id/addReminder2Fragment" />
+            app:destination="@id/addReminderFragment" />
+        <action
+            android:id="@+id/action_scannerFragment_to_medicineFragment"
+            app:destination="@id/medicineFragment" />
     </fragment>
     <fragment
         android:id="@+id/showMedicationFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.medication.ShowMedicationFragment"
         android:label="ShowMedicationFragment" >
         <action
-            android:id="@+id/action_showMedicationFragment_to_addReminderFragment"
-            app:destination="@id/addReminderFragment" />
+            android:id="@+id/action_showMedicationFragment_to_addMedicationFragment"
+            app:destination="@id/addMedicationFragment"/>
     </fragment>
 </navigation>

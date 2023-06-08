@@ -36,10 +36,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/backButton"
         app:layout_constraintBottom_toBottomOf="@id/backButton"
+        app:layout_constraintStart_toEndOf="@id/backButton"
+
         android:text="Ajouter un médicament"
         android:textStyle="bold"
         android:textColor="@color/dark_green"
-        app:layout_constraintStart_toEndOf="@id/backButton"
         android:layout_marginStart="10dp"
         />
 

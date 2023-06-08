@@ -10,8 +10,6 @@ import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,6 +28,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -40,6 +39,8 @@ import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
+import esprims.gi2.ma_pharmacie.data.entity.Medication
+import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineType
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddReminderBinding
 import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
@@ -48,12 +49,8 @@ import esprims.gi2.ma_pharmacie.presentation.shared.Constants
 import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -72,6 +69,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
             requireContext()
         )
     }
+
     private var actualReminderITem: Int = -1
     private var checkedRadioBt: RadioButton? = null
     private lateinit var binding: FragmentAddReminderBinding
@@ -82,6 +80,9 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     private  val viewModel :AddReminderViewModel by viewModels()
     val selectedDays = mutableListOf<String>()
     private var clickToRecord = true
+   val items = listOf("Zartan", "Lipitor", "Advil", "Zoloft","Tylenol","Ajouter  médicament")
+   private lateinit var myDataList :List<Medication>
+
     var isClicked = false
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,10 +96,27 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        myDataList=listOf(Medication
+            (0,"Zartan",type = MedicineType.CAPSULE, unit =  "10 mg", quantity = 20f, image =requireActivity().getDrawable(R.drawable.zartan) ),
+            Medication(0,"Lipitor","", type = MedicineType.CAPSULE, unit =  "10 mg", quantity = 20f, image =requireActivity().getDrawable(R.drawable.lipitor)),
+            Medication(0,"Advil ","", type = MedicineType.CAPSULE, unit = "40 mg",quantity = 10f, image = requireActivity().getDrawable(R.drawable.advil)),
+            Medication(0,"Zoloft", type = MedicineType.CAPSULE, unit = "80 mg",quantity = 30f, image = requireActivity().getDrawable(R.drawable.zoloft)),
+            Medication(0,"Tylenol",type = MedicineType.CAPSULE, unit = "80 mg",quantity = 15f, image = requireActivity().getDrawable(R.drawable.tylenof)),)
         Log.d("my  jwt",Constants.JWT)
+        try {
+            val args:AddReminderFragmentArgs by navArgs()
+            args.source
+            binding.selectMedication.visibility= GONE
+        }
+        catch (e:Exception){
+
+            binding.uploadBackgroundImage.setImageDrawable(requireActivity().getDrawable(R.drawable.pill))
+            binding.uploadBackgroundImage.alpha=0.65f
+
+        }
         hideAppBarWhenViewLooseFocus()
         hidBottomNavigation()
-        returnToSaveMedication()
+        popBackStack()
         handleRecordImageVisibility()
         handleDeleteAudioRecord()
        recorder=instanciateRecorderBasedInVersion()
@@ -113,10 +131,58 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         handleSelectDate()
         setUpRecordSeekBar()
         startAudioRecord()
+        setUpMedicationDropDown()
+        addImageWhenItemSelected()
         val recordAudioPermission= getRequestPermissionLauncher()
-
         handleRecordAudio(recordAudioPermission)
 
+
+    }
+
+    private fun addImageWhenItemSelected() {
+        binding.dropdown.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            if(position==items.lastIndex){
+                val selectedItem = parent.getItemAtPosition(position) as String
+                val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+                val action = AddReminderFragmentDirections.actionAddReminderFragmentToAddMedicineDialog()
+                navHostFragment.navController.navigate(action)
+            }
+            else{
+
+                binding.uploadBackgroundImage.setImageDrawable(myDataList[position].image)
+            }
+
+        }
+    }
+
+    private fun addNewMedication(){
+
+    }
+    private fun setUpMedicationDropDown() {
+     val adapter = object : ArrayAdapter<String>(requireContext(), 0, items)
+        {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.medication_drop_down_item, parent, false)
+                val item = view.findViewById<TextView>(R.id.medicationItem)
+                item.setText(items[position])
+                val divider = view.findViewById<View>(R.id.dividerForMedicationItem)
+
+                // Show or hide the divider based on position
+                if (position == count - 1) {
+                    divider.visibility = View.GONE // Hide the divider for the last item
+                } else {
+                    divider.visibility = View.VISIBLE // Show the divider for other items
+                }
+
+                return view
+            }
+
+
+        }
+
+        binding.dropdown.setAdapter(adapter)
+        binding.dropdown.setDropDownBackgroundDrawable(
+            requireActivity().getResources().getDrawable(R.color.white,null));
 
     }
 
@@ -615,18 +681,17 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         }
     }
 
-    private fun returnToSaveMedication() {
+    private fun popBackStack() {
         binding.backButton.setOnClickListener {
-           // findNavController().popBackStack()
-           // Toast.makeText(requireActivity(), "goujou", Toast.LENGTH_SHORT).show()
-            returnTODashboard()
+          findNavController().popBackStack()
+
         }
     }
     private  fun returnTODashboard()
     {
-        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        val action = AddReminderFragmentDirections.actionAddReminder2FragmentToReminderFragment()
-        navHostFragment.navController.navigate(action)
+        /*val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        val action = AddReminderFragmentDirections.action
+        navHostFragment.navController.navigate(action)*/
 
 
     }

@@ -11,120 +11,96 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/medicationImage"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+    <ImageView
+        android:id="@+id/illustration"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="15dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/medication_exemple"
-        app:layout_constraintBottom_toBottomOf="@id/quantity"
+        android:src="@drawable/pill"
+        android:scaleType="fitXY"
         />
-
     <TextView
-        android:id="@+id/medicationName"
-        android:layout_width="0dp"
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/medicationImage"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="16sp"
+        android:text="Zartan"
+        android:layout_marginTop="-10dp"
+        app:layout_constraintStart_toEndOf="@id/illustration"
+        android:layout_marginStart="15dp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="5dp"
-        android:text="Zartan 200g "
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="@id/illustration"
 
         />
-    <TextView
-        android:id="@+id/medDescrp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/medicationImage"
-        app:layout_constraintTop_toBottomOf="@id/medicationName"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="10dp"
-        android:text="Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. "
-
-        />
-
     <TextView
         android:id="@+id/type"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/medicationImage"
-        app:layout_constraintTop_toBottomOf="@id/medDescrp"
-        android:textSize="14sp"
-        android:textColor="@color/dark_green"
-
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="8dp"
-        android:text="Type"
-
-
-        />
-    <TextView
-        android:id="@+id/typeValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/type"
-        app:layout_constraintTop_toBottomOf="@id/type"
-        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        android:text="Capsule, "
+        android:layout_marginTop="5dp"
+        android:textSize="16sp"
         android:textColor="@color/black"
-        android:layout_marginTop="3dp"
-        android:text="Pillule"
         />
     <TextView
-        android:id="@+id/quantity"
+        android:id="@+id/unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/type"
         app:layout_constraintTop_toTopOf="@id/type"
         app:layout_constraintBottom_toBottomOf="@id/type"
-        android:textSize="14sp"
-        android:textColor="@color/dark_green"
-        android:text="Quantité"
-        android:layout_marginStart="30dp"
+        android:paddingStart="5dp"
+        android:text="20 mg"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/type"
+        app:layout_constraintTop_toBottomOf="@id/type"
+        android:text="Disponibilité, "
+        android:textSize="16sp"
+        android:textColor="@color/black"
         />
     <TextView
         android:id="@+id/quantityValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/quantity"
-        app:layout_constraintTop_toBottomOf="@id/quantity"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="3dp"
-        android:text="200g"
-
-
-        />
-    <TextView
-        android:id="@+id/stock"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/quantity"
-        app:layout_constraintTop_toTopOf="@id/type"
-        app:layout_constraintBottom_toBottomOf="@id/type"
-        android:textSize="14sp"
-        android:textColor="@color/dark_green"
-        android:layout_marginStart="20dp"
-        android:text="Condition de stockage"
+        app:layout_constraintTop_toBottomOf="@id/type"
+        android:text=" 3"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+
         />
     <TextView
-        android:id="@+id/stockValue"
-        android:layout_width="0dp"
+        android:id="@+id/quantityValueText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/stock"
-        app:layout_constraintTop_toBottomOf="@id/stock"
-        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/quantityValue"
+        app:layout_constraintTop_toBottomOf="@id/type"
+        android:text=" pillules"
+        android:textSize="16sp"
         android:textColor="@color/black"
-        android:layout_marginTop="3dp"
-        android:text="contre la lumière "
 
+        />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Voir plus"
+        android:textSize="13sp"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/dark_green"
         />
 
 
