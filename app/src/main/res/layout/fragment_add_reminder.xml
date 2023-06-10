@@ -44,7 +44,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/backButton"
 
-                app:shapeAppearanceOverlay="@style/roundedImageViewRoundedExemple"
 
                 />
 
@@ -542,9 +541,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:textColorHint="@color/dark_green"
-                android:theme="@style/CustomCursorStyle"
                 app:boxBackgroundColor="@android:color/white"
-
                 app:boxStrokeColor="@color/dark_green"
                 app:boxStrokeErrorColor="@color/dark_green"
                 app:boxStrokeWidth="4dp"

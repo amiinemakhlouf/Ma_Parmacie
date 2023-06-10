@@ -30,7 +30,7 @@
         android:iconTint="@color/white"
         />
     <item
-        android:id="@+id/loginFragment"
+        android:id="@+id/showDonationFragment"
         android:icon="@drawable/donation"
         android:title="@string/donation"
         android:iconTint="@color/white"

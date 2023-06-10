@@ -35,10 +35,12 @@ class ShowMedicationFragment : Fragment() {
             ( requireActivity() as MainActivity).binding.fab.visibility= VISIBLE
             (requireActivity() as MainActivity).binding.bottomNavView.visibility=VISIBLE
         }
-        binding.fab1.setOnClickListener{
+        binding.fab1.setOnClickListener {
+
             navigateToAddMedicationReminder()
 
         }
+
 
         setUpMedicationRecyclerView()
 
@@ -65,9 +67,12 @@ class ShowMedicationFragment : Fragment() {
     }
 
     private fun navigateToAddMedicationReminder() {
-        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        val action = ShowMedicationFragmentDirections.actionShowMedicationFragmentToAddMedicationFragment()
-        navHostFragment.navController.navigate(action)
+
+            /*val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+            val action = ShowMedicationFragmentDirections.actionMedicineFragmentToAddMedication()
+            navHostFragment.navController.navigate(action)
+*/
+
 
     }
 

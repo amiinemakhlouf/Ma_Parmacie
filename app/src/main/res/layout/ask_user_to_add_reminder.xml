@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"
         android:text="Le médicament a été bien enregistrer."
         />
     <TextView
@@ -30,7 +31,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="15dp"
         android:text="CONFIRMER"
-        android:textColor="@color/purple_700"
+        android:textColor="@color/dark_green"
         />
     <TextView
         android:id="@+id/ignore"
@@ -40,8 +41,7 @@
         app:layout_constraintBottom_toBottomOf="@id/confirm"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="15dp"
-        android:text="IGNOER"
-        android:textColor="@color/purple_700"
+        android:text="IGNORER"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

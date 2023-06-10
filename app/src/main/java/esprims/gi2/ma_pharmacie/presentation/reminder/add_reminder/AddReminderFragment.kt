@@ -106,8 +106,14 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
             val args:AddReminderFragmentArgs by navArgs()
             args.source
             val uriInStringFormat=addReminderFragmentArgs.uri
-            val uri=Uri.parse(uriInStringFormat)
-            binding.uploadBackgroundImage.setImageURI(uri)
+            Log.d("AddReminderFragment",uriInStringFormat.toString())
+            if(uriInStringFormat!="null"){
+                val uri=Uri.parse(uriInStringFormat)
+                binding.uploadBackgroundImage.setImageURI(uri)
+                Toast.makeText(requireContext(),"da helmina",Toast.LENGTH_SHORT).show()
+
+            }
+
             binding.selectMedication.visibility= GONE
         }
         catch (e:Exception){

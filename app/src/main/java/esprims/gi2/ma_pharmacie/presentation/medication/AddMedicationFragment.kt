@@ -211,6 +211,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
     private fun navigateToBarCodeFragment() {
 
         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        Log.d("AddMedicationFragment",viewModel.medicationImageUri.toString())
         val action=AddMedicationFragmentDirections.actionAddReminderFragmentToScannerFragment(viewModel.medicationImageUri.toString())
 
         navHostFragment.navController.navigate(action)

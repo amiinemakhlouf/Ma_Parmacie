@@ -14,7 +14,7 @@
         app:showAsAction="always"
         />
     <item
-        android:id="@+id/medicineFragment"
+        android:id="@+id/medicationFragment"
         android:icon="@drawable/donation"
         app:showAsAction="always"
         android:checkable="true"/>

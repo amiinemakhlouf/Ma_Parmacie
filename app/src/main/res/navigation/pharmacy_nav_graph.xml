@@ -30,12 +30,12 @@
         android:label="mon suivi"
         tools:layout="@layout/fragment_health_track" />
     <fragment
-        android:id="@+id/medicineFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.medication.show_medication.ShowMedicationFragment"
+        android:id="@+id/medicationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.medication.ShowMedicationFragment"
         android:label="mes medicaments"
         tools:layout="@layout/fragment_show_medication" >
         <action
-            android:id="@+id/action_medicineFragment_to_addMedicineDialog"
+            android:id="@+id/action_medicineFragment_to_addMedication"
             app:destination="@id/addMedicineDialog"
             app:enterAnim="@android:anim/fade_in" />
     </fragment>
@@ -214,7 +214,7 @@
             app:destination="@id/reminderFragment" />
         <action
             android:id="@+id/action_addReminderFragment_to_medicineFragment"
-            app:destination="@id/medicineFragment" />
+            app:destination="@id/medicationFragment" />
     </fragment>
     <dialog
         android:id="@+id/pharmacyBottomSheet"
@@ -245,11 +245,11 @@
         android:label="fragment_scanner"
         tools:layout="@layout/fragment_scanner" >
         <action
-            android:id="@+id/action_scannerFragment_to_addReminder2Fragment"
+            android:id="@+id/action_scannerFragment_to_addReminderFragment"
             app:destination="@id/addReminderFragment" />
         <action
             android:id="@+id/action_scannerFragment_to_medicineFragment"
-            app:destination="@id/medicineFragment" />
+            app:destination="@id/medicationFragment" />
         <argument
             android:name="uri"
             app:argType="string"
@@ -263,4 +263,18 @@
             android:id="@+id/action_showMedicationFragment_to_addMedicationFragment"
             app:destination="@id/addMedicationFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/showDonationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.donation.ShowDonationFragment"
+        android:label="fragment_show_donation"
+        tools:layout="@layout/fragment_show_donation" >
+        <action
+            android:id="@+id/action_showDonationFragment_to_addDonationFragment"
+            app:destination="@id/addDonationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDonationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.donation.AddDonationFragment"
+        android:label="fragment_add_donation"
+        tools:layout="@layout/fragment_add_donation" />
 </navigation>

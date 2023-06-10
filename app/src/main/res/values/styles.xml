@@ -16,6 +16,7 @@
     </style>
     <style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined" parent="">
         <item name="colorControlActivated">@color/dark_green</item>
+
     </style>
 
     <style name="MyDropDownMenu"
@@ -140,6 +141,10 @@
         <item name="android:background">@color/light_green</item>
         <item name="cornerRadius">20dp</item>
     </style>
+    <style name="Prefix.TextAppearance" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:paddingEnd">30sp</item>
+    </style>
+
 
     <style name="roundedCornerImage">
         <item name="cornerSize">10%</item>
