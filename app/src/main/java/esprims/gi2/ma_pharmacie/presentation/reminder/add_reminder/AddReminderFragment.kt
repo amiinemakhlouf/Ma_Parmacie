@@ -1,5 +1,4 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
-import android.provider.Settings
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,6 +9,7 @@ import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.LayoutInflater
@@ -36,6 +36,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
@@ -43,7 +45,6 @@ import esprims.gi2.ma_pharmacie.data.entity.Medication
 import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineType
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddReminderBinding
 import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
-import esprims.gi2.ma_pharmacie.presentation.login.LoginFragmentDirections
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
 import esprims.gi2.ma_pharmacie.presentation.shared.*
@@ -58,6 +59,9 @@ import java.util.*
 @AndroidEntryPoint
 class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
+    private var endDateInMilleseconds: Long?=null
+    private var startDateInMilliseconds: Long?=null
+    private var selectedItem= ""
     private val loadingDialog:LoadingDialog by lazy {
         LoadingDialog(requireActivity())
     }
@@ -95,12 +99,6 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        myDataList=listOf(Medication
-            (0,"Zartan",type = MedicineType.CAPSULE, unit =  "10 mg", quantity = 20f, image =requireActivity().getDrawable(R.drawable.zartan) ),
-            Medication(0,"Lipitor","", type = MedicineType.CAPSULE, unit =  "10 mg", quantity = 20f, image =requireActivity().getDrawable(R.drawable.lipitor)),
-            Medication(0,"Advil ","", type = MedicineType.CAPSULE, unit = "40 mg",quantity = 10f, image = requireActivity().getDrawable(R.drawable.advil)),
-            Medication(0,"Zoloft", type = MedicineType.CAPSULE, unit = "80 mg",quantity = 30f, image = requireActivity().getDrawable(R.drawable.zoloft)),
-            Medication(0,"Tylenol",type = MedicineType.CAPSULE, unit = "80 mg",quantity = 15f, image = requireActivity().getDrawable(R.drawable.tylenof)),)
         Log.d("my  jwt",Constants.JWT)
         try {
             val args:AddReminderFragmentArgs by navArgs()
@@ -110,18 +108,38 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
             if(uriInStringFormat!="null"){
                 val uri=Uri.parse(uriInStringFormat)
                 binding.uploadBackgroundImage.setImageURI(uri)
-                Toast.makeText(requireContext(),"da helmina",Toast.LENGTH_SHORT).show()
+                binding.quantityTv.setText(addReminderFragmentArgs.type)
+                binding.NameETT.setText((addReminderFragmentArgs.personName))
+                binding.selectMedication.visibility= INVISIBLE
+                binding.dropdown.visibility= INVISIBLE
+                binding.selectMedication1.visibility= VISIBLE
+                binding.dropdown1.setText(addReminderFragmentArgs.medicationName)
+                binding.dropdown1.isClickable=false
+                binding.dropdown1.isFocusable=false
+
 
             }
 
-            binding.selectMedication.visibility= GONE
         }
         catch (e:Exception){
 
             binding.uploadBackgroundImage.setImageDrawable(requireActivity().getDrawable(R.drawable.pill))
             binding.uploadBackgroundImage.alpha=0.65f
+            binding.quantityTv.setText("")
 
         }
+
+
+
+        startDateInMilliseconds=System.currentTimeMillis()
+        endDateInMilleseconds=System.currentTimeMillis()
+        val calendar=Calendar.getInstance()
+        calendar.timeInMillis= startDateInMilliseconds!!.toLong()
+        val year=calendar.get(Calendar.YEAR)
+        val month=calendar.get(Calendar.MONTH)
+        val day=calendar.get(Calendar.DAY_OF_MONTH)
+        binding.startDate.setText(day.toString()+"/"+month+"/"+year)
+        binding.endDate.setText(day.toString()+"/"+month+"/"+year)
         hideAppBarWhenViewLooseFocus()
         hidBottomNavigation()
         popBackStack()
@@ -150,22 +168,20 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     private fun addImageWhenItemSelected() {
         binding.dropdown.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             if(position==items.lastIndex){
-                val selectedItem = parent.getItemAtPosition(position) as String
+                Toast.makeText(requireContext(),selectedItem,Toast.LENGTH_SHORT).show()
                 val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-                val action = AddReminderFragmentDirections.actionAddReminderFragmentToAddMedicineDialog()
+                val action = AddReminderFragmentDirections.actionAddReminderFragmentToAddMedicationFragment("dsqsq")
+
+
                 navHostFragment.navController.navigate(action)
             }
             else{
-
-                binding.uploadBackgroundImage.setImageDrawable(myDataList[position].image)
+                selectedItem = parent.getItemAtPosition(position) as String
             }
 
         }
     }
 
-    private fun addNewMedication(){
-
-    }
     private fun setUpMedicationDropDown() {
      val adapter = object : ArrayAdapter<String>(requireContext(), 0, items)
         {
@@ -226,6 +242,9 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         binding.doseEt.setOnFocusChangeListener { v, hasFocus ->
             if(!hasFocus){
                 requireContext().hideKeyboard(v)
+            }
+            else{
+                binding.doseEt.setText("")
             }
         }
     }
@@ -517,7 +536,8 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 val minute: Int = picker.minute
 
                 (list[actualReminderITem][1] as TextView).setText(
-                    String.format("%02d h : %02d", hour, minute)
+                   // String.format("%02d h : %02d", hour, minute)
+                    hour.toString()+":"+minute.toString()
                 )
                 var reminderIndex = 0
                 for (reminder in list[actualReminderITem]) {
@@ -601,6 +621,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         datePicker.show(requireFragmentManager(), null)
 
 
+
         datePicker.addOnPositiveButtonClickListener {
             val selectedDateInMillis = it // get selected date in milliseconds
             val calendar = Calendar.getInstance()
@@ -618,10 +639,10 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
             val endDate = binding.endDate.editableText.toString()
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
             val startDateinDateFormat = dateFormat.parse(startDate)
-            val startDateInMilliseconds = startDateinDateFormat!!.time
+             startDateInMilliseconds = startDateinDateFormat!!.time
             val endDateInDateFormat = dateFormat.parse(endDate)
-            val endDateInMilleseconds = endDateInDateFormat!!.time
-            if (startDateInMilliseconds > endDateInMilleseconds) {
+             endDateInMilleseconds = endDateInDateFormat!!.time
+            if (startDateInMilliseconds!! > endDateInMilleseconds!!) {
                 binding.dateErrorMsg.visibility = VISIBLE
             } else {
                 binding.dateErrorMsg.visibility = INVISIBLE
@@ -642,10 +663,60 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     }
 
     private fun saveReminder() {
+        var days :String=""
+        if(binding.daysSwitch.isChecked)
+        {
+            days="full"
+        }
+        else{
+            for(day in   selectedDays){
+                days+=day
+            }
+        }
+        var moment=0
+        if(binding.beforeMealsRadio.isChecked){
+            moment=0
+        }
+        if(binding.afterMealsRadio.isChecked){
+            moment=1
+        }
+        if(binding.beforeSleepingRadio.isChecked){
+            moment=2
+        }
+        if(binding.nevermindRadio.isChecked){
+            moment=3
+        }
+        val storageRef = FirebaseStorage.getInstance().reference
+        val imageRef = storageRef.child("images/"+addReminderFragmentArgs.medicationName+".jpg")
+        val uri=Uri.parse(addReminderFragmentArgs.uri)
+        Log.d("AddReminderFragment",addReminderFragmentArgs.uri!!)
+        val uploadTask = imageRef.putFile(uri)
+        uploadTask.addOnSuccessListener { taskSnapshot ->
+            Log.d("AddReminderFragment","tomagnoli")
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                // Save the image URL to Firestore
+                val imageUrl = uri.toString()
+                Log.d("AddReminderFragment",imageUrl)
+                // Save the imageUrl to Firestore using appropriate document reference
+            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(requireContext(),"error successfully",Toast.LENGTH_SHORT).show()
+            Log.d("AddReminderFragment",exception.message.toString())
 
-            val currentTimestamp = System.currentTimeMillis()
-            val reminder=Reminder("efferalgan","3 pilules"
-                ,currentTimestamp.toString(),"amine","amiinemakhlouf@gmail.com")
+        }
+
+        val reminder=Reminder(selectedItem,binding.doseEt.text.toString()+" pillules"
+                ,binding.firstTime.text.toString(),
+                binding.NameETT.text.toString(),
+                startDate=startDateInMilliseconds!!.toString(),
+                endDate=(endDateInMilleseconds!!+86400000-1000).toString()  ,
+                moment=moment,
+               userEmail = "amiinemakhlouf@gmail.com",
+                days = days,
+                type = binding.quantityTv.text.toString()
+            )
+        //Constants.EMAIL
+             Log.d("AddReminderFragment",binding.firstTime.text.toString())
             viewModel.saveReminder(reminder)
 
 

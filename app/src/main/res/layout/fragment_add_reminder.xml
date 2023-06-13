@@ -48,6 +48,7 @@
                 />
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -78,7 +79,7 @@
                 app:helperText=""
                 app:helperTextTextColor="@color/red"
                 app:hintTextColor="@color/dark_green"
-                app:layout_constraintTop_toBottomOf="@id/upload_background_image"
+                app:layout_constraintTop_toBottomOf="@id/selectMedication"
 
 
                 >
@@ -111,7 +112,7 @@
                 app:iconSize="35dp"
                 app:iconTint="@color/dark_green"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/selectMedication" />
+                app:layout_constraintTop_toBottomOf="@id/NameET" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/reminder"
@@ -394,6 +395,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/startDateTextField"
                 style="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -440,7 +442,6 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:backgroundTint="@android:color/darker_gray"
                 android:hint="selectionner un médicament"
                 android:textColorHint="@color/dark_green"
                 app:boxBackgroundColor="@android:color/white"
@@ -450,7 +451,7 @@
                 app:helperTextTextColor="@color/red"
                 app:hintEnabled="true"
                 app:hintTextColor="@color/dark_green"
-                app:layout_constraintTop_toBottomOf="@id/NameET">
+                app:layout_constraintTop_toBottomOf="@id/upload_background_image">
 
 
                 <AutoCompleteTextView
@@ -458,6 +459,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="none"
+
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/selectMedication1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:textColorHint="@color/dark_green"
+                app:hintTextColor="@color/dark_green"
+                app:boxBackgroundColor="@android:color/white"
+                app:boxStrokeColor="@color/dark_green"
+                app:boxStrokeWidth="2dp"
+                app:hintEnabled="true"
+                android:hint="Nom de médicament"
+                 android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/upload_background_image">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dropdown1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textCursorDrawable="@color/dark_green"
 
 
                     />
@@ -741,6 +772,17 @@
                 app:layout_constraintTop_toBottomOf="@id/record"
                 app:tint="@color/white"
 
+                />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/editFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="20dp"
+                android:src="@drawable/baseline_edit_24"
+                android:visibility="invisible"
+                app:tint="@color/white"
                 />
 
 

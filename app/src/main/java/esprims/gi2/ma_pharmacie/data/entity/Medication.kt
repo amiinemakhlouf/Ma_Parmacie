@@ -7,9 +7,9 @@ data class Medication(
     var id:Int?=null,
     val name :String?=null,
     val codabar:String?=null,
-    val type: MedicineType?=null,
+    val type: String?=null,
     val additionalDescription:String?=null,
     val unit :String?=null,
     val quantity:Float?=null,
-    val image: Drawable?=null
+    val image: String?=null
 )

@@ -13,6 +13,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".presentation.medication.AddMedicationFragment">
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/closeAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/red"
+        android:src="@drawable/ic_baseline_close_24"
+        android:text="Partage de dons :"
+        app:borderWidth="0dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.imageview.ShapeableImageView
@@ -43,6 +57,20 @@
         android:textColor="@color/dark_green"
         android:layout_marginStart="10dp"
         />
+    <TextView
+        android:id="@+id/addMedicationTitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/backButton"
+        app:layout_constraintBottom_toBottomOf="@id/backButton"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
+        android:text="Ajouter un médicament"
+        android:textStyle="bold"
+        android:textColor="@color/dark_green"
+        android:layout_marginStart="10dp"
+        />
+
 
     <ImageView
         android:id="@+id/addImageIcon"

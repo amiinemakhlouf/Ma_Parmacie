@@ -49,7 +49,7 @@ import kotlinx.coroutines.withContext
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     public lateinit var binding: ActivityMainBinding
-    private lateinit var navController: NavController
+    private  var navController: NavController?=null
     private lateinit var appBarConfiguration: AppBarConfiguration
     private  val loadingDialog :LoadingDialog by lazy {
         LoadingDialog(this)
@@ -65,38 +65,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        navController=navHostFragment.navController
-        binding.bottomNavView.setupWithNavController(navController)
+            supportFragmentManager.findFragmentById(R.id.my_fragment)
+        navController=navHostFragment?.findNavController()
+        navController?.let { binding.bottomNavView.setupWithNavController(it,) }
+
         setContentView(binding.root)
         binding.fab.setOnClickListener {
 
-            navController.navigate(R.id.addReminderFragment)
+            navController?.navigate(R.id.addReminderFragment,)
         }
-           /*  lifecycleScope.launch(IO) {
-                 val  isUserLogin=userIsLoggedIn()
-
-                withContext(Main)
-                {
-                  if(isUserLogin){
-
-                    Toast.makeText(this@MainActivity,"boubumbura",Toast.LENGTH_SHORT).show()
-                    val inflater = navHostFragment.navController.navInflater
-                    val graph = inflater.inflate(R.navigation.pharmacy_nav_graph)
-                    graph.setStartDestination(R.id.reminderFragment)
-                    navHostFragment.navController.graph = graph
-                      setContentView(binding.root)
-
-
-                  }
-                    else{
-
-                       setContentView(binding.root)
-                  }
-            }
-
-
-        }*/
 
     }
 
@@ -104,24 +81,10 @@ class MainActivity : AppCompatActivity() {
         val hostNavFragment =
             supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         navController = hostNavFragment.findNavController()
-        navController.navigate(R.id.reminderFragment)
+        navController?.navigate(R.id.reminderFragment)
 
     }
 
-     suspend private fun userIsLoggedIn(): Boolean {
-
-
-        val jwtKey = stringPreferencesKey("jwt")
-
-          val preferences= dataStore.data.first()
-         if(!preferences[jwtKey].isNullOrEmpty()){
-
-             return true
-         }
-
-        return false
-
-    }
 
     /*override fun onResume() {
         super.onResume()
@@ -137,8 +100,8 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onSupportNavigateUp(): Boolean {
-        navController.graph.setStartDestination(R.id.loginFragment)
-        return navController.navigateUp(appBarConfiguration)
+        navController?.graph?.setStartDestination(R.id.loginFragment)
+        return navController!!.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
 
     }

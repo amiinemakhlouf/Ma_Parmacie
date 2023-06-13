@@ -32,7 +32,7 @@ class MedicationAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.binding.name.setText(dataset[position].name)
-        holder.binding.type.setText(dataset[position].type?.name+",    ")
+        holder.binding.type.setText(dataset[position].type)
         holder.binding.unit.setText(dataset[position].unit)
         holder.binding.quantityValue.setText(dataset[position].quantity?.toInt().toString())
 

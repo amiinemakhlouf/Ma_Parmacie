@@ -33,6 +33,7 @@ import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.onBoarding.dataStore
 import esprims.gi2.ma_pharmacie.presentation.register.Utils
+import esprims.gi2.ma_pharmacie.presentation.shared.Constants
 import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
@@ -325,6 +326,7 @@ class LoginFragment : Fragment() {
                 val userData =account.result
                 val username=userData.displayName
                 val email=userData.email
+                Constants.EMAIL=email!!
                 lifecycleScope.launch(IO){
                     viewModel.loginWithGoogleAccount(User(username=username!!,email=email!!))
 

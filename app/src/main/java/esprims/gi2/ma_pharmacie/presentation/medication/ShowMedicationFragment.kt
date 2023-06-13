@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import esprims.gi2.ma_pharmacie.R
@@ -31,6 +32,7 @@ class ShowMedicationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(requireContext(),"yahia ben ali",Toast.LENGTH_SHORT).show()
         if(( requireActivity() as MainActivity).binding.bottomNavView.visibility!=VISIBLE){
             ( requireActivity() as MainActivity).binding.fab.visibility= VISIBLE
             (requireActivity() as MainActivity).binding.bottomNavView.visibility=VISIBLE
@@ -50,11 +52,11 @@ class ShowMedicationFragment : Fragment() {
     private fun setUpMedicationRecyclerView() {
 
         val myDataList = listOf<Medication>(Medication
-            (0,"Zartan",type = MedicineType.CAPSULE, unit =  "10 mg", quantity = 20f),
-            Medication(0,"Lipitor","", type = MedicineType.CAPSULE, unit =  "10 mg", quantity = 20f),
-            Medication(0,"Advil ","", type = MedicineType.CAPSULE, unit = "40 mg",quantity = 10f),
-            Medication(0,"Zoloft", type = MedicineType.CAPSULE, unit = "80 mg",quantity = 30f),
-            Medication(0,"Tylenol",type = MedicineType.CAPSULE, unit = "80 mg",quantity = 15f),)
+            (0,"Zartan",type = MedicineType.CAPSULE.toString(), unit =  "10 mg", quantity = 20f),
+            Medication(0,"Lipitor","", type = MedicineType.CAPSULE.toString(), unit =  "10 mg", quantity = 20f),
+            Medication(0,"Advil ","", type = MedicineType.CAPSULE.toString(), unit = "40 mg",quantity = 10f),
+            Medication(0,"Zoloft", type = MedicineType.CAPSULE.toString(), unit = "80 mg",quantity = 30f),
+            Medication(0,"Tylenol",type = MedicineType.CAPSULE.toString(), unit = "80 mg",quantity = 15f),)
 
         val medicationAdapter= MedicationAdapter(myDataList)
         binding.medicationRV.apply {
@@ -68,10 +70,10 @@ class ShowMedicationFragment : Fragment() {
 
     private fun navigateToAddMedicationReminder() {
 
-            /*val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-            val action = ShowMedicationFragmentDirections.actionMedicineFragmentToAddMedication()
+            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+            val action = ShowMedicationFragmentDirections.actionShowMedicationFragmentToAddMedicationFragment()
             navHostFragment.navController.navigate(action)
-*/
+
 
 
     }

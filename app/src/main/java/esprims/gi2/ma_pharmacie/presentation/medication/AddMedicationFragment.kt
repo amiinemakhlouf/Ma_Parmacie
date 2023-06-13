@@ -2,6 +2,7 @@ package esprims.gi2.ma_pharmacie.presentation.medication
 
 import android.content.Context.MODE_PRIVATE
 import android.content.pm.PackageManager
+import android.content.res.Resources.getSystem
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -11,12 +12,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -27,6 +30,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
@@ -53,7 +57,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
     private var checkedDaysList = mutableListOf<Int>()
     lateinit var currentPhotoPath: String
     private val viewModel:AddMedicationViewModel by viewModels()
-
+    private val addMedicationFragmentArgs :AddMedicationFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,6 +70,14 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        addMedicationFragmentArgs.source?.let {
+            binding.closeAdd.visibility= VISIBLE
+            binding.backButton.visibility= INVISIBLE
+            binding.addMedicationTitle.visibility= INVISIBLE
+            binding.addMedicationTitle2.visibility= VISIBLE
+        }
+
         viewModel.medicationImageUri?.let {
             binding.uploadBackgroundImage.setImageURI(it)
             binding.addMedicationTV.text=""
@@ -210,11 +222,18 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
 
     private fun navigateToBarCodeFragment() {
 
-        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment)
         Log.d("AddMedicationFragment",viewModel.medicationImageUri.toString())
-        val action=AddMedicationFragmentDirections.actionAddReminderFragmentToScannerFragment(viewModel.medicationImageUri.toString())
+        val action=AddMedicationFragmentDirections.actionAddReminderFragmentToScannerFragment(
+            viewModel.medicationImageUri.toString(),
+            medicationName=binding.medicationNameETT.text.toString(),
+            type=binding.quantityTv.text.toString(),
+            qunatity = binding.quantityEt.editableText.toString().toFloat(),
+            description =binding.medicationDescriptionET.editableText.toString()
 
-        navHostFragment.navController.navigate(action)
+        )
+
+        navHostFragment?.findNavController()?.navigate(action)
     }
 
     private fun navigateToPreviousFragment() {
@@ -503,3 +522,4 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
             }
         }}}
 
+val Int.dp: Int get() = (this / getSystem().displayMetrics.density).toInt()

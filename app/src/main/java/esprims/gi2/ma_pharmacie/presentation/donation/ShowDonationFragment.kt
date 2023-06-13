@@ -1,6 +1,7 @@
 package esprims.gi2.ma_pharmacie.presentation.donation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +23,9 @@ import esprims.gi2.ma_pharmacie.presentation.medication.ShowMedicationFragmentDi
 import esprims.gi2.ma_pharmacie.presentation.medication.adapters.MedicationAdapter
 
 
-class ShowDonationFragment : Fragment() {
+class ShowDonationFragment : Fragment(),DonationFragmentListener {
+
+    private  var _chckedItem=0
     private val  binding:FragmentShowDonationBinding    by lazy {
         FragmentShowDonationBinding.inflate(layoutInflater)
     }
@@ -41,16 +44,15 @@ class ShowDonationFragment : Fragment() {
         binding.addDonation.setOnClickListener {
             val navHostFragment=requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
             val action=ShowDonationFragmentDirections.actionShowDonationFragmentToAddDonationFragment()
-            navHostFragment.navController.navigate(action)
+            navHostFragment.navController.navigate(action,)
         }
 
     }
 
     private fun handleBottomSheet() {
-        val filterDonationFragment =FilterDonationFragment()
         binding.filter.setOnClickListener {
+             val filterDonationFragment=FilterDonationFragment(this, _checkedItem = _chckedItem)
             Toast.makeText(requireContext(),"maytayah 3al kilou ken zouz",Toast.LENGTH_SHORT).show()
-
             filterDonationFragment.show(requireActivity().supportFragmentManager,"n")
         }
     }
@@ -64,15 +66,19 @@ class ShowDonationFragment : Fragment() {
     private  fun setUpRecyclerView()
     {
         val myDataList = listOf<Medication>(Medication
-            (0,"Zartan",type = MedicineType.CAPSULE, unit =  "10 mg", quantity = 20f),
-            Medication(0,"Lipitor","", type = MedicineType.CAPSULE, unit =  "10 mg", quantity = 20f),
-            Medication(0,"Advil ","", type = MedicineType.CAPSULE, unit = "40 mg",quantity = 10f),
-            Medication(0,"Zoloft", type = MedicineType.CAPSULE, unit = "80 mg",quantity = 30f),
-            Medication(0,"Tylenol",type = MedicineType.CAPSULE, unit = "80 mg",quantity = 15f),)
+            (0,"Zartan",type = MedicineType.CAPSULE.name, unit =  "10 mg", quantity = 20f),
+            Medication(0,"Lipitor","", type = MedicineType.CAPSULE.name, unit =  "10 mg", quantity = 20f),
+            Medication(0,"Advil ","", type = MedicineType.CAPSULE.name, unit = "40 mg",quantity = 10f),
+            Medication(0,"Zoloft", type = MedicineType.CAPSULE.name, unit = "80 mg",quantity = 30f),
+            Medication(0,"Tylenol",type = MedicineType.CAPSULE.name, unit = "80 mg",quantity = 15f),)
         binding.donationRv.apply {
 
             layoutManager=LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
             adapter=MedicationAdapter(dataset =myDataList)
         }
+    }
+
+    override fun passDataToFragment(checkedItem: Int) {
+        _chckedItem=checkedItem
     }
 }

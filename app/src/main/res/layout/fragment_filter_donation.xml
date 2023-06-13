@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/dark_green"
+        android:checked="true"
         android:textSize="16sp"
         android:text="Tout les dons" />
     <RadioButton

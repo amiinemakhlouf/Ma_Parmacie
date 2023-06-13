@@ -1,12 +1,15 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -51,67 +54,62 @@ class ReminderFragment : Fragment() , ReminderCallback {
         super.onViewCreated(view, savedInstanceState)
         ( requireActivity() as MainActivity).binding.bottomNavView.visibility=VISIBLE
         ( requireActivity() as MainActivity).binding.fab.visibility= View.VISIBLE
+
+        if(viewModel.isFirstStartUp){
+
+
+            lifecycleScope.launch(IO){
+                viewModel.getAllReminders(Constants.JWT)
+
+            }
+
         lifecycleScope.launch(Main){
-            viewModel.getAllReminders(Constants.JWT)
+            viewModel.stateFlowOfReminders.collectLatest {uiState->
+                when(uiState)
+                {
+                    is UIState.Loading ->{
+                        loadingDialog.showDialog()
+
+                    }
+                    is  UIState.Error ->{
+                        loadingDialog.hideDialog()
+                        Toasty.error(requireContext(),"Un erreur est survenu").show()
+                    }
+                    is UIState.Success ->{
+                        loadingDialog.hideDialog()
+                        val reminders=uiState.data
+                        if(reminders.isNotEmpty()){
+                            binding.noItems.visibility=GONE
+                        }
+                        Log.d("ReminderFragment", reminders.toString())
+                         viewModel.listByTime= mutableListOf<List<Reminder>>()
+                       val hash= reminders.groupBy { it.reminderTime }
+                        for (reminder in hash){
+
+                            viewModel.listByTime.add(reminder.value)
+
+                        }
+                        showReminderRecyclerView(viewModel.listByTime)
+
+                    }
+                }
+            }
         }
+            viewModel.isFirstStartUp=false
+        }
+        else{
+            if(viewModel.listByTime.isNotEmpty()){
+                binding.noItems.isVisible=false
+                showReminderRecyclerView(viewModel.listByTime)
+            }
+        }
+
         logout()
         updateUIAfterLogout()
         handleAppBackButton()
         onSystemBackButtonClicked(this)
 
-        val dates= listOf<Date>(
-            Date("lun",22,1),
-            Date("mar",22,1),
-            Date("mer",22,1),
-            Date("jeu",22,1),
-            Date("ven",22,1),
-            Date("sam",22,1),
-            Date("dim",22,1),
-        )
-        val reminders = listOf<List<ReminderParent>>(
-
-           listOf(
-               ReminderParent(Reminder(
-                   medicationName = "Zartan", dose = "2*400g",
-                     reminderTime = "08:00", personName = "jhon",
-                   userEmail = "amiinemakhlouf@gmail.com"
-               )),
-                   ReminderParent(Reminder(
-                       medicationName = "Oseltamivir", dose = "2*400g",
-                       reminderTime = "08:00", personName = "Joe",
-                       userEmail = "amiinemakhlouf@gmail.com"
-                   ),
-
-           ) ), listOf(
-                ReminderParent(Reminder(
-                    medicationName = "Zartan", dose = "2*400g",
-                     reminderTime = "10:00", personName = "Jhon",
-                    userEmail = "amiinemakhlouf@gmail.com"
-                ),
-
-           )),
-               listOf( ReminderParent(Reminder(
-                    medicationName = "Oseltamivir", dose = "2*400g",
-                     reminderTime = "17:00", personName = "Joe",
-                   userEmail = "amiinemakhlouf@gmail.com"
-                ),
-
-
-                       ),
-                   ReminderParent(Reminder(
-                       medicationName = "Zartan", dose = "2*400g",
-                        reminderTime = "17:00", personName = "Joe",
-                       userEmail = "amiinemakhlouf@gmail.com"
-                   ),
-               )
-
-               ))
-
-
-
-
        // showDaysRecyclerView(dates)
-        showReminderRecyclerView( reminders)
 
     }
 
@@ -171,14 +169,26 @@ class ReminderFragment : Fragment() , ReminderCallback {
     }
 
 
-    
+    override fun navigateToDetailsScreen(reminder: Reminder) {
 
-    override fun navigateToDetailsScreen() {
         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        val action = ReminderFragmentDirections.actionReminderFragmentToReminderDetailsFragment()
-        navHostFragment.navController.navigate(action,  )
+        val action = ReminderFragmentDirections.actionReminderFragmentToReminderDetailsFragment(
+            medicationName = reminder.medicationName,
+            dose = reminder.dose,
+            username =reminder.personName,
+            days = reminder.days,
+            moment = reminder.moment,
+            startDate = reminder.startDate,
+            endDate=reminder.endDate
 
+
+
+        )
+
+        navHostFragment.navController.navigate(action,  )
     }
+
+
 
      private fun onSystemBackButtonClicked(fragment: Fragment)
     {

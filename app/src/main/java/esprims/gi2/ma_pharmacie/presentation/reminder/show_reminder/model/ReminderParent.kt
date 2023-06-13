@@ -5,7 +5,13 @@ data class ReminderParent(val reminder: Reminder) :Reminder(
     dose = reminder.dose,
     reminderTime = reminder.reminderTime,
     personName = reminder.personName,
-    userEmail = "amiinemakhlouf@gmail.com"
+    startDate = reminder.startDate,
+    endDate = reminder.endDate,
+    moment = reminder.moment,
+    userEmail = "amiinemakhlouf@gmail.com",
+    days=reminder.days,
+    type = reminder.type
+
 ){
     public val parentTime=reminderTime
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pharmacy_nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/pharmacyFragment"
@@ -29,23 +29,6 @@
         android:name="esprims.gi2.ma_pharmacie.presentation.health_track.HealthTrackFragment"
         android:label="mon suivi"
         tools:layout="@layout/fragment_health_track" />
-    <fragment
-        android:id="@+id/medicationFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.medication.ShowMedicationFragment"
-        android:label="mes medicaments"
-        tools:layout="@layout/fragment_show_medication" >
-        <action
-            android:id="@+id/action_medicineFragment_to_addMedication"
-            app:destination="@id/addMedicineDialog"
-            app:enterAnim="@android:anim/fade_in" />
-    </fragment>
-    <fragment
-        android:id="@+id/addMedicineDialog"
-        android:name="esprims.gi2.ma_pharmacie.presentation.medication.AddMedicationFragment"
-        android:label="nouveau médicament"
-
-
-        />
 
     <fragment
         android:id="@+id/onBoardingFragment"
@@ -101,11 +84,42 @@
         android:id="@+id/reminderDetailsFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.reminder_detail.ReminderDetailsFragment"
         android:label="fragment_reminder_details"
-        tools:layout="@layout/fragment_reminder_details">
+        tools:layout="@layout/fragment_add_reminder">
         <deepLink
             android:id="@+id/deepLink"
             android:autoVerify="true"
             app:uri="https://mabarmacie.com/register" />
+        <argument
+            android:name="medicationName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="dose"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="username"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="days"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="moment"
+            app:argType="integer" />
+        <argument
+            android:name="startDate"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="endDate"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/thirdOnBoardingFragment"
@@ -126,6 +140,11 @@
         <action
             android:id="@+id/action_addReminderFragment_to_scannerFragment"
             app:destination="@id/scannerFragment" />
+        <argument
+            android:name="source"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -199,9 +218,6 @@
         android:label="fragment_add_reminder2"
         tools:layout="@layout/fragment_add_reminder" >
 
-        <action
-            android:id="@+id/action_addReminderFragment_to_addMedicineDialog"
-            app:destination="@id/addMedicineDialog" />
         <argument
             android:name="source"
             app:argType="integer" />
@@ -215,6 +231,42 @@
         <action
             android:id="@+id/action_addReminderFragment_to_medicineFragment"
             app:destination="@id/medicationFragment" />
+        <argument
+            android:name="medicationName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="personName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="dose"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument android:name="startDate"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="endDate"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="days"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="type"
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_addReminderFragment_to_addMedicationFragment"
+            app:destination="@id/addMedicationFragment" />
     </fragment>
     <dialog
         android:id="@+id/pharmacyBottomSheet"
@@ -241,7 +293,7 @@
     </dialog>
     <fragment
         android:id="@+id/scannerFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.ScannerFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.barcode_scanner.ScannerFragment"
         android:label="fragment_scanner"
         tools:layout="@layout/fragment_scanner" >
         <action
@@ -249,11 +301,24 @@
             app:destination="@id/addReminderFragment" />
         <action
             android:id="@+id/action_scannerFragment_to_medicineFragment"
-            app:destination="@id/medicationFragment" />
+            app:destination="@id/showMedicationFragment" />
         <argument
             android:name="uri"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="medicationName"
+            app:argType="string" />
+        <argument
+            android:name="qunatity"
+            app:argType="float" />
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
     <fragment
         android:id="@+id/showMedicationFragment"
@@ -277,4 +342,16 @@
         android:name="esprims.gi2.ma_pharmacie.presentation.donation.AddDonationFragment"
         android:label="fragment_add_donation"
         tools:layout="@layout/fragment_add_donation" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_reminderFragment"
+            app:destination="@id/reminderFragment" />
+    </fragment>
 </navigation>

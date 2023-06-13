@@ -16,6 +16,6 @@ interface ReminderService {
     suspend fun saveReminder(@Body reminder: Reminder,@Header("AUTHORIZATION") value: String): Response<Reminder>
 
     @GET("api/reminders")
-    suspend fun getAllReminders(@Header("AUTHORIZATION") value: String):Response<List<Reminder>>
+    suspend fun getAllReminders(@Header("AUTHORIZATION") value: String?=null):Response<List<Reminder>>
 
 }
