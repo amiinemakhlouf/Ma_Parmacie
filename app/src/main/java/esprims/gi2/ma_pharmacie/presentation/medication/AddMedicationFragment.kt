@@ -32,6 +32,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
@@ -42,6 +43,7 @@ import esprims.gi2.ma_pharmacie.databinding.FragmentAddMedicationBinding
 import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder.AddReminderAdapter
+import esprims.gi2.ma_pharmacie.presentation.shared.Constants
 import esprims.gi2.ma_pharmacie.presentation.shared.hideAppBar
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -70,7 +72,39 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(addMedicationFragmentArgs.source=="item")
+        {
+            binding.addMedicationTitle.setText("Details de médicament")
+            binding.backButton.setOnClickListener {
+                Toast.makeText(requireActivity(),"la tunisie",Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
 
+            }
+
+            Glide.with(requireActivity()).load(addMedicationFragmentArgs.medication!!.image).
+            into(binding.uploadBackgroundImage);
+
+            addMedicationFragmentArgs.medication.apply {
+                Log.d("AddMedicationFragment","  "+this!!.name)
+                binding.medicationNameETT.setText(this!!.name)
+                binding.medicationDescriptionET.setText(this.additionalDescription)
+                binding.quantityEt.setText(this.quantity?.toInt().toString())
+                Glide.with(requireActivity()).load(this.image).into(binding.uploadBackgroundImage);
+
+                Log.d("AddMedicationFragment","  "+this.image)
+            }
+
+
+        }
+        else{
+
+
+
+        viewModel.medicationImageUri?.let {
+            binding.uploadBackgroundImageStretch.setImageURI(it)
+            binding.uploadBackgroundImage.alpha=1f
+            binding.uploadBackgroundImageStretch.alpha=0/7f
+        }
         addMedicationFragmentArgs.source?.let {
             binding.closeAdd.visibility= VISIBLE
             binding.backButton.visibility= INVISIBLE
@@ -123,6 +157,8 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
                 binding.optionnalMsg.text=""
                 binding.addImageIcon.visibility=INVISIBLE
                 binding.uploadBackgroundImage.setImageURI(viewModel.medicationImageUri)
+                binding.uploadBackgroundImageStretch.setImageURI(viewModel.medicationImageUri)
+                binding.uploadBackgroundImageStretch.alpha=0.7f
 
             }
 
@@ -157,7 +193,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
             }
 
         }
-
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -222,6 +258,23 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
 
     private fun navigateToBarCodeFragment() {
 
+        var state=0
+        if (binding.RoomTemperatureRadio.isChecked)
+        {
+            state=1
+        }
+        if(binding.FreezingRadio.isChecked)
+        {
+            state=2
+        }
+        if(binding.ProtectionFromLightRadio.isChecked)
+        {
+            state=3
+        }
+        if(binding.RefrigerationRadio.isChecked)
+        {
+            state=4
+        }
         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment)
         Log.d("AddMedicationFragment",viewModel.medicationImageUri.toString())
         val action=AddMedicationFragmentDirections.actionAddReminderFragmentToScannerFragment(
@@ -229,7 +282,9 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
             medicationName=binding.medicationNameETT.text.toString(),
             type=binding.quantityTv.text.toString(),
             qunatity = binding.quantityEt.editableText.toString().toFloat(),
-            description =binding.medicationDescriptionET.editableText.toString()
+            description =binding.medicationDescriptionET.editableText.toString(),
+            state = state
+
 
         )
 
@@ -494,6 +549,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val photoFile = File.createTempFile("IMG_$timeStamp", ".jpg", storageDir)
+        Constants.FILE=photoFile
         return FileProvider.getUriForFile(requireContext(), "com.example.myapp.fileprovider", photoFile)
     }
 
@@ -508,7 +564,9 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
+
                 viewModel.medicationImageUri=createPhotoUri()
+
                 viewModel.medicationImageUri?.let {
                     dispatchTakePictureIntent(imageUri = it)
 

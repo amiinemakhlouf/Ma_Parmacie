@@ -19,7 +19,6 @@ import esprims.gi2.ma_pharmacie.data.entity.Medication
 import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineType
 import esprims.gi2.ma_pharmacie.databinding.FragmentShowDonationBinding
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
-import esprims.gi2.ma_pharmacie.presentation.medication.ShowMedicationFragmentDirections
 import esprims.gi2.ma_pharmacie.presentation.medication.adapters.MedicationAdapter
 
 
@@ -74,7 +73,7 @@ class ShowDonationFragment : Fragment(),DonationFragmentListener {
         binding.donationRv.apply {
 
             layoutManager=LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
-            adapter=MedicationAdapter(dataset =myDataList)
+            adapter=MedicationAdapter(dataset =myDataList,null)
         }
     }
 

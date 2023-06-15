@@ -115,7 +115,7 @@ class RegisterFragment : Fragment() {
               }
 
               is UIState.Error ->{
-                  (uiState as UIState.Success).data?.let { updateUiAfterRegisterFailed(it) }
+                  (uiState as UIState.Error)?.let { updateUiAfterRegisterFailed("un erreur est survenu") }
                   loadingDialog.hideDialog()
 
               }

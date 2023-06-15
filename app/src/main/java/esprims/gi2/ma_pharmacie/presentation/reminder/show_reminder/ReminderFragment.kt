@@ -18,12 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentReminderBinding
-import esprims.gi2.ma_pharmacie.presentation.login.LoginFragmentDirections
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
-import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Date
-import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.DaysAdapter
 import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
-import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.ReminderParent
 import esprims.gi2.ma_pharmacie.presentation.shared.Constants
 import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
@@ -79,7 +75,10 @@ class ReminderFragment : Fragment() , ReminderCallback {
                         loadingDialog.hideDialog()
                         val reminders=uiState.data
                         if(reminders.isNotEmpty()){
-                            binding.noItems.visibility=GONE
+                        }
+                        else{
+                            binding.noItems.visibility= VISIBLE
+
                         }
                         Log.d("ReminderFragment", reminders.toString())
                          viewModel.listByTime= mutableListOf<List<Reminder>>()
@@ -180,6 +179,7 @@ class ReminderFragment : Fragment() , ReminderCallback {
             moment = reminder.moment,
             startDate = reminder.startDate,
             endDate=reminder.endDate
+
 
 
 

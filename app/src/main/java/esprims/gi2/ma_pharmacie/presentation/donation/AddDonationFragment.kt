@@ -11,16 +11,24 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
+import esprims.gi2.ma_pharmacie.data.entity.Donation
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddDonationBinding
 import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
+import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
+import esprims.gi2.ma_pharmacie.presentation.shared.UIState
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,6 +36,9 @@ import java.util.*
 @AndroidEntryPoint
 class AddDonationFragment : Fragment() {
     private var resultLauncher: ActivityResultLauncher<Uri>? = null
+    private val loadingDialog :LoadingDialog by lazy {
+        LoadingDialog(requireActivity())
+    }
     private val viewModel: AddDonationViewModel by viewModels()
     private val binding: FragmentAddDonationBinding by lazy {
         FragmentAddDonationBinding.inflate(layoutInflater)
@@ -46,10 +57,35 @@ class AddDonationFragment : Fragment() {
         binding.continuerFab.setOnClickListener {
             if(!checkInputs())
             {
-                Toasty.error(requireContext(),"eazeaz").show()
+                lifecycleScope.launch(Main)
+                {
+                viewModel.saveDonation(
+                    Donation(
+                        viewModel.city,
+                        binding.medicationNameETT.text.toString(),
+                        binding.quantityETT.text.toString().toFloat(),
+                        binding.disponibilityETT.text.toString(),
+                        viewModel.imageUri1?.let { it1 ->
+                            requireActivity().contentResolver.openInputStream(
+                                it1
+                            )?.readBytes()
+                        },
+                        viewModel.imageUri2?.let { it1 ->
+                            requireActivity().contentResolver.openInputStream(
+                                it1
+                            )?.readBytes()
+                        },
+                        binding.phoneNumberEt.text.toString(),
+                        isTaken = false
+
+                    ))
+                }
+
                 return@setOnClickListener
             }
-            Toasty.success(requireContext(),"tout est bon").show()
+            else{
+                Toast.makeText(requireContext(),"bouja",Toast.LENGTH_SHORT).show()
+            }
         }
         closeFragment()
         handleFocusSwitchingInInputs()
@@ -58,6 +94,17 @@ class AddDonationFragment : Fragment() {
         resultLauncher = getCameraResultLauncher()
         getImagesFroUser()
         hideKeyboardWhenInputsLooseFocues()
+
+        lifecycleScope.launch(Main)
+        {
+            viewModel.StaFlowOfAddReminder.collectLatest {
+                when(it)
+                {
+                    is UIState.Success ->Toast.makeText(requireContext(),"don sauvegardé",Toast.LENGTH_SHORT).show()
+                    is UIState.Error   ->Toast.makeText(requireContext(),"un erreur est généré",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
 
     }

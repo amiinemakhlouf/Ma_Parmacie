@@ -145,6 +145,16 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="medication"
+            app:argType="esprims.gi2.ma_pharmacie.data.entity.Medication"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -319,14 +329,21 @@
             android:name="description"
             app:argType="string"
             android:defaultValue='""' />
+        <argument
+            android:name="state"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/showMedicationFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.medication.ShowMedicationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.medication.show_medication.ShowMedicationFragment"
         android:label="ShowMedicationFragment" >
         <action
             android:id="@+id/action_showMedicationFragment_to_addMedicationFragment"
             app:destination="@id/addMedicationFragment"/>
+        <action
+            android:id="@+id/action_showMedicationFragment_to_medicationDetailsFragment"
+            app:destination="@id/medicationDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/showDonationFragment"
@@ -353,5 +370,15 @@
         <action
             android:id="@+id/action_splashFragment_to_reminderFragment"
             app:destination="@id/reminderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/medicationDetailsFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.medication.medication_details.MedicationDetailsFragment"
+        android:label="MedicationDetailsFragment" >
+        <argument android:name="medication"
+            app:argType="esprims.gi2.ma_pharmacie.data.entity.Medication" />
+        <action
+            android:id="@+id/action_medicationDetailsFragment_to_showMedicationFragment"
+            app:destination="@id/showMedicationFragment" />
     </fragment>
 </navigation>

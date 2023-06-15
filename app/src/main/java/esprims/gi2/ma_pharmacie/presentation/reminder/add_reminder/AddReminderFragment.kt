@@ -30,6 +30,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -48,7 +49,9 @@ import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
 import esprims.gi2.ma_pharmacie.presentation.shared.*
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -82,7 +85,6 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     private  val viewModel :AddReminderViewModel by viewModels()
     val selectedDays = mutableListOf<String>()
     private var clickToRecord = true
-   val items = listOf("Zartan", "Lipitor", "Advil", "Zoloft","Tylenol","Ajouter  médicament")
    private lateinit var myDataList :List<Medication>
    private val addReminderFragmentArgs:AddReminderFragmentArgs by navArgs()
 
@@ -130,13 +132,17 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         }
 
 
+        lifecycleScope.launch(IO)
+        {
+            viewModel.getMedications()
+        }
 
         startDateInMilliseconds=System.currentTimeMillis()
         endDateInMilleseconds=System.currentTimeMillis()
         val calendar=Calendar.getInstance()
         calendar.timeInMillis= startDateInMilliseconds!!.toLong()
         val year=calendar.get(Calendar.YEAR)
-        val month=calendar.get(Calendar.MONTH)
+        val month=calendar.get(Calendar.MONTH)+1
         val day=calendar.get(Calendar.DAY_OF_MONTH)
         binding.startDate.setText(day.toString()+"/"+month+"/"+year)
         binding.endDate.setText(day.toString()+"/"+month+"/"+year)
@@ -166,47 +172,80 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     }
 
     private fun addImageWhenItemSelected() {
+
+
         binding.dropdown.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            if(position==items.lastIndex){
+            if(position==viewModel.items?.lastIndex){
                 Toast.makeText(requireContext(),selectedItem,Toast.LENGTH_SHORT).show()
                 val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
                 val action = AddReminderFragmentDirections.actionAddReminderFragmentToAddMedicationFragment("dsqsq")
 
-
-                navHostFragment.navController.navigate(action)
+               navHostFragment.navController.navigate(action)
             }
             else{
                 selectedItem = parent.getItemAtPosition(position) as String
+
+                Glide.with(requireActivity()).load(viewModel.items?.get(position)?.image).placeholder(R.drawable.pill).
+                into(binding.uploadBackgroundImage);
+
+
             }
 
         }
     }
 
     private fun setUpMedicationDropDown() {
-     val adapter = object : ArrayAdapter<String>(requireContext(), 0, items)
+        lifecycleScope.launch(Main)
         {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.medication_drop_down_item, parent, false)
-                val item = view.findViewById<TextView>(R.id.medicationItem)
-                item.setText(items[position])
-                val divider = view.findViewById<View>(R.id.dividerForMedicationItem)
 
-                // Show or hide the divider based on position
-                if (position == count - 1) {
-                    divider.visibility = View.GONE // Hide the divider for the last item
-                } else {
-                    divider.visibility = View.VISIBLE // Show the divider for other items
+        viewModel._mutableStateOfMedcations.collectLatest {
+            when(it)
+            {
+                is UIState.Loading ->{
+                    loadingDialog.showDialog()
                 }
+                is UIState.Success ->{
+                    loadingDialog.hideDialog()
+                    val list= mutableListOf<String>()
+                    for(element in  it.data)
+                    {
+                        list.add(element = element.name!!)
+                    }
+                    list.add("ajouter médicament")
+                    viewModel.items?.add(Medication())
+                    val adapter = object : ArrayAdapter<String>(requireContext(), 0, list )
+                    {
+                        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                            val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.medication_drop_down_item, parent, false)
+                            val item = view.findViewById<TextView>(R.id.medicationItem)
+                            item.setText(list[position])
+                            val divider = view.findViewById<View>(R.id.dividerForMedicationItem)
 
-                return view
-            }
+                            // Show or hide the divider based on position
+                            if (position == count - 1) {
+                                divider.visibility = View.GONE // Hide the divider for the last item
+                            } else {
+                                divider.visibility = View.VISIBLE // Show the divider for other items
+                            }
 
+                            return view
+                        }
+
+
+                    }
+
+                    binding.dropdown.setAdapter(adapter)
+                    binding.dropdown.setDropDownBackgroundDrawable(
+                        requireActivity().getResources().getDrawable(R.color.white,null));
+
+                }
+                is UIState.Error ->{
+                    loadingDialog.hideDialog()
+                    Toasty.error(requireActivity(),"un erreur est survenu").show()
+                }        }
 
         }
-
-        binding.dropdown.setAdapter(adapter)
-        binding.dropdown.setDropDownBackgroundDrawable(
-            requireActivity().getResources().getDrawable(R.color.white,null));
+        }
 
     }
 
@@ -686,24 +725,6 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         if(binding.nevermindRadio.isChecked){
             moment=3
         }
-        val storageRef = FirebaseStorage.getInstance().reference
-        val imageRef = storageRef.child("images/"+addReminderFragmentArgs.medicationName+".jpg")
-        val uri=Uri.parse(addReminderFragmentArgs.uri)
-        Log.d("AddReminderFragment",addReminderFragmentArgs.uri!!)
-        val uploadTask = imageRef.putFile(uri)
-        uploadTask.addOnSuccessListener { taskSnapshot ->
-            Log.d("AddReminderFragment","tomagnoli")
-            imageRef.downloadUrl.addOnSuccessListener { uri ->
-                // Save the image URL to Firestore
-                val imageUrl = uri.toString()
-                Log.d("AddReminderFragment",imageUrl)
-                // Save the imageUrl to Firestore using appropriate document reference
-            }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(requireContext(),"error successfully",Toast.LENGTH_SHORT).show()
-            Log.d("AddReminderFragment",exception.message.toString())
-
-        }
 
         val reminder=Reminder(selectedItem,binding.doseEt.text.toString()+" pillules"
                 ,binding.firstTime.text.toString(),
@@ -713,7 +734,8 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 moment=moment,
                userEmail = "amiinemakhlouf@gmail.com",
                 days = days,
-                type = binding.quantityTv.text.toString()
+                type = binding.quantityTv.text.toString(),
+
             )
         //Constants.EMAIL
              Log.d("AddReminderFragment",binding.firstTime.text.toString())

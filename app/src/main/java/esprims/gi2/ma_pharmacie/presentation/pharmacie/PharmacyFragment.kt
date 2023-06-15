@@ -123,6 +123,9 @@ class PharmacyFragment : Fragment(),PinchSaceListenner,DataPassListener {
 
 
 
+
+
+
     }
 
     private fun handleSearchMedication() {

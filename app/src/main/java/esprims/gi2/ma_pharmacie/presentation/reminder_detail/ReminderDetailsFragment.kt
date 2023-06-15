@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -78,7 +79,6 @@ class ReminderDetailsFragment : Fragment(), DayListener {
         binding.continuerFab.visibility= GONE
         binding.editFab.visibility= VISIBLE
 
-        Toast.makeText(requireContext(), "houu", Toast.LENGTH_SHORT).show()
         binding.backButton.setOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -98,14 +98,10 @@ class ReminderDetailsFragment : Fragment(), DayListener {
         Log.d("days", days!!)
         if (days == "full") {
             binding.daysSwitch.isChecked = true
-            Toast.makeText(
-                requireContext(),
-                binding.daysRv.childCount.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
 
             binding.daysRv.post {
-                for (i in 0 .. binding.daysRv.adapter!!.itemCount) {
+                Log.d("ReminderDetailsFragment",binding.daysRv.adapter!!.itemCount.toString())
+                for (i in 0 until binding.daysRv.adapter!!.itemCount) {
                     val cardView = binding.daysRv.getChildAt(i) as MaterialCardView
                     cardView.setCardBackgroundColor(resources.getColor(R.color.day_green, null))
                     cardView.isCheckable=false
