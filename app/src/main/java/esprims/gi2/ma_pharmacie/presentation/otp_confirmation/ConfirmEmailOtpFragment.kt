@@ -220,7 +220,6 @@ class ConfirmEmailOtpFragment : Fragment() {
         lifecycleScope.launch(Main){
 
 
-            Toasty.success(requireActivity(), "Bienvenue", Toast.LENGTH_SHORT, true).show();
             val navHostFragment =
             requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         val action =

@@ -74,7 +74,7 @@ class ReminderFragment : Fragment() , ReminderCallback {
                     is UIState.Success ->{
                         loadingDialog.hideDialog()
                         val reminders=uiState.data
-                        if(reminders.isNotEmpty()){
+                        if(reminders!!.isNotEmpty()){
                         }
                         else{
                             binding.noItems.visibility= VISIBLE

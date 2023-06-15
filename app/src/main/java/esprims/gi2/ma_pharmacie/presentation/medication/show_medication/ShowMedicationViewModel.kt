@@ -18,17 +18,12 @@ class ShowMedicationViewModel @Inject constructor
     private val getAllMedicationUseCase: GetAllMedicationUseCase
             ):ViewModel()
 {
-    init {
-        viewModelScope.launch  (IO)
-        {
-            getAllMedications()
 
-        }
-    }
     var isFirstStartup=true
         private  val mutableStateOfMedications =MutableStateFlow<UIState<List<Medication>>>(UIState.Default)
         val _mutableStateOfMedication=mutableStateOfMedications
         suspend fun getAllMedications() {
+
             mutableStateOfMedications.emit(UIState.Loading)
 
             val result= getAllMedicationUseCase.getAllMedications()

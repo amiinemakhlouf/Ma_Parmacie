@@ -257,6 +257,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                     is UIState.Loading-> loadingDialog.showDialog()
                     is UIState.Success -> {
                         loadingDialog.hideDialog()
+                        Toast.makeText(requireActivity(),"jilani mami",Toast.LENGTH_SHORT).show()
                         Toasty.success(requireActivity(),"le rappel est bien enregistré",Toast.LENGTH_SHORT).show()
                         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
                         val action = AddReminderFragmentDirections.actionAddReminderFragmentToReminderFragment()

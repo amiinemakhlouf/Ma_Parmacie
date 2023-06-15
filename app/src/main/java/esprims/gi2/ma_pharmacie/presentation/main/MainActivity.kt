@@ -27,12 +27,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
+import esprims.gi2.ma_pharmacie.data.remote.notificationService.NotificationService
 import esprims.gi2.ma_pharmacie.databinding.ActivityMainBinding
 import esprims.gi2.ma_pharmacie.presentation.alarm.AlarmActivity
 import esprims.gi2.ma_pharmacie.presentation.onBoarding.dataStore
@@ -74,6 +77,25 @@ class MainActivity : AppCompatActivity() {
 
             navController?.navigate(R.id.addReminderFragment,)
         }
+
+
+        val notificationService=NotificationService()
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            Toast.makeText(this,token,Toast.LENGTH_SHORT).show()
+
+            Log.d(TAG, task.result)
+            Toast.makeText(baseContext, task.result, Toast.LENGTH_SHORT).show()
+        })
+
 
     }
 

@@ -23,6 +23,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -77,6 +78,9 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
             binding.addMedicationTitle.setText("Details de médicament")
             binding.backButton.setOnClickListener {
                 Toast.makeText(requireActivity(),"la tunisie",Toast.LENGTH_SHORT).show()
+                (requireActivity() as MainActivity).binding.fab.isVisible=true
+                (requireActivity() as MainActivity).binding.bottomNavView.isVisible=true
+
                 findNavController().popBackStack()
 
             }
@@ -188,7 +192,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
             }
             else{
 
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CAMERA),0)
+                this.requestPermissions( arrayOf(android.Manifest.permission.CAMERA)  ,0)
 
             }
 
@@ -201,8 +205,10 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if(requestCode ==0 && grantResults.isNotEmpty())
+        if(requestCode ==0)
         {
+
+            Toast.makeText(requireContext(),"tunisia",Toast.LENGTH_SHORT).show()
             viewModel.medicationImageUri=createPhotoUri()
 
             viewModel.medicationImageUri?.let {
@@ -293,6 +299,9 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
 
     private fun navigateToPreviousFragment() {
         binding.backButton.setOnClickListener {
+            (requireActivity() as MainActivity).binding.fab.isVisible=true
+            (requireActivity() as MainActivity).binding.bottomNavView.isVisible=true
+
             findNavController().popBackStack()
         }
     }
@@ -578,6 +587,11 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
              else {
             //  requireActivity().requestPermissions()
             }
-        }}}
+        }}
+
+
+}
+
+
 
 val Int.dp: Int get() = (this / getSystem().displayMetrics.density).toInt()

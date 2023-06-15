@@ -9,7 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     android:scrollbars="vertical"
-    tools:context=".presentation.donation.AddDonationFragment">
+    tools:context=".presentation.donation.add_donation.AddDonationFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/myroot"

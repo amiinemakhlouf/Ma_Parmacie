@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.presentation.donation
+package esprims.gi2.ma_pharmacie.presentation.donation.add_donation
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -19,7 +19,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.data.entity.Donation
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddDonationBinding
 import esprims.gi2.ma_pharmacie.presentation.hideKeyboard

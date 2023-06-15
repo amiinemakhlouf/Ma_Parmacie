@@ -1,19 +1,14 @@
 package esprims.gi2.ma_pharmacie.presentation.barcode_scanner
 
-import android.content.ContentResolver
-import android.content.Context
 import android.content.pm.ActivityInfo
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +24,7 @@ import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.data.entity.Medication
 import esprims.gi2.ma_pharmacie.databinding.AskUserToAddReminderBinding
 import esprims.gi2.ma_pharmacie.databinding.FragmentScannerBinding
+import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.medication.AddMedicationViewModel
 import esprims.gi2.ma_pharmacie.presentation.shared.Constants
 import esprims.gi2.ma_pharmacie.presentation.shared.FragmentSource
@@ -41,11 +37,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 @AndroidEntryPoint
@@ -98,6 +89,8 @@ class ScannerFragment : Fragment() {
 
                     is UIState.Success ->{
                         loadingDialog.hideDialog()
+                        (requireActivity() as MainActivity).binding.fab.isVisible=true
+                        (requireActivity() as MainActivity).binding.bottomNavView.isVisible=true
                         val action = ScannerFragmentDirections.actionScannerFragmentToMedicineFragment()
                         navHostFragment.navController.navigate(action)
 
@@ -116,15 +109,14 @@ class ScannerFragment : Fragment() {
             dialog.show()
             dialogBinding.ignore.setOnClickListener {
                 dialog.dismiss()
-                saveMEdication()
+                saveMedication()
             }
 
         }
 
-
     }
 
-    private fun saveMEdication() {
+    private fun saveMedication() {
 
         val medication = Medication(
             name = scannerFragmentArgs.medicationName,
@@ -167,14 +159,15 @@ class ScannerFragment : Fragment() {
                     Toasty.success(requireActivity(), "Codabar enregistré").show()
                     dialog.show()
                     dialogBinding.confirm.setOnClickListener {
-                        navigateToSaveReminderFragment()
 
-                        dialog.hide()
+                        navigateToSaveReminderFragment()
+                        dialog.dismiss()
 
                     }
                     dialogBinding.ignore.setOnClickListener {
-
-                        saveMEdication()
+                        loadingDialog
+                            .hideDialog()
+                        saveMedication()
                     }
                 }
             }

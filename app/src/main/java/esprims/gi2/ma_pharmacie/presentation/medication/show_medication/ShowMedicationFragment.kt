@@ -21,6 +21,7 @@ import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import esprims.gi2.ma_pharmacie.presentation.medication.adapters.MedicationAdapter
 import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -47,13 +48,27 @@ class ShowMedicationFragment : Fragment(),MedicationAdapter.MedicationAdapterLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        if(showMedicationViewModel.isFirstStartup)
+        {
+            lifecycleScope.launch(IO)
+            {
+                showMedicationViewModel.getAllMedications()
+
+            }
+            showMedicationViewModel.isFirstStartup=false
+
+        }
+
+
+
         binding.fab1.setOnClickListener {
             navigateToAddMedicationReminder()
         }
 
         lifecycleScope.launch(Main)
         {
-            showMedicationViewModel._mutableStateOfMedication.collectLatest {
+            showMedicationViewModel._mutableStateOfMedication.collect {
 
                 when(it)
                 {
@@ -75,7 +90,6 @@ class ShowMedicationFragment : Fragment(),MedicationAdapter.MedicationAdapterLis
                             binding.medicationRV.visibility= INVISIBLE
                             lifecycleScope.launch(Main)
                             {
-                                delay(1000)
                                 loadingDialog.hideDialog()
                                 binding.medicationRV.visibility= VISIBLE
                                 setUpMedicationRecyclerView(it.data)
@@ -124,11 +138,6 @@ class ShowMedicationFragment : Fragment(),MedicationAdapter.MedicationAdapterLis
         navHostFragment.navController.navigate(action)
     }
 
-    override fun onResume() {
-        super.onResume()
-        ( requireActivity() as MainActivity).binding.fab.visibility= VISIBLE
-        (requireActivity() as MainActivity).binding.bottomNavView.visibility=VISIBLE
 
-    }
 
 }

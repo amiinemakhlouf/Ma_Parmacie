@@ -347,7 +347,7 @@
     </fragment>
     <fragment
         android:id="@+id/showDonationFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.donation.ShowDonationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.donation.show_donation.ShowDonationFragment"
         android:label="fragment_show_donation"
         tools:layout="@layout/fragment_show_donation" >
         <action
@@ -356,7 +356,7 @@
     </fragment>
     <fragment
         android:id="@+id/addDonationFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.donation.AddDonationFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.donation.add_donation.AddDonationFragment"
         android:label="fragment_add_donation"
         tools:layout="@layout/fragment_add_donation" />
     <fragment

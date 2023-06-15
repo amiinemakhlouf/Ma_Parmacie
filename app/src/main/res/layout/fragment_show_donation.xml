@@ -7,7 +7,7 @@
     android:background="@color/light_green"
     android:paddingEnd="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.donation.ShowDonationFragment">
+    tools:context=".presentation.donation.show_donation.ShowDonationFragment">
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -63,6 +63,18 @@
         android:clipToPadding="false"
         android:paddingBottom="8dp"
 
+        />
+
+    <TextView
+        android:id="@+id/noItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Aucun élément."
+        android:visibility="invisible"
         />
 
 

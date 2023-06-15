@@ -18,4 +18,25 @@ class DonationRepository @Inject constructor(
         }
         return  Res.Error()
     }
+    suspend fun getAllDonations():Res<String>
+    {
+        val res=donationService.getDonations()
+        if(res.isSuccessful)
+        {
+            return  Res.Success()
+        }
+
+            return  Res.Error()
+
+    }
+
+    suspend fun getDonationByEmail(email:String):Res<List<Donation>>
+    {
+        val res=donationService.getDonationsByEmail(email)
+        if(res.isSuccessful)
+        {
+            return Res.Success(data = res.body())
+        }
+        return  Res.Error()
+    }
 }
