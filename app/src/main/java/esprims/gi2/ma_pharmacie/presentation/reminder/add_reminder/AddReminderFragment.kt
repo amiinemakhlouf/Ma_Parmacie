@@ -816,7 +816,9 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 (requireActivity() as MainActivity).binding.bottomNavView.visibility= VISIBLE
             }
             catch (e:java.lang.Exception){
-                findNavController().popBackStack()
+                (requireActivity() as MainActivity).binding.fab.visibility= VISIBLE
+                (requireActivity() as MainActivity).binding.bottomNavView.visibility= VISIBLE
+                requireActivity().supportFragmentManager.popBackStack()
 
             }
 
