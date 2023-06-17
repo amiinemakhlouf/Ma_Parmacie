@@ -73,9 +73,14 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
                         if (it.data!!.isEmpty())
                         {
                             binding.noItems.visibility= VISIBLE
+
+                            setUpRecyclerView(listOf())
                         }
                         else{
                             setUpRecyclerView(it.data)
+                            binding.noItems.visibility= INVISIBLE
+                            binding.donationRv.adapter!!.notifyDataSetChanged()
+
 
                         }
                     }
@@ -93,11 +98,13 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
                 when (it) {
                     0 -> {
                         showDonationViewModel.getDonations()
+                        binding.title.text="Tout les dons"
                     }
                     2 -> {
                         lifecycleScope.launch(IO)
                         {
                             showDonationViewModel.getDonationByEmail("amiinemakhlouf@gmail.com")
+                            binding.title.text="Mes dons"
 
                         }
 
@@ -105,6 +112,9 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
                     1 -> lifecycleScope.launch(IO)
                     {
                         showDonationViewModel.getOtherPeopleDonation("amiinemakhlouf@gmail.com")
+                        binding.title.text="Dons partagés par d'autres utilisateurs"
+
+
                     }
                 }
             }
@@ -121,6 +131,8 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
                             binding.noItems.visibility = VISIBLE
                         } else {
                             setUpRecyclerView(it.data)
+                            binding.noItems.visibility= INVISIBLE
+                            binding.donationRv.adapter!!.notifyDataSetChanged()
 
                         }
                     }
@@ -151,7 +163,11 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
                         }
 
                         setUpRecyclerView(it.data!!)
+                        binding.donationRv.adapter!!.notifyDataSetChanged()
+
                     }
+
+                    else -> loadingDialog.hideDialog()
                 }
             }
 
@@ -168,6 +184,8 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
                 is UIState.Success ->{
                     loadingDialog.hideDialog()
                     setUpRecyclerView(it.data!!)
+                    binding.donationRv.adapter!!.notifyDataSetChanged()
+
                 }
                 is UIState.Error ->{
                     loadingDialog.hideDialog()
@@ -218,6 +236,7 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
         lifecycleScope.launch(Main)
         {
             showDonationViewModel.mutableStateFlowOfChoice.emit(checkedItem)
+
 
         }
     }

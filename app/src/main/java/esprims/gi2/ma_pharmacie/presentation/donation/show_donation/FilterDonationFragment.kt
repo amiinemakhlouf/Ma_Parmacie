@@ -64,7 +64,6 @@ class FilterDonationFragment(
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        donationFragmentListener.passDataToFragment(checkedItem!!)
         super.onDismiss(dialog)
 
         this.requireView()

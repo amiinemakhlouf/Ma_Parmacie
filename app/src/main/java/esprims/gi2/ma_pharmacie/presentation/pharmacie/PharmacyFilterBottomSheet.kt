@@ -87,6 +87,7 @@ class PharmacyFilterBottomSheet(
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+
         super.onDismiss(dialog)
 
     }

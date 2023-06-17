@@ -294,6 +294,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
 
         )
 
+
         navHostFragment.navController.navigate(action)
     }
 
