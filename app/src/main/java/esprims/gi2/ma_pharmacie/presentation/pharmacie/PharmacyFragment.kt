@@ -123,9 +123,6 @@ class PharmacyFragment : Fragment(),PinchSaceListenner,DataPassListener {
 
 
 
-
-
-
     }
 
     private fun handleSearchMedication() {
@@ -603,7 +600,6 @@ class PharmacyFragment : Fragment(),PinchSaceListenner,DataPassListener {
                 binding.maps.invalidate()
 
             }
-        }
 
         binding.maps.invalidate()
         var j=0
@@ -628,6 +624,7 @@ class PharmacyFragment : Fragment(),PinchSaceListenner,DataPassListener {
             binding.maps.invalidate()
         }
 
+        }
 
     }
 

@@ -27,8 +27,8 @@ class PharmacyBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-      handleCallPharmacy()
-      getPharmacyInformation()
+        handleCallPharmacy()
+        getPharmacyInformation()
 
 
     }
