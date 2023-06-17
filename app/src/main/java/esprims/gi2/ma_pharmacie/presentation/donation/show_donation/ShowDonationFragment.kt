@@ -36,7 +36,7 @@ import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
-class ShowDonationFragment : Fragment(), DonationFragmentListener {
+class ShowDonationFragment : Fragment(), DonationAdapterListener,DonationFragmentListener {
 
     private val loadingDialog: LoadingDialog by lazy {
         LoadingDialog(requireActivity())
@@ -56,10 +56,7 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch(IO) {
-            showDonationViewModel.getDonationByEmail("amiinemakhlouf@gmail.com")
-
-        }
+        
 
         lifecycleScope.launch(Main)
         {
@@ -98,13 +95,19 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
                 when (it) {
                     0 -> {
                         showDonationViewModel.getDonations()
-                        binding.title.text="Tout les dons"
+                        withContext(Main){
+                            binding.title.text="Tout les dons"
+
+                        }
                     }
                     2 -> {
                         lifecycleScope.launch(IO)
                         {
                             showDonationViewModel.getDonationByEmail("amiinemakhlouf@gmail.com")
-                            binding.title.text="Mes dons"
+                            withContext(Main){
+                                binding.title.text="Mes dons"
+
+                            }
 
                         }
 
@@ -112,7 +115,11 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
                     1 -> lifecycleScope.launch(IO)
                     {
                         showDonationViewModel.getOtherPeopleDonation("amiinemakhlouf@gmail.com")
-                        binding.title.text="Dons partagés par d'autres utilisateurs"
+                        withContext(Main)
+                        {
+                            binding.title.text="Dons partagés par d'autres utilisateurs"
+
+                        }
 
 
                     }
@@ -228,7 +235,7 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
         binding.donationRv.apply {
 
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            adapter = DonationAdapter(dataset = list, null)
+            adapter = DonationAdapter(dataset = list, this@ShowDonationFragment)
         }
     }
 
@@ -239,5 +246,11 @@ class ShowDonationFragment : Fragment(), DonationFragmentListener {
 
 
         }
+    }
+
+    override fun onclick(donation: Donation) {
+        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        val action= ShowDonationFragmentDirections.actionShowDonationFragmentToDonationDetailsFragment(donation)
+        navHostFragment.navController.navigate(action)
     }
 }

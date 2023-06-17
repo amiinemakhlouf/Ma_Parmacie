@@ -9,7 +9,7 @@ import esprims.gi2.ma_pharmacie.presentation.donation.MedicationAdapter
 
 class DonationAdapter(
     val dataset: List<Donation>,
-     val donationAdapter:DonationAdapter?) :
+     val donationAdapterListener: DonationAdapterListener) :
 
     RecyclerView.Adapter<DonationAdapter.ViewHolder>() {
     class ViewHolder (
@@ -33,6 +33,10 @@ class DonationAdapter(
         holder.binding.name.setText(actualItem.medicationName)
         holder.binding.unit.setText(actualItem.quantity)
         holder.binding.cityValue.setText(actualItem.city)
+
+        holder.binding.root.setOnClickListener {
+            donationAdapterListener.onclick(donation = actualItem)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -40,4 +44,10 @@ class DonationAdapter(
     }
 
 
+
 }
+interface DonationAdapterListener{
+
+     fun  onclick(donation: Donation)
+}
+

@@ -108,7 +108,6 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         try {
             val args:AddReminderFragmentArgs by navArgs()
             args.source
-            selectedItem=addReminderFragmentArgs.medicationName!!
             val uriInStringFormat=addReminderFragmentArgs.uri
             Log.d("AddReminderFragment",uriInStringFormat.toString())
             if(uriInStringFormat!="null"){
@@ -116,14 +115,12 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 binding.uploadBackgroundImage.setImageURI(uri)
                 binding.quantityTv.setText(addReminderFragmentArgs.type)
                 binding.NameETT.setText((addReminderFragmentArgs.personName))
-                binding.dropdown1.setText(addReminderFragmentArgs.medicationName)
                 binding.selectMedication.visibility= INVISIBLE
                 binding.dropdown.visibility= INVISIBLE
                 binding.selectMedication1.visibility= VISIBLE
                 binding.dropdown1.setText(addReminderFragmentArgs.medicationName)
                 binding.dropdown1.isClickable=false
                 binding.dropdown1.isFocusable=false
-
 
 
             }
@@ -142,7 +139,6 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         {
             viewModel.getMedications()
         }
-
 
         startDateInMilliseconds=System.currentTimeMillis()
         endDateInMilleseconds=System.currentTimeMillis()
@@ -225,17 +221,12 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                             val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.medication_drop_down_item, parent, false)
                             val item = view.findViewById<TextView>(R.id.medicationItem)
-                            val itemImage = view.findViewById<ImageView>(R.id.addImage)
-
                             item.setText(list[position])
                             val divider = view.findViewById<View>(R.id.dividerForMedicationItem)
 
                             // Show or hide the divider based on position
                             if (position == count - 1) {
                                 divider.visibility = View.GONE // Hide the divider for the last item
-                                item.setTextColor(resources.getColor(R.color.dark_green,null))
-                                itemImage.visibility= VISIBLE
-
                             } else {
                                 divider.visibility = View.VISIBLE // Show the divider for other items
                             }
@@ -302,7 +293,6 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     }
 
     private fun handleRecordAudio(recordAudioPermission: ActivityResultLauncher<String>) {
-
         binding.recordImage.setOnLongClickListener { _ ->
             when {
                 ContextCompat.checkSelfPermission(
@@ -329,10 +319,9 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 }
             }
             return@setOnLongClickListener true
-        }}
+        }
 
-
-
+    }
 
     private fun showRecordAudioPermissionExplicationDialog() {
         val builder = AlertDialog.Builder(requireContext(),R.style.permission_dialog)
@@ -756,7 +745,6 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         if(binding.nevermindRadio.isChecked){
             moment=3
         }
-
         val reminder=Reminder(selectedItem,binding.doseEt.text.toString()+" pillules"
                 ,binding.firstTime.text.toString(),
                 binding.NameETT.text.toString(),
@@ -828,11 +816,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 (requireActivity() as MainActivity).binding.bottomNavView.visibility= VISIBLE
             }
             catch (e:java.lang.Exception){
-                val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-                (requireActivity() as MainActivity).binding.fab.visibility= VISIBLE
-                (requireActivity() as MainActivity).binding.bottomNavView.visibility= VISIBLE
-
-                navHostFragment.navController.popBackStack()
+                findNavController().popBackStack()
 
             }
 

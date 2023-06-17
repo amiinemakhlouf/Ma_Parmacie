@@ -8,7 +8,7 @@ open class Reminder(
     val startDate: String,
     val endDate: String,
     val moment: Int,
-    val days: String,
+    var days: String,
     val type: String,
     val userEmail: String = "",
     val image: String? = null

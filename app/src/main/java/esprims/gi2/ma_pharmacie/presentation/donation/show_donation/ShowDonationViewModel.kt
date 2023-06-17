@@ -26,7 +26,7 @@ class ShowDonationViewModel @Inject constructor(
 {
     private val mutableStateFlowOfDonations:MutableStateFlow<UIState<List<Donation>>> = MutableStateFlow(UIState.Default)
     val stateflowOfDonations= mutableStateFlowOfDonations
-    val mutableStateFlowOfChoice= MutableStateFlow<Int>(2)
+    val mutableStateFlowOfChoice= MutableStateFlow<Int>(0)
     val mutableStateFlowOfChoice1= mutableStateFlowOfChoice
     private val mutableStateFlowOFOtherPeopleDonation  = MutableStateFlow<UIState<List<Donation>>>(UIState.Default)
     val StateFlowOFOtherPeopleDonation=mutableStateFlowOFOtherPeopleDonation

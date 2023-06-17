@@ -353,6 +353,9 @@
         <action
             android:id="@+id/action_showDonationFragment_to_addDonationFragment"
             app:destination="@id/addDonationFragment" />
+        <action
+            android:id="@+id/action_showDonationFragment_to_donationDetailsFragment"
+            app:destination="@id/donationDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addDonationFragment"
@@ -384,5 +387,13 @@
         <action
             android:id="@+id/action_medicationDetailsFragment_to_showMedicationFragment"
             app:destination="@id/showMedicationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/donationDetailsFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.donation.donation_details.DonationDetailsFragment"
+        android:label="DonationDetailsFragment" >
+        <argument
+            android:name="donation"
+            app:argType="esprims.gi2.ma_pharmacie.data.entity.Donation" />
     </fragment>
 </navigation>

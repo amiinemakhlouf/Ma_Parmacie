@@ -67,6 +67,7 @@ class ReminderFragment : Fragment() , ReminderCallback {
             lifecycleScope.launch(IO){
                 viewModel.getAllReminders(Constants.JWT)
 
+
             }
 
         lifecycleScope.launch(Main){
@@ -270,6 +271,14 @@ class ReminderFragment : Fragment() , ReminderCallback {
     monthsMap["November"] = "Novembre"
     monthsMap["December"] = "Décembre"
         return monthsMap
+    }
+    fun getContiguousStrings(input: String): List<String> {
+        val result = mutableListOf<String>()
+        for (i in 0 until input.length - 3) {
+            val substring = input.substring(i, i + 4)
+            result.add(substring)
+        }
+        return result
     }
 
 

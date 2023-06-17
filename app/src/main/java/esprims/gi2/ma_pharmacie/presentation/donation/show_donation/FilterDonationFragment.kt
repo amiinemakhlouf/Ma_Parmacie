@@ -64,10 +64,19 @@ class FilterDonationFragment(
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+
         super.onDismiss(dialog)
+
+        checkedItem?.let {
+            donationFragmentListener.passDataToFragment(it)
+
+        }
+
+
 
         this.requireView()
     }
+
 
     override fun getTheme(): Int {
         return R.style.BottomSheetDialog

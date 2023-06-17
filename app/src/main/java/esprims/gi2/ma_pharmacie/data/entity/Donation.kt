@@ -1,6 +1,10 @@
 package esprims.gi2.ma_pharmacie.data.entity
 
- class Donation(
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+class Donation(
      val city: String?=null,
      val medicationName: String?=null,
      val quantity: String? =null,
@@ -10,4 +14,4 @@ package esprims.gi2.ma_pharmacie.data.entity
      val phoneNumber: String?=null,
      val isTaken: Boolean?=null,
      val email:String?=null
-)
+):Parcelable
