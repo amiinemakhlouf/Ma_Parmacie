@@ -207,7 +207,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 is UIState.Success ->{
                     loadingDialog.hideDialog()
                     val list= mutableListOf<String>()
-                    for(element in  it.data)
+                    for(element in  it.data!!)
                     {
                         list.add(element = element.name!!)
                     }
@@ -576,8 +576,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 val minute: Int = picker.minute
 
                 (list[actualReminderITem][1] as TextView).setText(
-                   // String.format("%02d h : %02d", hour, minute)
-                    hour.toString()+":"+minute.toString()
+                    String.format("%02d h : %02d", hour, minute)
                 )
                 var reminderIndex = 0
                 for (reminder in list[actualReminderITem]) {
@@ -795,7 +794,9 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 navHostFragment.navController.navigate(action)
             }
             catch (e:java.lang.Exception){
-                findNavController().popBackStack()
+                val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+
+                navHostFragment.navController.popBackStack()
 
             }
 

@@ -90,10 +90,8 @@ class MainActivity : AppCompatActivity() {
             // Get new FCM registration token
             val token = task.result
 
-            Toast.makeText(this,token,Toast.LENGTH_SHORT).show()
 
             Log.d(TAG, task.result)
-            Toast.makeText(baseContext, task.result, Toast.LENGTH_SHORT).show()
         })
 
 

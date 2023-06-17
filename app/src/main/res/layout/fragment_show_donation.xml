@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
-        android:text="les dons:"
+        android:text="Tout les dons:"
         android:textColor="@color/dark_green"
         />
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

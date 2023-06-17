@@ -59,15 +59,18 @@
             android:id="@+id/selectCities"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@android:color/darker_gray"
             android:hint="Selectionner votre ville"
-            android:textColorHint="@color/dark_green"
+
+            android:textColorHint="@android:color/darker_gray"
             app:boxBackgroundColor="@android:color/white"
             app:boxStrokeColor="@color/dark_green"
+            app:helperTextEnabled="true"
+
             app:boxStrokeWidth="2dp"
             app:endIconTint="@color/dark_green"
             app:helperTextTextColor="@color/red"
@@ -98,7 +101,7 @@
             android:id="@+id/medicationNameET"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -140,7 +143,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/quantityET"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -184,7 +187,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/disponibilityET"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/disponibilty"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
@@ -217,7 +220,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:text="Image"
+            android:text="Images (optonnelle)"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/disponibilityET" />
 
@@ -323,7 +326,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/PhoneNumberTextLayout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="25dp"
@@ -349,7 +352,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneNumberEt"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingStart="20dp"
                 android:textSize="18sp"
                 android:inputType="number"
@@ -358,6 +361,8 @@
                 android:drawablePadding="16dp"
                 tools:text="933"
                 android:paddingTop="9dp"
+                android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+
                 android:imeOptions="actionDone"
 
                 />

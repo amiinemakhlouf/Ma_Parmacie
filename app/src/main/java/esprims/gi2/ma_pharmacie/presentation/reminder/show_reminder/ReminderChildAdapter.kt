@@ -37,6 +37,7 @@ class ReminderChildAdapter(
         holder.binding.medicationName.text=currentItem.medicationName
         holder.binding.medicationDose.text=currentItem.dose
 
+
         holder.binding.root.setOnClickListener {
             reminderCallback.navigateToDetailsScreen(currentItem)
         }

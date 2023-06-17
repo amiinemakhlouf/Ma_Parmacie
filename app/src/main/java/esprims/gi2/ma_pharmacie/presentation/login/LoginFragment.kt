@@ -144,7 +144,7 @@ class LoginFragment : Fragment() {
 
                     is UIState.Error ->{
                         loadingDialog.hideDialog()
-                        uiState.errorMessage.let { Toasty.error(requireActivity(), it,Toast.LENGTH_LONG).show() }
+                        uiState.errorMessage.let { Toasty.error(requireActivity(), it!!,Toast.LENGTH_LONG).show() }
                         //showSnackBar(getString(R.string.no_internet))
                     }
                 }

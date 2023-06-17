@@ -10,13 +10,14 @@ import retrofit2.http.Path
 
 interface DonationService {
 
-    @POST("/donations")
-    suspend fun saveDonation(@Body donation: Donation): Response<List<SimpleStringResponse>>
+    @POST("donations")
+    suspend fun saveDonation(@Body donation: Donation): Response<Donation>
 
-    @GET("/donations")
+    @GET("donations")
     suspend fun getDonations(): Response<List<Donation>>
-    @GET("/donations/{email}")
+    @GET("donations/{email}")
     suspend fun getDonationsByEmail(@Path("email") email: String): Response<List<Donation>>
-    }
+    @GET("donations/differentEmails/{email}")
+    suspend fun getOtherPeopleDonations(@Path("email") email: String): Response<List<Donation>>
 
 }

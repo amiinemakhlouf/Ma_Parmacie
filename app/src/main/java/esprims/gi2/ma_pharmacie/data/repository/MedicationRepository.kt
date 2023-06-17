@@ -51,6 +51,8 @@ class MedicationRepository @Inject constructor
 
         if(result.isSuccessful){
 
+            Log.d("Medicationrepository","   "+result.body()!!.size)
+
 
             return Res.Success(result.body())
         }

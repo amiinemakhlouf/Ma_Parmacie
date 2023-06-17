@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.databinding.FragmentFilterDonationBinding
@@ -16,6 +17,7 @@ class FilterDonationFragment(
     private val donationFragmentListener: DonationFragmentListener,
     val _checkedItem:Int
 ) : BottomSheetDialogFragment() {
+    private var checkedItem: Int?=null
     private  val binding:FragmentFilterDonationBinding by lazy {
         FragmentFilterDonationBinding.inflate(layoutInflater)
     }
@@ -31,6 +33,9 @@ class FilterDonationFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.filter.setOnClickListener {
+            this.dismiss()
+        }
 
         if(_checkedItem==0)
         {
@@ -44,7 +49,7 @@ class FilterDonationFragment(
         }
 
         binding.root.setOnCheckedChangeListener { group, checkedId ->
-            var checkedItem=0
+             checkedItem=0
             if(binding.allDonations.isChecked){
                 checkedItem=0
             }
@@ -55,12 +60,13 @@ class FilterDonationFragment(
                 checkedItem=2
             }
 
-            donationFragmentListener.passDataToFragment(checkedItem)
         }
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+        donationFragmentListener.passDataToFragment(checkedItem!!)
         super.onDismiss(dialog)
+
         this.requireView()
     }
 

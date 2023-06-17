@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/child_reminder_background"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/illustration"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/donation_illustration"
+        android:layout_marginStart="15dp"
+        android:scaleType="fitXY"
+        />
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zartan"
+        android:layout_marginTop="-10dp"
+        app:layout_constraintStart_toEndOf="@id/illustration"
+        android:layout_marginStart="15dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="@id/illustration"
+
+        />
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        android:text="Quantité:  "
+        android:layout_marginTop="5dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/type"
+        app:layout_constraintTop_toTopOf="@id/type"
+        app:layout_constraintBottom_toBottomOf="@id/type"
+        android:paddingStart="5dp"
+        android:text="20 mg"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/type"
+        app:layout_constraintTop_toBottomOf="@id/type"
+        android:text="Ville, "
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/cityValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/quantity"
+        app:layout_constraintTop_toBottomOf="@id/type"
+        android:text=" 3"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+
+        />
+    <TextView
+        android:id="@+id/quantityValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/quantityValue"
+        app:layout_constraintTop_toBottomOf="@id/type"
+        android:text=""
+        android:textSize="16sp"
+        android:textColor="@color/black"
+
+        />
+
+    <TextView
+        android:id="@+id/seeMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="13sp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/quantityValueText"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/dark_green"
+        />
+
+    <ImageView
+        android:id="@+id/more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/baseline_keyboard_arrow_right_24"
+        android:layout_marginEnd="20dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

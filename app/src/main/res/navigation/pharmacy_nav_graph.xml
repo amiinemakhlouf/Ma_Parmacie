@@ -358,7 +358,11 @@
         android:id="@+id/addDonationFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.donation.add_donation.AddDonationFragment"
         android:label="fragment_add_donation"
-        tools:layout="@layout/fragment_add_donation" />
+        tools:layout="@layout/fragment_add_donation" >
+        <action
+            android:id="@+id/action_addDonationFragment_to_showDonationFragment"
+            app:destination="@id/showDonationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="esprims.gi2.ma_pharmacie.presentation.SplashFragment"

@@ -48,6 +48,7 @@ class ShowMedicationFragment : Fragment(),MedicationAdapter.MedicationAdapterLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Toast.makeText(requireActivity(),"hechmi jilani",Toast.LENGTH_SHORT).show()
 
         if(showMedicationViewModel.isFirstStartup)
         {
@@ -78,7 +79,7 @@ class ShowMedicationFragment : Fragment(),MedicationAdapter.MedicationAdapterLis
 
                     }
                     is UIState.Success ->{
-                        if(it.data.isEmpty())
+                        if(it.data?.isEmpty() == true)
                         {
                             binding.noItems.visibility= VISIBLE
                             loadingDialog.hideDialog()
@@ -86,7 +87,7 @@ class ShowMedicationFragment : Fragment(),MedicationAdapter.MedicationAdapterLis
                         else{
 
                             binding.noItems.visibility= INVISIBLE
-                            setUpMedicationRecyclerView(myDataList = it.data)
+                            setUpMedicationRecyclerView(myDataList = it.data!!)
                             binding.medicationRV.visibility= INVISIBLE
                             lifecycleScope.launch(Main)
                             {

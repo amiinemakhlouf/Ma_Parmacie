@@ -68,10 +68,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <org.osmdroid.views.MapView
+    <fragment
         android:id="@+id/maps"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:text="@string/hello_blank_fragment" />
 
 

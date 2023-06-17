@@ -281,7 +281,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
         {
             state=4
         }
-        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment)
+        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         Log.d("AddMedicationFragment",viewModel.medicationImageUri.toString())
         val action=AddMedicationFragmentDirections.actionAddReminderFragmentToScannerFragment(
             viewModel.medicationImageUri.toString(),
@@ -294,7 +294,7 @@ class AddMedicationFragment : Fragment(), AddReminderAdapter.OnTypeListener {
 
         )
 
-        navHostFragment?.findNavController()?.navigate(action)
+        navHostFragment.navController.navigate(action)
     }
 
     private fun navigateToPreviousFragment() {

@@ -13,10 +13,8 @@ data class Medication(
     val type: String?=null,
     val additionalDescription:String?=null,
     val unit :String?=null,
-    override val quantity:Float?=null,
+    val quantity:Float?=null,
     val state:Int?=null,
-    val image: String?=null
-):Parcelable, Med(
-    medicationName = name,
-    quantity=quantity
-)
+    val image: String?=null,
+    val userEmail:String?=null
+):Parcelable

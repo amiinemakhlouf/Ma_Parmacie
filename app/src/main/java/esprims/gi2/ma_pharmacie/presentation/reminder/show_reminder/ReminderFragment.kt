@@ -1,15 +1,15 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder
 
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -27,6 +27,8 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -51,6 +53,14 @@ class ReminderFragment : Fragment() , ReminderCallback {
         ( requireActivity() as MainActivity).binding.bottomNavView.visibility=VISIBLE
         ( requireActivity() as MainActivity).binding.fab.visibility= View.VISIBLE
 
+        val today=android.text.format.DateFormat.format("EEEE", System.currentTimeMillis());
+        val cal = Calendar.getInstance()
+        val month_date = SimpleDateFormat("MMMM")
+        val month_name = month_date.format(cal.time)
+
+
+        binding.TodayDay.setText(returnDays()[today]+" "+Calendar.DAY_OF_MONTH+" "+getMonths()[month_name])
+
         if(viewModel.isFirstStartUp){
 
 
@@ -73,7 +83,13 @@ class ReminderFragment : Fragment() , ReminderCallback {
                     }
                     is UIState.Success ->{
                         loadingDialog.hideDialog()
-                        val reminders=uiState.data
+                        var reminders=uiState.data
+                        reminders= reminders!!.filter { it.days=="full" || it.days.contains(getTodayIn3letters()[today]!!) }
+                        for (reminder in reminders)
+                        {
+                            Log.d("Reminder","  "+reminder.days)
+
+                        }
                         if(reminders!!.isNotEmpty()){
                         }
                         else{
@@ -185,7 +201,7 @@ class ReminderFragment : Fragment() , ReminderCallback {
 
         )
 
-        navHostFragment.navController.navigate(action,  )
+        navHostFragment.navController.navigate(action)
     }
 
 
@@ -205,6 +221,57 @@ class ReminderFragment : Fragment() , ReminderCallback {
     private fun handleAppBackButton() {
 
     }
+    fun getDate(timestamp: Long) :String {
+        val calendar = Calendar.getInstance(Locale.FRENCH)
+        calendar.timeInMillis = timestamp * 1000L
+        val date = DateFormat.format("dd-MM-yyyy",calendar).toString()
+        return date
+    }
+
+    fun returnDays(): HashMap<String, String> {
+
+
+    val daysMap = HashMap<String, String>()
+    daysMap["Monday"] = "Lundi"
+    daysMap["Tuesday"] = "Mardi"
+    daysMap["Wednesday"] = "Mercredi"
+    daysMap["Thursday"] = "Jeudi"
+    daysMap["Friday"] = "Vendredi"
+    daysMap["Saturday"] = "Samedi"
+    daysMap["Sunday"] = "Dimanche"
+        return daysMap
+    }
+
+    private fun getTodayIn3letters(): HashMap<String, String> {
+        val TodayIn3LetterMap = HashMap<String, String>()
+        TodayIn3LetterMap["Monday"] = "lun"
+        TodayIn3LetterMap["Tuesday"] = "mar"
+        TodayIn3LetterMap["Wednesday"] = "mer"
+        TodayIn3LetterMap["Thursday"] = "jeu"
+        TodayIn3LetterMap["Friday"] = "ven"
+        TodayIn3LetterMap["Saturday"] = "sam"
+        TodayIn3LetterMap["Sunday"] = "dim"
+        return TodayIn3LetterMap
+    }
+
+    fun getMonths(): HashMap<String, String> {
+
+        val monthsMap = HashMap<String, String>()
+    monthsMap["January"] = "Janvier"
+    monthsMap["February"] = "Février"
+    monthsMap["March"] = "Mars"
+    monthsMap["April"] = "Avril"
+    monthsMap["May"] = "Mai"
+    monthsMap["June"] = "Juin"
+    monthsMap["July"] = "Juillet"
+    monthsMap["August"] = "Août"
+    monthsMap["September"] = "Septembre"
+    monthsMap["October"] = "Octobre"
+    monthsMap["November"] = "Novembre"
+    monthsMap["December"] = "Décembre"
+        return monthsMap
+    }
+
 
 }
 
