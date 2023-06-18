@@ -214,20 +214,26 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                     {
                         list.add(element = element.name!!)
                     }
-                    list.add("ajouter médicament")
+                    list.add("Ajouter médicament")
                     viewModel.items?.add(Medication())
                     val adapter = object : ArrayAdapter<String>(requireContext(), 0, list )
                     {
                         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                             val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.medication_drop_down_item, parent, false)
                             val item = view.findViewById<TextView>(R.id.medicationItem)
+                            val image =view.findViewById<ImageView>(R.id.addImage)
                             item.setText(list[position])
                             val divider = view.findViewById<View>(R.id.dividerForMedicationItem)
 
                             // Show or hide the divider based on position
                             if (position == count - 1) {
                                 divider.visibility = View.GONE // Hide the divider for the last item
+                                image.visibility= VISIBLE
+                                item.setTextColor(requireActivity().resources.getColor(R.color.dark_green))
+
                             } else {
+                                image.visibility= INVISIBLE
+                                item.setTextColor(requireActivity().resources.getColor(R.color.black))
                                 divider.visibility = View.VISIBLE // Show the divider for other items
                             }
 
@@ -746,7 +752,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
             moment=3
         }
         val reminder=Reminder(selectedItem,binding.doseEt.text.toString()+" pillules"
-                ,binding.firstTime.text.toString(),
+                ,binding.firstTime.text.toString()+binding.secondTime.text.toString()+binding.thirdTime.text.toString(),
                 binding.NameETT.text.toString(),
                 startDate=startDateInMilliseconds!!.toString(),
                 endDate=(endDateInMilleseconds!!+86400000-1000).toString()  ,
@@ -816,9 +822,10 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 (requireActivity() as MainActivity).binding.bottomNavView.visibility= VISIBLE
             }
             catch (e:java.lang.Exception){
-                (requireActivity() as MainActivity).binding.fab.visibility= VISIBLE
-                (requireActivity() as MainActivity).binding.bottomNavView.visibility= VISIBLE
-                requireActivity().supportFragmentManager.popBackStack()
+                val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+                val action=AddReminderFragmentDirections.actionAddReminderFragmentToReminderFragment()
+                navHostFragment.navController.navigate(action)
+
 
             }
 

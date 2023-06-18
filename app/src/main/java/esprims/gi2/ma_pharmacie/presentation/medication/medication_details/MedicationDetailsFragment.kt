@@ -193,6 +193,8 @@ class MedicationDetailsFragment : Fragment(),AddReminderAdapter.OnTypeListener {
         fragmentMedicationDetailsBinding.backButton.setOnClickListener {
 
             findNavController().popBackStack()
+            (requireActivity() as MainActivity).binding.fab.visibility= VISIBLE
+            (requireActivity() as MainActivity).binding.bottomNavView.visibility= VISIBLE
         }
         fragmentMedicationDetailsBinding.root1.setOnClickListener {
             fragmentMedicationDetailsBinding.root.requestFocus()

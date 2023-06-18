@@ -58,12 +58,39 @@ class ReminderFragmentViewModel @Inject constructor(
                  is Result.Success -> {
 
                      val data=result.data
+                     val finalList= mutableListOf<Reminder>()
                      for (reminder in data!!)
                      {
-                         Log.d("ReminderFragmentViewModel  ",reminder.medicationName)
+                         Log.d("ReminderFragmentViewModel  ",reminder.reminderTime!!)
+                         val mysub=sliceString(reminder.reminderTime!!,9)
+                         for (datad in mysub)
+                         {
+                             val reminder1= Reminder().apply {
+                                 this.reminderTime=datad
+                                 this.days=reminder.days
+                                 this.dose=reminder.dose!!
+                                 this.image=null
+                                 this.medicationName=reminder.medicationName
+                                 this.personName=reminder.personName
+                                 this.type=reminder.type
+                                 this.moment=reminder.moment
+                                 this.endDate=reminder.endDate
+                                 this.startDate=reminder.startDate
+
+
+
+                             }
+                             finalList.add(reminder1)
+
+                         }
+
 
                      }
-                     mutableStateFlowOfReminders.emit(UIState.Success(data))
+
+                         Log.d("ReminderFragmentViewModel",data.size.toString())
+
+
+                     mutableStateFlowOfReminders.emit(UIState.Success(finalList))
                  }
              }
 
@@ -71,5 +98,10 @@ class ReminderFragmentViewModel @Inject constructor(
 
 
     }
+
+    fun sliceString(str: String, length: Int): List<String> {
+        return str.chunked(length)
+    }
+
 
 }

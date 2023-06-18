@@ -85,7 +85,7 @@ class ReminderFragment : Fragment() , ReminderCallback {
                     is UIState.Success ->{
                         loadingDialog.hideDialog()
                         var reminders=uiState.data
-                        reminders= reminders!!.filter { it.days=="full" || it.days.contains(getTodayIn3letters()[today]!!) }
+                        reminders= reminders!!.filter { it.days=="full" || it.days!!.contains(getTodayIn3letters()[today]!!) }
                         for (reminder in reminders)
                         {
                             Log.d("Reminder","  "+reminder.days)
@@ -193,9 +193,9 @@ class ReminderFragment : Fragment() , ReminderCallback {
             dose = reminder.dose,
             username =reminder.personName,
             days = reminder.days,
-            moment = reminder.moment,
+            moment = reminder.moment!!,
             startDate = reminder.startDate,
-            endDate=reminder.endDate
+            endDate=reminder.endDate!!
 
 
 

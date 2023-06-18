@@ -11,6 +11,7 @@ import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Remind
 import esprims.gi2.ma_pharmacie.presentation.shared.Result
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -33,8 +34,12 @@ class AddReminderViewModel @Inject constructor(
 
     public  fun saveReminder(reminder: Reminder){
 
+
         viewModelScope.launch(IO) {
             reminderState.emit(UIState.Loading)
+            launch {
+
+            }
             val result=reminderRepository.saveReminder(reminder)
             when(result){
 
