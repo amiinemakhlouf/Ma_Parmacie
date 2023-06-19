@@ -1,5 +1,6 @@
 package esprims.gi2.ma_pharmacie.presentation.main
 
+import NotificationHelper
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
@@ -78,6 +79,8 @@ class MainActivity : AppCompatActivity() {
             navController?.navigate(R.id.addReminderFragment,)
         }
 
+
+        // Step 2: Build the notification
 
         val notificationService=NotificationService()
 

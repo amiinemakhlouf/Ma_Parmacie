@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
-import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -15,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -136,6 +134,7 @@ class LoginFragment : Fragment() {
                             saveJwtLocally(it,requireActivity())
                         }
                         moveToReminderScreen()
+                        Constants.userEmail=binding.emailEt.editText!!.text.toString()
                     }
                     is UIState.Loading ->{
                         loadingDialog.showDialog()
@@ -326,7 +325,7 @@ class LoginFragment : Fragment() {
                 val userData =account.result
                 val username=userData.displayName
                 val email=userData.email
-                Constants.EMAIL=email!!
+                Constants.userEmail=email!!
                 lifecycleScope.launch(IO){
                     viewModel.loginWithGoogleAccount(User(username=username!!,email=email!!))
 

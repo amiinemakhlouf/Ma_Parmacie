@@ -329,7 +329,8 @@ class AddDonationFragment : Fragment() {
         return try {
             val inputStream = contentResolver.openInputStream(uri)
             val btm = BitmapFactory.decodeStream(inputStream)
-            getResizedBitmap(btm, 150)
+           // getResizedBitmap(btm, 150)
+            btm
         } catch (e: IOException) {
             e.printStackTrace()
             null

@@ -1,4 +1,5 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
+import NotificationHelper
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,6 +10,8 @@ import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.speech.SpeechRecognizer
 import android.util.Log
@@ -51,6 +54,8 @@ import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Remind
 import esprims.gi2.ma_pharmacie.presentation.shared.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.File
@@ -568,11 +573,34 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
     private fun handleConfirmBt() {
         binding.continuerFab.setOnClickListener {
 
+            Log.d("AddReminderFragment","  "+System.currentTimeMillis())
             saveReminder()
+
+            val handler = Handler(Looper.getMainLooper())
+
+// Post a Runnable to be executed after a delay
+            GlobalScope.launch {
+
+                delay(1687195800000-System.currentTimeMillis())
+                NotificationHelper.createNotification(requireContext(),audioFile)
+
+
+            }
+
+
         }
 
         binding.continuerFab2.setOnClickListener {
             saveReminder()
+            val handler = Handler(Looper.getMainLooper())
+
+// Post a Runnable to be executed after a delay
+
+            handler.postDelayed({
+                // Code to be executed after the delay
+                // This code will run on the main (UI) thread
+
+            }, 1687194359000-System.currentTimeMillis())
         }
 
     }
@@ -764,7 +792,11 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
             )
         //Constants.EMAIL
              Log.d("AddReminderFragment",binding.firstTime.text.toString())
+
             viewModel.saveReminder(reminder)
+
+        NotificationHelper.createNotification(requireActivity(),audioFile)
+
 
 
     }

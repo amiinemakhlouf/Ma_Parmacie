@@ -79,6 +79,9 @@
         <action
             android:id="@+id/action_reminderFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_reminderFragment_to_delegateReminderFragment"
+            app:destination="@id/delegateReminderFragment" />
     </fragment>
     <fragment
         android:id="@+id/reminderDetailsFragment"
@@ -396,4 +399,8 @@
             android:name="donation"
             app:argType="esprims.gi2.ma_pharmacie.data.entity.Donation" />
     </fragment>
+    <fragment
+        android:id="@+id/delegateReminderFragment"
+        android:name="esprims.gi2.ma_pharmacie.presentation.DelegateReminderFragment"
+        android:label="DelegateReminderFragment" />
 </navigation>

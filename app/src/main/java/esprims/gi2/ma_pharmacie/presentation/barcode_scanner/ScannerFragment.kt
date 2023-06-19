@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
@@ -155,6 +156,8 @@ class ScannerFragment : Fragment() {
 
             } else {
                 lifecycleScope.launch(Main) {
+                    binding.barCodeScan.visibility= INVISIBLE
+                    binding.ignoreTv.visibility=INVISIBLE
                     delay(1500)
                     Toasty.success(requireActivity(), "Codabar enregistré").show()
                     dialog.show()
@@ -167,6 +170,7 @@ class ScannerFragment : Fragment() {
                     dialogBinding.ignore.setOnClickListener {
                         loadingDialog
                             .hideDialog()
+                        dialog.dismiss()
                         saveMedication()
                     }
                 }

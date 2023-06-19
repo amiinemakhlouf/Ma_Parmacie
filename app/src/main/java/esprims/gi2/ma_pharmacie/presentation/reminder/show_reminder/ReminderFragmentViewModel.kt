@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import esprims.gi2.ma_pharmacie.app.MyPharmacyApplication
 import esprims.gi2.ma_pharmacie.domain.usecases.reminder.GetAllRemindersUseCase
 import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
 import esprims.gi2.ma_pharmacie.presentation.shared.Constants
@@ -52,12 +53,18 @@ class ReminderFragmentViewModel @Inject constructor(
         mutableStateFlowOfReminders.emit(UIState.Loading)
         viewModelScope.launch(IO)
          {
+             Log.d("ReminderViewMdodel", "i'm here bto")
 
            when(val result= getAllRemindersUseCase.invoke(jwt)){
-
                  is Result.Success -> {
+                     Log.d("ReminderViewMdodel", "success")
 
                      val data=result.data
+                     if(data!!.isEmpty())
+                     {
+                         mutableStateFlowOfReminders.emit(UIState.Success(listOf<Reminder>()))
+                         return@launch
+                     }
                      val finalList= mutableListOf<Reminder>()
                      for (reminder in data!!)
                      {
@@ -92,6 +99,8 @@ class ReminderFragmentViewModel @Inject constructor(
 
                      mutableStateFlowOfReminders.emit(UIState.Success(finalList))
                  }
+
+               else ->Log.d("ReminderViewMdodel"," erreur")
              }
 
          }

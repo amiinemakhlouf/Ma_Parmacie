@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+
+    android:layout_marginEnd="10dp"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:backgroundTint="@color/dark_green"
+        android:background="@drawable/rounded_corner"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        app:layout_constraintTop_toTopOf="@id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/container"
+        android:text="Don du sang"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:padding="20dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/description"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/container"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:text="Lundi à hopital bourguiba Monastir, participez à notre événement de don de sang et aidez à sauver des vies."
+        />
+
+    <TextView
+        android:id="@+id/date"
+        app:layout_constraintTop_toTopOf="@id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/container"
+        android:text="22/07/2023"
+        android:textSize="15dp"
+        android:textColor="@color/white"
+        android:padding="20dp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/contactUS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:text="Contactez nous"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@id/container"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+
+        />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="4dp"
+        android:src="@drawable/phone_enabled"
+        app:layout_constraintStart_toEndOf="@id/contactUS"
+        app:layout_constraintTop_toTopOf="@id/contactUS"
+        app:layout_constraintBottom_toBottomOf="@id/contactUS"
+
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        app:layout_constraintTop_toBottomOf="@id/container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/firstPoint"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/rounded_corner"
+            android:backgroundTint="@color/dark_green"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="@color/cadet_Blue"
+
+
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+
+            />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/secondPoint"
+            android:layout_width="15sp"
+            android:layout_height="15dp"
+            android:src="@drawable/rounded_corner"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/firstPoint"
+            android:layout_marginStart="5dp"
+            app:tint="@color/dark_green"
+
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

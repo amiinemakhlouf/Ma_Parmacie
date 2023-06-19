@@ -6,5 +6,6 @@ import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Remind
 interface ReminderCallback {
 
     fun navigateToDetailsScreen(reminder: Reminder)
+    fun navigateToDelegateScreen()
 
 }

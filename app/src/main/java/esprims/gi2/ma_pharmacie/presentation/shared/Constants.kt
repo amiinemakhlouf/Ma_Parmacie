@@ -5,6 +5,6 @@ import java.io.File
 object Constants {
 
     var JWT:String=""
-    var EMAIL:String=""
+    var userEmail:String=""
     var FILE: File?=null
 }

@@ -1,31 +1,33 @@
 package esprims.gi2.ma_pharmacie.presentation.donation.show_donation
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.data.entity.Donation
-import esprims.gi2.ma_pharmacie.data.entity.Medication
-import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineType
+import esprims.gi2.ma_pharmacie.data.entity.Event
 import esprims.gi2.ma_pharmacie.databinding.FragmentShowDonationBinding
 import esprims.gi2.ma_pharmacie.presentation.donation.DonationFragmentListener
+import esprims.gi2.ma_pharmacie.presentation.donation.EventAdapter
 import esprims.gi2.ma_pharmacie.presentation.donation.FilterDonationFragment
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
-import esprims.gi2.ma_pharmacie.presentation.medication.adapters.MedicationAdapter
-import esprims.gi2.ma_pharmacie.presentation.shared.Constants
 import esprims.gi2.ma_pharmacie.presentation.shared.LoadingDialog
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState
 import kotlinx.coroutines.Dispatchers.IO
@@ -33,14 +35,25 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 
 @AndroidEntryPoint
 class ShowDonationFragment : Fragment(), DonationAdapterListener,DonationFragmentListener {
+    private lateinit var timer: Timer
+    lateinit var  callback:ViewPager2.OnPageChangeCallback
+    val firstPoint :ImageView by lazy {
+        requireActivity().findViewById<ImageView>(R.id.firstPoint)
+    }
+    val secondPoint:ImageView by lazy {
+        requireActivity().findViewById<ImageView>(R.id.secondPoint)
+    }
 
     private val loadingDialog: LoadingDialog by lazy {
         LoadingDialog(requireActivity())
     }
+    var currentPage = 0;
+
     private val showDonationViewModel: ShowDonationViewModel by viewModels()
 
     private val binding: FragmentShowDonationBinding by lazy {
@@ -56,7 +69,59 @@ class ShowDonationFragment : Fragment(), DonationAdapterListener,DonationFragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
+        callback=MyPageChangeCallback()
+        binding.viewPager.orientation=ViewPager2.ORIENTATION_HORIZONTAL
+        val listOfEvents= mutableListOf<Event>(
+            Event(
+                title = "Cancer du sain",
+             description = "Lundi à hopital bourguiba Monastir, participez à notre événement de don de sang et aidez à sauver des vies.",
+                contact = "93317311",
+                date = "28/12/1998"
+            ),
+            Event(
+                title = "Cancer du fois",
+                description = "Lundi à hopital bourguiba Monastir, participez à notre événement de don de sang et aidez à sauver des vies.",
+                contact = "93317311",
+                date = "28/12/2028"
+            ),
+
+        )
+        val eventAdapter=EventAdapter(listOfEvents)
+        binding.viewPager.adapter=eventAdapter
+
+        val handler = Handler()
+        val Update = Runnable {
+            if (currentPage == listOfEvents.size) {
+                currentPage = 0
+
+            }
+            if(currentPage==0)
+            {
+                firstPoint.setColorFilter(requireContext().getColor(R.color.dark_green))
+                secondPoint.setColorFilter(requireContext().getColor(R.color.cadet_Blue))
+
+            }
+            else
+            {
+                secondPoint.setColorFilter(requireContext().getColor(R.color.dark_green))
+                firstPoint.setColorFilter(requireContext().getColor(R.color.cadet_Blue))
+
+            }
+
+            binding.viewPager.setCurrentItem(currentPage++, true)
+        }
+        binding.viewPager.registerOnPageChangeCallback(callback!!)
+
+
+
+         timer = Timer() // This will create a new Thread
+        timer.schedule(object : TimerTask() { // task to be scheduled
+            override fun run() {
+                handler.post(Update)
+            }
+        }, 3000, 5000)
+
 
         lifecycleScope.launch(Main)
         {
@@ -165,8 +230,14 @@ class ShowDonationFragment : Fragment(), DonationAdapterListener,DonationFragmen
 
                         Toast.makeText(requireContext(), "mohamed depannage", Toast.LENGTH_SHORT)
                             .show()
-                        for (data in it.data!!) {
-                            Log.d("ShowDonationFragment", " " + data.email)
+
+                        if(it.data!!.isEmpty())
+                        {
+                            binding.noItems.visibility= VISIBLE
+                        }
+                        else{
+                            binding.noItems.visibility= INVISIBLE
+
                         }
 
                         setUpRecyclerView(it.data!!)
@@ -205,6 +276,9 @@ class ShowDonationFragment : Fragment(), DonationAdapterListener,DonationFragmen
         handleBottomSheet(
         )
         binding.addDonation.setOnClickListener {
+
+            timer.cancel()
+            binding.viewPager.unregisterOnPageChangeCallback(callback!!)
             val navHostFragment =
                 requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
             val action =
@@ -252,5 +326,40 @@ class ShowDonationFragment : Fragment(), DonationAdapterListener,DonationFragmen
         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
         val action= ShowDonationFragmentDirections.actionShowDonationFragmentToDonationDetailsFragment(donation)
         navHostFragment.navController.navigate(action)
+    }
+    inner class MyPageChangeCallback : ViewPager2.OnPageChangeCallback() {
+        override fun onPageScrollStateChanged(state: Int) {
+            println(state)
+        }
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            Toast.makeText(requireContext(), "touhami  brassou", Toast.LENGTH_SHORT).show()
+            println(position)
+        }
+
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            if (position == 0) {
+                Toast.makeText(requireContext(), "ahla", Toast.LENGTH_SHORT).show()
+                firstPoint.setColorFilter(requireContext().getColor(R.color.dark_green))
+                secondPoint.setColorFilter(requireContext().getColor(R.color.cadet_Blue))
+            } else {
+                Toast.makeText(requireContext(), "nahla", Toast.LENGTH_SHORT).show()
+                val firstPoint = requireActivity().findViewById<ImageView>(R.id.firstPoint)
+                val secondPoint = requireActivity().findViewById<ImageView>(R.id.secondPoint)
+                firstPoint.setColorFilter(requireContext().getColor(R.color.cadet_Blue))
+                secondPoint.setColorFilter(requireContext().getColor(R.color.dark_green))
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.viewPager.unregisterOnPageChangeCallback(callback)
     }
 }

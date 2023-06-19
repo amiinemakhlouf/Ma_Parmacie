@@ -205,9 +205,14 @@ class ReminderFragment : Fragment() , ReminderCallback {
         navHostFragment.navController.navigate(action)
     }
 
+    override fun navigateToDelegateScreen() {
+        val navHostFragment =requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
+        val action= ReminderFragmentDirections.actionReminderFragmentToDelegateReminderFragment()
+        navHostFragment.navController.navigate(action)
+    }
 
 
-     private fun onSystemBackButtonClicked(fragment: Fragment)
+    private fun onSystemBackButtonClicked(fragment: Fragment)
     {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {

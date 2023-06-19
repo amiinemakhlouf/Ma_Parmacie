@@ -3,10 +3,7 @@ package esprims.gi2.ma_pharmacie.data.remote.reminderService
 import esprims.gi2.ma_pharmacie.data.entity.User
 import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ReminderService {
 
@@ -18,6 +15,6 @@ interface ReminderService {
     ): Response<Reminder>
 
     @GET("api/reminders")
-    suspend fun getAllReminders(@Header("AUTHORIZATION") value: String?=null):Response<List<Reminder>>
+    suspend fun getAllReminders(@Header("AUTHORIZATION") value: String?=null,@Query("userEmail") userEmail: String):Response<List<Reminder>>
 
 }
