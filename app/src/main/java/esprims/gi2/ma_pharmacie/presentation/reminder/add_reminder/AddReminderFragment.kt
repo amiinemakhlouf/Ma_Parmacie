@@ -1,6 +1,10 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
 import NotificationHelper
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_MUTABLE
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
@@ -62,6 +66,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneOffset
 import java.util.*
 
 @AndroidEntryPoint
@@ -578,14 +584,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
             val handler = Handler(Looper.getMainLooper())
 
-// Post a Runnable to be executed after a delay
-            GlobalScope.launch {
-
-                delay(1687195800000-System.currentTimeMillis())
-                NotificationHelper.createNotification(requireContext(),audioFile)
-
-
-            }
+// Post a Runna
 
 
         }
@@ -794,8 +793,37 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
              Log.d("AddReminderFragment",binding.firstTime.text.toString())
 
             viewModel.saveReminder(reminder)
+            val alarmManager=requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent=Intent(requireActivity(),AlertReceiver::class.java)
+            intent.putExtra("time",binding.firstTime.text.toString())
+            val pendingIntent=PendingIntent.getBroadcast(requireContext(),
+                0,intent,FLAG_MUTABLE
+            )
+        val hour=binding.firstTime.text.toString()[0]+binding.firstTime.text.toString()[1].toString()
+        val minutes=binding.firstTime.text.toString()[binding.firstTime.text.toString().lastIndex]+binding.firstTime.text.toString()[
+                binding.firstTime.text.toString().lastIndex-1
+        ].toString()
 
-        NotificationHelper.createNotification(requireActivity(),audioFile)
+        val date=createDate(hour,minutes)
+
+        val dateInMs=System.currentTimeMillis()+date!!.time
+        Log.d("hour",date.hours.toString())
+        Log.d("hour",date.minutes.toString())
+        val today = LocalDate.now()
+        val todayMillis = today.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+        val hourinMs=date.hours.toLong()*3600000
+        val minutesInms=date.minutes.toLong()*60000
+
+        Log.d("dateInMs",(todayMillis+hourinMs+minutesInms).toString())
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,
+            todayMillis+hourinMs+minutesInms-3600000,
+            pendingIntent
+        )
+
+
+
+
+
 
 
 
@@ -881,6 +909,23 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         ( requireActivity() as MainActivity).binding.fab.visibility= GONE
 
     }
+    fun createDate(hour: String, minutes: String): Date? {
+        val timeString = "$hour:$minutes"
+        val format = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val calendar = Calendar.getInstance()
+
+        try {
+            val time = format.parse(timeString)
+            calendar.time = time
+            calendar.set(Calendar.SECOND, 0) // Optional: Set seconds to 0 if needed
+            return calendar.time
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return null
+    }
+
 }
 
 
