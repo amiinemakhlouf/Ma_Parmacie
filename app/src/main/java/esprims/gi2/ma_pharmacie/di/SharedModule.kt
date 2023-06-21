@@ -15,7 +15,7 @@ object SharedModule {
 
     @Provides
     fun provideRetrofitInstance():Retrofit{
-        val myServerLocalIpAdress="http://192.168.100.88:3010/"
+        val myServerLocalIpAdress="http://192.168.100.175:3010/"
         //val myServerLocalIpAdress="http://10.0.2.2:3000/"
         val retrofit = Retrofit.Builder()
             .baseUrl(myServerLocalIpAdress)

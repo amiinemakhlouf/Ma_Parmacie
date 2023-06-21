@@ -2,15 +2,12 @@ package esprims.gi2.ma_pharmacie.presentation.donation.show_donation
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -228,8 +225,6 @@ class ShowDonationFragment : Fragment(), DonationAdapterListener,DonationFragmen
                     is UIState.Success -> {
                         loadingDialog.hideDialog()
 
-                        Toast.makeText(requireContext(), "mohamed depannage", Toast.LENGTH_SHORT)
-                            .show()
 
                         if(it.data!!.isEmpty())
                         {
@@ -338,18 +333,15 @@ class ShowDonationFragment : Fragment(), DonationAdapterListener,DonationFragmen
             positionOffsetPixels: Int
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            Toast.makeText(requireContext(), "touhami  brassou", Toast.LENGTH_SHORT).show()
             println(position)
         }
 
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             if (position == 0) {
-                Toast.makeText(requireContext(), "ahla", Toast.LENGTH_SHORT).show()
                 firstPoint.setColorFilter(requireContext().getColor(R.color.dark_green))
                 secondPoint.setColorFilter(requireContext().getColor(R.color.cadet_Blue))
             } else {
-                Toast.makeText(requireContext(), "nahla", Toast.LENGTH_SHORT).show()
                 val firstPoint = requireActivity().findViewById<ImageView>(R.id.firstPoint)
                 val secondPoint = requireActivity().findViewById<ImageView>(R.id.secondPoint)
                 firstPoint.setColorFilter(requireContext().getColor(R.color.cadet_Blue))

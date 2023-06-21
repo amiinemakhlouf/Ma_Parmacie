@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import esprims.gi2.ma_pharmacie.data.remote.reminderService.ReminderService
 import esprims.gi2.ma_pharmacie.data.remote.userService.UserService
 import esprims.gi2.ma_pharmacie.data.repository.ReminderRepository
+import esprims.gi2.ma_pharmacie.domain.usecases.reminder.AddReminderUseCase
 import esprims.gi2.ma_pharmacie.domain.usecases.reminder.GetAllRemindersUseCase
 import retrofit2.Retrofit
 
@@ -27,6 +28,10 @@ object ReminderModule {
     @Provides
     fun providesAllReminderUseCase(reminderRepository: ReminderRepository)=
         GetAllRemindersUseCase(reminderRepository)
+
+    @Provides
+    fun providesDelegateReminderUseCase(reminderRepository: ReminderRepository)=
+        AddReminderUseCase(reminderRepository)
 
 
 }

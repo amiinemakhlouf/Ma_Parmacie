@@ -32,7 +32,16 @@ class ReminderRepository @Inject constructor(
 
         return when(result.isSuccessful){
 
-            true -> Result.Success(result.body())
+            true ->{
+                for(res in result.body()!!){
+
+                    Log.d("ResminderRepository",res.userEmail!!)
+                    Log.d("ResminderRepository",res.reminderTime!!)
+                    Log.d("ResminderRepository",res.isDelegated!!.toString())
+                }
+                Result.Success(result.body())
+
+            }
 
             else-> {
                 Log.d("ReminderRepository","  "+result.errorBody().toString())
@@ -42,6 +51,31 @@ class ReminderRepository @Inject constructor(
 
             }
         }
+    }
+
+    suspend fun  getReminderById(id:Int):Result<Reminder>{
+
+        val res=reminderService.getReminderById(id)
+        if(res.isSuccessful)
+        {
+            return  Result.Success(res.body())
+        }
+
+        return Result.Error(res.errorBody().toString()!!)
+
+    }
+
+     suspend  fun updateReminderById(id: Int,reminder: Reminder):Result<Reminder> {
+
+       val res= reminderService.updateReminderById(id=id,reminder)
+
+        if(res.isSuccessful)
+        {
+            return  esprims.gi2.ma_pharmacie.presentation.shared.Result.Success(reminder)
+        }
+
+        return  esprims.gi2.ma_pharmacie.presentation.shared.Result.Error()
+
     }
 
 }

@@ -1,4 +1,4 @@
-package esprims.gi2.ma_pharmacie.domain.usecases
+package esprims.gi2.ma_pharmacie.domain.usecases.reminder
 
 import esprims.gi2.ma_pharmacie.data.entity.Donation
 import esprims.gi2.ma_pharmacie.data.repository.DonationRepository

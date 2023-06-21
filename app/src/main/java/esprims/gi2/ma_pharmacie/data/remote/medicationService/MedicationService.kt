@@ -14,7 +14,7 @@ interface MedicationService {
     ):Response<Medication>
 
     @GET("get/all/medications")
-    suspend fun getAllMedications():Response<List<Medication>>
+    suspend fun getAllMedications(@Query("userEmail") userEmail: String):Response<List<Medication>>
 
     @GET("medication/{id}")
     suspend fun getMedication(@Path("id") id: String): Response<MedicationResponse>

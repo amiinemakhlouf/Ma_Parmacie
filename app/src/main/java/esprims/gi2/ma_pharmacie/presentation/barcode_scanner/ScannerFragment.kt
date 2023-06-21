@@ -42,6 +42,7 @@ import okhttp3.RequestBody
 
 @AndroidEntryPoint
 class ScannerFragment : Fragment() {
+
     private lateinit var dialog: AlertDialog
     private  val loadingDialog by lazy {
         LoadingDialog(requireActivity())
@@ -158,6 +159,7 @@ class ScannerFragment : Fragment() {
                 lifecycleScope.launch(Main) {
                     binding.barCodeScan.visibility= INVISIBLE
                     binding.ignoreTv.visibility=INVISIBLE
+                    loadingDialog.hideDialog()
                     delay(1500)
                     Toasty.success(requireActivity(), "Codabar enregistré").show()
                     dialog.show()
@@ -198,6 +200,7 @@ class ScannerFragment : Fragment() {
 
     private fun handleScanBarCode(barcodeLauncher: ActivityResultLauncher<ScanOptions>) {
         binding.barCodeScan.setOnClickListener {
+            loadingDialog.showDialog()
             barcodeLauncher.launch(ScanOptions())
         }
     }

@@ -1,5 +1,4 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.add_reminder
-import NotificationHelper
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -34,7 +33,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -44,13 +42,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.AndroidEntryPoint
 import es.dmoral.toasty.Toasty
 import esprims.gi2.ma_pharmacie.R
 import esprims.gi2.ma_pharmacie.data.entity.Medication
-import esprims.gi2.ma_pharmacie.data.local.enums_helpers.MedicineType
 import esprims.gi2.ma_pharmacie.databinding.FragmentAddReminderBinding
 import esprims.gi2.ma_pharmacie.presentation.hideKeyboard
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
@@ -58,8 +53,6 @@ import esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Remind
 import esprims.gi2.ma_pharmacie.presentation.shared.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.File
@@ -70,9 +63,11 @@ import java.time.LocalDate
 import java.time.ZoneOffset
 import java.util.*
 
+
 @AndroidEntryPoint
 class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
+    private var medicationPosition: Int?=null
     private var enter: Boolean=true
     private var endDateInMilleseconds: Long?=null
     private var startDateInMilliseconds: Long?=null
@@ -132,6 +127,7 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
                 binding.dropdown1.setText(addReminderFragmentArgs.medicationName)
                 binding.dropdown1.isClickable=false
                 binding.dropdown1.isFocusable=false
+                binding.quantityTv.setText(addReminderFragmentArgs.type)
 
 
             }
@@ -189,6 +185,10 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
 
         binding.dropdown.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            Toast.makeText(requireContext(),"gadz",Toast.LENGTH_SHORT).show()
+             medicationPosition=position
+             Log.d("AddReminderFragment",medicationPosition!!.toString())
+             Log.d("AddReminderFragment",viewModel.items!![medicationPosition!!].type.toString())
             if(position==viewModel.items?.lastIndex){
                 Toast.makeText(requireContext(),selectedItem,Toast.LENGTH_SHORT).show()
                 val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
@@ -684,6 +684,23 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
 
             }
         })
+
+        binding.dropdown.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parentView: AdapterView<*>?,
+                selectedItemView: View?,
+                position: Int,
+                id: Long
+            ) {
+
+                binding.quantityTv.setText(viewModel.items!![position].unit)
+            }
+
+
+            override fun onNothingSelected(parentView: AdapterView<*>?) {
+                // your code here
+            }
+        })
     }
 
     private fun getRAddioButtonsChoices(): List<RadioButton> {
@@ -778,30 +795,34 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         if(binding.nevermindRadio.isChecked){
             moment=3
         }
-        val reminder=Reminder(selectedItem,binding.doseEt.text.toString()+" pillules"
-                ,binding.firstTime.text.toString()+binding.secondTime.text.toString()+binding.thirdTime.text.toString(),
-                binding.NameETT.text.toString(),
-                startDate=startDateInMilliseconds!!.toString(),
-                endDate=(endDateInMilleseconds!!+86400000-1000).toString()  ,
-                moment=moment,
-               userEmail = "amiinemakhlouf@gmail.com",
-                days = days,
-                type = binding.quantityTv.text.toString(),
-
+        val reminder=Reminder(null,
+            selectedItem, binding.doseEt.text.toString() + " pillules",
+            binding.firstTime.text.toString() + binding.secondTime.text.toString() + binding.thirdTime.text.toString(),
+            binding.NameETT.text.toString(),
+            startDate = startDateInMilliseconds!!.toString(),
+            endDate = (endDateInMilleseconds!! + 86400000 - 1000).toString(),
+            moment = moment,
+            userEmail = "amiinemakhlouf@gmail.com",
+            days = days,
+            type = viewModel.items!![medicationPosition!!].type.toString(),
+            statu = 0
             )
         //Constants.EMAIL
              Log.d("AddReminderFragment",binding.firstTime.text.toString())
 
             viewModel.saveReminder(reminder)
-            val alarmManager=requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val descripton="Vous avez"+binding.doseEt.text.toString()+"capsules"+ " de"+
+        binding.dropdown.text.toString() + " à prendre."
+
+        val alarmManager=requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent=Intent(requireActivity(),AlertReceiver::class.java)
-            intent.putExtra("time",binding.firstTime.text.toString())
+            intent.putExtra("description",descripton)
             val pendingIntent=PendingIntent.getBroadcast(requireContext(),
                 0,intent,FLAG_MUTABLE
             )
         val hour=binding.firstTime.text.toString()[0]+binding.firstTime.text.toString()[1].toString()
-        val minutes=binding.firstTime.text.toString()[binding.firstTime.text.toString().lastIndex]+binding.firstTime.text.toString()[
-                binding.firstTime.text.toString().lastIndex-1
+        val minutes=binding.firstTime.text.toString()[binding.firstTime.text.toString().lastIndex-1]+binding.firstTime.text.toString()[
+                binding.firstTime.text.toString().lastIndex
         ].toString()
 
         val date=createDate(hour,minutes)
@@ -809,10 +830,12 @@ class AddReminderFragment : Fragment() ,AddReminderDaysAdapter.DayListener {
         val dateInMs=System.currentTimeMillis()+date!!.time
         Log.d("hour",date.hours.toString())
         Log.d("hour",date.minutes.toString())
+
         val today = LocalDate.now()
         val todayMillis = today.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
         val hourinMs=date.hours.toLong()*3600000
         val minutesInms=date.minutes.toLong()*60000
+
 
         Log.d("dateInMs",(todayMillis+hourinMs+minutesInms).toString())
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,

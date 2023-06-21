@@ -35,9 +35,9 @@ class MedicationAdapter (
 
         val context=holder.itemView.context
         holder.binding.name.setText(dataset[position].name)
-        holder.binding.type.setText(dataset[position].type)
-        holder.binding.unit.setText(dataset[position].unit)
-        when(holder.binding.type.text.toString()){
+        //holder.binding.type.setText(dataset[position].type)
+       // holder.binding.unit.setText(dataset[position].unit)
+        when(dataset[position].type){
             "capsules" -> holder.binding.illustration.setImageDrawable( context.getDrawable(
                 R.drawable.capsule
             ))

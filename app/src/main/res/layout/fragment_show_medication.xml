@@ -12,7 +12,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Vos médicaments:"
+        android:text="Mes médicaments:"
         android:layout_marginTop="30dp"
         android:textStyle="bold"
         android:textColor="@color/dark_green"

@@ -1,13 +1,17 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,7 +37,9 @@ import java.util.*
 
 @AndroidEntryPoint
 class ReminderFragment : Fragment() , ReminderCallback {
-     private  lateinit var binding:FragmentReminderBinding
+    private var mydialog: DialogInterface?=null
+    private var capturedRem: Reminder?=null
+    private  lateinit var binding:FragmentReminderBinding
      private  val loadingDialog :LoadingDialog by lazy {
          LoadingDialog(requireActivity())
      }
@@ -50,6 +56,7 @@ class ReminderFragment : Fragment() , ReminderCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(requireContext(),"ezzedine rahmouni",Toast.LENGTH_SHORT).show()
         ( requireActivity() as MainActivity).binding.bottomNavView.visibility=VISIBLE
         ( requireActivity() as MainActivity).binding.fab.visibility= View.VISIBLE
 
@@ -86,12 +93,16 @@ class ReminderFragment : Fragment() , ReminderCallback {
                         loadingDialog.hideDialog()
                         var reminders=uiState.data
                         reminders= reminders!!.filter { it.days=="full" || it.days!!.contains(getTodayIn3letters()[today]!!) }
-                        for (reminder in reminders)
+                        val myReminders=reminders.filter { it.isDelegated==false  ||  it.statu!=0 }
+                        val otherReminders=reminders.filter { it.isDelegated==true  && it.statu==0}
+                        Log.d("beji matrix",myReminders.size.toString())
+                        for (reminder in myReminders)
                         {
-                            Log.d("Reminder","  "+reminder.days)
+                            Log.d("beji matrix","  "+reminder.isDelegated)
+                            Log.d("beji matrix","  "+reminder.reminderTime)
 
                         }
-                        if(reminders!!.isNotEmpty()){
+                        if(myReminders.isNotEmpty()){
                         }
                         else{
                             binding.noItems.visibility= VISIBLE
@@ -99,13 +110,57 @@ class ReminderFragment : Fragment() , ReminderCallback {
                         }
                         Log.d("ReminderFragment", reminders.toString())
                          viewModel.listByTime= mutableListOf<List<Reminder>>()
-                       val hash= reminders.groupBy { it.reminderTime }
+                       val hash= myReminders.groupBy { it.reminderTime }
+                        val hash1=otherReminders.groupBy { it.reminderTime }
                         for (reminder in hash){
 
                             viewModel.listByTime.add(reminder.value)
 
                         }
+                        for(rem in hash1)
+                        {
+                            viewModel.othersList.add(rem.value)
+
+                        }
                         showReminderRecyclerView(viewModel.listByTime)
+
+                        for (rem in otherReminders)
+                        {
+                            capturedRem=rem
+                            showAlert(title = "Demeande de délégation de rappel",
+                                message = rem.source+ "veut vous deléguer un rappel pour prise de"+rem.medicationName+" à " +rem.reminderTime!!+ "pour"+
+                                        rem.personName,
+
+                                    {
+                                 Toast.makeText(requireContext(),"vous avez accepter la demande",Toast.LENGTH_SHORT).show()
+
+                                        mydialog!!.dismiss()
+
+                                       viewModel.listByTime.addAll(viewModel.othersList)
+                                        for(item in viewModel.listByTime)
+                                        {
+                                            Log.d("ReminderFragment",item.toString())
+                                        }
+                                        binding.reminderRecyclerView.adapter!!.notifyDataSetChanged()
+                                        binding.noItems.visibility= INVISIBLE
+                                        lifecycleScope.launch(IO)
+                                        {
+                                            capturedRem!!.statu=1
+                                            capturedRem!!.userEmail=Constants.userEmail
+                                            viewModel.RespondReminderDelegation(capturedRem!!)
+
+                                        }
+
+                        },{
+                                    Toast.makeText(requireContext(),"vous avez refuser la demande",Toast.LENGTH_SHORT).show()
+
+
+                                }
+
+                            )
+                            break
+
+                        }
 
                     }
                 }
@@ -200,14 +255,16 @@ class ReminderFragment : Fragment() , ReminderCallback {
 
 
 
+
         )
 
         navHostFragment.navController.navigate(action)
     }
 
-    override fun navigateToDelegateScreen() {
+
+    override fun navigateToDelegateScreen(reminder: Reminder) {
         val navHostFragment =requireActivity().supportFragmentManager.findFragmentById(R.id.my_fragment) as NavHostFragment
-        val action= ReminderFragmentDirections.actionReminderFragmentToDelegateReminderFragment()
+        val action= ReminderFragmentDirections.actionReminderFragmentToDelegateReminderFragment(reminder)
         navHostFragment.navController.navigate(action)
     }
 
@@ -285,7 +342,28 @@ class ReminderFragment : Fragment() , ReminderCallback {
         }
         return result
     }
+    private fun showAlert(title: String, message: String ,
+                          onPositiveButtonClicked: () -> Unit,
+                          onNegativeButtonClicked: () -> Unit,
+    ) {
+        val alertDialogBuilder = AlertDialog.Builder(requireContext(),R.style.MyDialogTheme)
+        alertDialogBuilder.setTitle(title)
+        alertDialogBuilder.setMessage(message)
+        alertDialogBuilder.setPositiveButton("Accepter") { dialog: DialogInterface, _: Int ->
+            mydialog=dialog
+            dialog.dismiss()
+            onPositiveButtonClicked()
+        }
+        alertDialogBuilder.setNegativeButton("Refuser") { dialog: DialogInterface, _: Int ->
+            onNegativeButtonClicked()
+            dialog.dismiss()
+        }
 
 
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
 }
+
+
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:layout_marginTop="20dp"
     android:background="@drawable/child_reminder_background"
     android:layout_marginStart="15dp"
@@ -25,7 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Zartan"
-        android:layout_marginTop="-10dp"
         app:layout_constraintStart_toEndOf="@id/illustration"
         android:layout_marginStart="15dp"
         android:textStyle="bold"
@@ -34,36 +33,15 @@
         app:layout_constraintTop_toTopOf="@id/illustration"
 
         />
-    <TextView
-        android:id="@+id/type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/name"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        android:text="Capsule, "
-        android:layout_marginTop="5dp"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        />
-    <TextView
-        android:id="@+id/unit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/type"
-        app:layout_constraintTop_toTopOf="@id/type"
-        app:layout_constraintBottom_toBottomOf="@id/type"
-        android:paddingStart="5dp"
-        android:text="20 mg"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        />
+
     <TextView
         android:id="@+id/quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/type"
-        app:layout_constraintTop_toBottomOf="@id/type"
-        android:text="Disponibilité, "
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        android:layout_marginTop="8dp"
+        android:text="Quantité: "
         android:textSize="16sp"
         android:textColor="@color/black"
         />
@@ -72,20 +50,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/quantity"
-        app:layout_constraintTop_toBottomOf="@id/type"
+        app:layout_constraintTop_toBottomOf="@id/name"
         android:text=" 3"
         android:textSize="16sp"
         android:textColor="@color/black"
-
+        android:layout_marginTop="8dp"
         />
     <TextView
         android:id="@+id/quantityValueText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/quantityValue"
-        app:layout_constraintTop_toBottomOf="@id/type"
+        app:layout_constraintTop_toBottomOf="@id/name"
         android:text=" pillules"
         android:textSize="16sp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/black"
 
         />

@@ -16,5 +16,5 @@ data class Medication(
     val quantity:Float?=null,
     val state:Int?=null,
     val image: String?=null,
-    val userEmail:String?=null
+    var userEmail:String?=null
 ):Parcelable

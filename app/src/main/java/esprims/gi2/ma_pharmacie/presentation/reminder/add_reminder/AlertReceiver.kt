@@ -9,9 +9,9 @@ import androidx.core.content.ContentProviderCompat.requireContext
 class AlertReceiver():BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
-        val time=intent!!.getStringExtra("time")
-        Log.d("AlertReceiver",time!!)
-        NotificationHelper.createNotification(context!!,null)
+        val description=intent!!.getStringExtra("description")
+        Log.d("AlertReceiver",description!!)
+        NotificationHelper.createNotification(context!!,null, description = description)
 
     }
 

@@ -1,6 +1,12 @@
 package esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+
+@Parcelize
 open class Reminder(
+    var id:Int?=null,
     var medicationName: String?=null,
     var dose: String?=null,
     var reminderTime: String?=null,
@@ -10,7 +16,11 @@ open class Reminder(
     var moment: Int?=null,
     var days: String?=null,
     var type: String?=null,
-    val userEmail: String? = "",
-    var image: String? = null
+    var userEmail: String? = "",
+    var image: String? = null,
+    var isDelegated:Boolean=false,
+    var source:String?=null,
+    var statu:Int?=0
 
-)
+
+):Parcelable

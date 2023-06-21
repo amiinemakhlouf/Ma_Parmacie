@@ -36,6 +36,7 @@ class ReminderParentAdapter(
         val currentItem=dataset[position]
         val context=holder.itemView.context
         holder.binding.time.text=currentItem[0].reminderTime
+
         val adapter=ReminderChildAdapter(dataset[position],reminderCallback)
         holder.binding.reminderRecyclerViewParent.apply {
             layoutManager= LinearLayoutManager(context,

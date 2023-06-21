@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import esprims.gi2.ma_pharmacie.data.entity.Donation
-import esprims.gi2.ma_pharmacie.domain.usecases.GetOtherPeopleDonationsUseCase
+import esprims.gi2.ma_pharmacie.domain.usecases.reminder.GetOtherPeopleDonationsUseCase
 import esprims.gi2.ma_pharmacie.domain.usecases.donation.GetDonationByEmailUseCase
 import esprims.gi2.ma_pharmacie.domain.usecases.donation.GetDonationsUseCase
 import esprims.gi2.ma_pharmacie.presentation.shared.UIState

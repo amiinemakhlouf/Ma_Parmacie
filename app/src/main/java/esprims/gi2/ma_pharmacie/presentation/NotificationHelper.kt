@@ -11,6 +11,7 @@ import esprims.gi2.ma_pharmacie.app.MyPharmacyApplication
 import esprims.gi2.ma_pharmacie.presentation.main.MainActivity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.icu.text.CaseMap.Title
 import android.media.RingtoneManager
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
@@ -22,7 +23,9 @@ object NotificationHelper {
     private const val CHANNEL_NAME = "Your Channel Name"
     private const val NOTIFICATION_ID = 1
 
-    fun createNotification(context: Context,file: File?) {
+    fun createNotification(context: Context,file: File?,
+    description: String
+    ) {
         createNotificationChannel(context)
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)

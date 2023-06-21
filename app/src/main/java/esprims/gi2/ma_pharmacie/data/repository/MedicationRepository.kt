@@ -3,6 +3,7 @@ package esprims.gi2.ma_pharmacie.data.repository
 import android.util.Log
 import esprims.gi2.ma_pharmacie.data.entity.Medication
 import esprims.gi2.ma_pharmacie.data.remote.medicationService.MedicationService
+import esprims.gi2.ma_pharmacie.presentation.shared.Constants
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -31,6 +32,7 @@ class MedicationRepository @Inject constructor
     suspend fun saveMedication(medication: Medication,image:MultipartBody.Part):Res<String>
     {
 
+        medication.userEmail=Constants.userEmail
         val result=    medicationService.saveMedication(medication)
         if(result.isSuccessful)
         {
@@ -47,7 +49,7 @@ class MedicationRepository @Inject constructor
     }
     suspend fun getAll():Res<List<Medication>>
     {
-       val result= medicationService.getAllMedications()
+       val result= medicationService.getAllMedications(Constants.userEmail)
 
         if(result.isSuccessful){
 

@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import esprims.gi2.ma_pharmacie.data.remote.donationService.DonationService
 import esprims.gi2.ma_pharmacie.data.repository.DonationRepository
-import esprims.gi2.ma_pharmacie.domain.usecases.GetOtherPeopleDonationsUseCase
+import esprims.gi2.ma_pharmacie.domain.usecases.reminder.GetOtherPeopleDonationsUseCase
 import esprims.gi2.ma_pharmacie.domain.usecases.donation.GetDonationsUseCase
 import esprims.gi2.ma_pharmacie.domain.usecases.donation.SaveDonationUseCase
 import retrofit2.Retrofit

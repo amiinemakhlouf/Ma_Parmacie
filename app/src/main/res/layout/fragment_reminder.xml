@@ -24,7 +24,7 @@
         android:id="@+id/todayPlan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Les rappels d'aujourd'hui:"
+        android:text="Mes rappels d'aujourd'hui:"
         android:textColor="@color/dark_green"
         app:layout_constraintTop_toTopOf="@id/logoutIcon"
         app:layout_constraintBottom_toBottomOf="@id/logoutIcon"

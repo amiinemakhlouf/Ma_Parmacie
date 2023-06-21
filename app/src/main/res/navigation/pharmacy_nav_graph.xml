@@ -401,6 +401,13 @@
     </fragment>
     <fragment
         android:id="@+id/delegateReminderFragment"
-        android:name="esprims.gi2.ma_pharmacie.presentation.DelegateReminderFragment"
-        android:label="DelegateReminderFragment" />
+        android:name="esprims.gi2.ma_pharmacie.presentation.delegate.DelegateReminderFragment"
+        android:label="DelegateReminderFragment" >
+        <argument
+            android:name="reminder"
+            app:argType="esprims.gi2.ma_pharmacie.presentation.reminder.show_reminder.model.Reminder" />
+        <action
+            android:id="@+id/action_delegateReminderFragment_to_reminderFragment"
+            app:destination="@id/reminderFragment" />
+    </fragment>
 </navigation>

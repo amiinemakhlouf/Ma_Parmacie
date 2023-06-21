@@ -17,4 +17,10 @@ interface ReminderService {
     @GET("api/reminders")
     suspend fun getAllReminders(@Header("AUTHORIZATION") value: String?=null,@Query("userEmail") userEmail: String):Response<List<Reminder>>
 
+    @GET("/reminders/{id}")
+     suspend fun getReminderById(@Path("id") id: Int): Response<Reminder>
+    @PUT("/reminders/{id}")
+    suspend fun updateReminderById(@Path("id") id: Int, @Body reminder: Reminder): Response<Reminder>
+
+
 }
